@@ -1,0 +1,15 @@
+:root {
+  --main-color-black: #1e1e07;
+  --main-color-green: #0e5f12;
+  --main-color-orange: #ff8807;
+  --main-color-orange-light: rgb(255, 198, 64);
+  --main-color-yellow: #ffe923;
+  --main-color-yellow-light: #fffbab;
+}
+
+/* body {
+  margin: 0 3%;
+} */
+h1 {
+  background-color: var(--main-color-orange);
+}
