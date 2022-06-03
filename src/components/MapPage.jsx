@@ -10,6 +10,7 @@ const FindMap = styled.div`
 
 const Search = styled.div`
   width: 40%;
+  display: flex;
 `;
 
 const MapPage = () => {
