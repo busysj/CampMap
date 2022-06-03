@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from 'styled-components';
-import {Swiper, SwiperSlide} from 'swiper/react';
-import SwiperCore, {Navigation, Pagination, Autoplay} from 'swiper';
-import 'swiper/swiper.scss';
-import 'swiper/components/navigation/navigation.scss';
-import 'swiper/components/pagination/pagination.scss';
+import SwiperTool, {
+  StyleSwiper, 
+  BestReviewContainer,
+  BestReviewContext, 
+  BestReviewImg, 
+  SwiperSlide
+} from "../tools/SwiperTool";
+
 
 //더미사진
 import camp1 from '../dummydata/camp1.jpg';
@@ -15,13 +18,7 @@ const Review = styled.div`
   display : flex;
   width : 100%; height : 500px;
 `;
-const BestReviewContainer = styled.div`
-  background : #ffa07a;
-  width : 48%; height : 100%;
-  margin-left : 10px; margin-right : 10px;
-`;
 const ReviewListContainer = styled.div`
-  background : #ffa07a;
   width : 50%; height : 100%;
   margin-left : 10px; margin-right : 10px;
 `;
@@ -40,52 +37,36 @@ const ReviewList = styled.ul`
   flex-direction: column;
 `;
 const ReviewItem = styled.li`
-  margin : 5px; padding: 30px;
+  margin : 5px; padding: 20px;
   text-align: center;
-  background-color: #942a00;
+  border: var(--main-color-orange) solid 2px;
+  border-radius: 20px;
   &:hover {
     background-color: #ffa07a;
   }
 `;
-const StyleSwiper = styled(Swiper)`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  color: #0e5f12;
-`;
 
 const ReviewPage = () => {
-  const [swiper, setswiper] = useState(null);
-
-  const swiperParams = {
-    navigation : true,
-    spaceBetween : 50,
-    slidesPerView : 1,
-    pagination : {clickable : true},
-    autoplay : {delay : 3000},
-    loop : true
-  };
-
-  SwiperCore.use([Navigation, Pagination, Autoplay]);
-
+  const slide = SwiperTool();
   return (
     <Review>
       <BestReviewContainer>
-        <StyleSwiper {...swiperParams} ref={setswiper}>
+        <StyleSwiper {...slide.swiperParams} ref={slide.setswiper}>
           <SwiperSlide>
-            <div>
-              <img src={camp1}></img>
-            </div>
+          <BestReviewImg src={camp1} />
+          <BestReviewContext>
+            응애
+          </BestReviewContext>
           </SwiperSlide>
           <SwiperSlide>
-            <div>
-              <img src={camp2}></img>
-            </div>
+          <BestReviewImg src={camp2} />
+            <BestReviewContext>
+            </BestReviewContext>
           </SwiperSlide>
           <SwiperSlide>
-            <div>
-              <img src={camp3}></img>
-            </div>
+          <BestReviewImg src={camp3} />
+            <BestReviewContext>
+            </BestReviewContext>
           </SwiperSlide>
         </StyleSwiper>
       </BestReviewContainer>
