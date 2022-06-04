@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import SwiperTool, {
   StyleSwiper, 
   BestReviewContainer,
-  BestReviewContext, 
   BestReviewImg, 
   SwiperSlide
 } from "../tools/SwiperTool";
@@ -45,6 +44,19 @@ const ReviewItem = styled.li`
     background-color: #ffa07a;
   }
 `;
+const BestReviewTitle = styled.h2`
+  width: 100%; height: 100%;
+  color: white;
+  position: absolute; top: 10%;
+  text-align: center;
+`;
+const BestReviewContext = styled.p`
+  width: 100%; height: 100%;
+  position: absolute; top: 25%;
+  text-align: center;
+  color: white;
+`
+
 
 const ReviewPage = () => {
   const slide = SwiperTool();
@@ -53,23 +65,24 @@ const ReviewPage = () => {
       <BestReviewContainer>
         <StyleSwiper {...slide.swiperParams} ref={slide.setswiper}>
           <SwiperSlide>
-          <BestReviewImg src={camp1} />
-          <BestReviewContext>
-            응애
-          </BestReviewContext>
-          </SwiperSlide>
-          <SwiperSlide>
-          <BestReviewImg src={camp2} />
-            <BestReviewContext>
+            <BestReviewImg src={camp1} />{/* 삽입 이미지 */}
+            <BestReviewTitle>{/* 삽입 제목 */}
+              응애
+            </BestReviewTitle>
+            <BestReviewContext>{/* 삽입 내용 */}
+              삽사르기
             </BestReviewContext>
           </SwiperSlide>
           <SwiperSlide>
-          <BestReviewImg src={camp3} />
-            <BestReviewContext>
-            </BestReviewContext>
+            <BestReviewImg src={camp2} />
+          </SwiperSlide>
+          <SwiperSlide>
+            <BestReviewImg src={camp3} />
           </SwiperSlide>
         </StyleSwiper>
       </BestReviewContainer>
+      {/* 베스트 리뷰 컨테이너 끝 */}
+      {/* 리뷰 리스트 시작 */}
       <ReviewListContainer>
         <ReviewList>
           <ReviewItem>응앵애응애</ReviewItem>

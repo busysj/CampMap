@@ -67,7 +67,7 @@ const PopupPage = (props) => {
                         X
                     </PopupButton>
                 </PopupHeader>
-                <PopupImage src={Safety} to="/"></PopupImage>
+                <PopupImage src={Safety} to="/" />
             </Popup>
         </Draggable>
     );

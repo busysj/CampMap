@@ -20,12 +20,6 @@ const BestReviewImg = styled.img`
   margin: 0;
   filter: brightness(30%);
 `;
-const BestReviewContext = styled.p`
-  width: 100%; height: 100%;
-  color: white;
-  position: absolute; top: 0;
-  margin: 0;
-`;
 
 const SwiperTool = () => {
   const [swiper, setswiper] = useState(null);
@@ -43,5 +37,5 @@ const SwiperTool = () => {
     swiper, setswiper, swiperParams
   };
 };
-export {StyleSwiper, BestReviewImg, BestReviewContext, SwiperSlide, BestReviewContainer}
+export {StyleSwiper, BestReviewImg, SwiperSlide, BestReviewContainer}
 export default SwiperTool;

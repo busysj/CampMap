@@ -13,7 +13,7 @@ const Nav = styled.div`
   font-size: 1.2rem;
   position: sticky;
   box-shadow: 0 1px 8px gray;
-  z-index: 100;
+  z-index: 3;
 `;
 
 const NavLogo = styled.div`
