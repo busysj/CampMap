@@ -15,7 +15,15 @@ const SearchBackgroundimg = styled.div`
         width: 100%;
         height: 500px;
         content: "";
-        background-image: url(${backgroundImg});
+        background-image: linear-gradient(
+                to right,
+                rgba(20, 20, 20, 0.8) 0%,
+                rgba(20, 20, 20, 0.3) 25%,
+                rgba(20, 20, 20, 0.1) 50%,
+                rgba(20, 20, 20, 0.3) 75%,
+                rgba(20, 20, 20, 0.8) 100%
+            ),
+            url(${backgroundImg});
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
@@ -23,7 +31,6 @@ const SearchBackgroundimg = styled.div`
         top: 0;
         left: 0;
         z-index: -10;
-        filter: brightness(60%);
     }
 `;
 
