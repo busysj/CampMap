@@ -20,7 +20,6 @@ const BestReviewImg = styled.img`
   margin: 0;
   filter: brightness(30%);
 `;
-
 const SwiperTool = () => {
   const [swiper, setswiper] = useState(null);
 
@@ -28,8 +27,8 @@ const SwiperTool = () => {
     navigation : true,
     spaceBetween : 100,
     slidesPerView : 1,
-    pagination : {clickable : true},
-    autoplay : {delay : 7000},
+    pagination : {clickable : true, styled : {color : 'var(--main-color-orange)'}},
+    autoplay : {delay : 7000, disableOnInteraction : false},
     loop : true
   };
   SwiperCore.use([Navigation, Pagination, Autoplay]);
@@ -37,5 +36,6 @@ const SwiperTool = () => {
     swiper, setswiper, swiperParams
   };
 };
+
 export {StyleSwiper, BestReviewImg, SwiperSlide, BestReviewContainer}
 export default SwiperTool;

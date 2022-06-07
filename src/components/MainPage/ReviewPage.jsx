@@ -7,11 +7,12 @@ import SwiperTool, {
   SwiperSlide
 } from "../tools/SwiperTool";
 
+const camp = [ //이미지 api로 받아올것
+  require('../dummydata/camp1.jpg'),
+  require('../dummydata/camp2.jpg'),
+  require('../dummydata/camp3.jpg')];
 
-//더미사진
-import camp1 from '../dummydata/camp1.jpg';
-import camp2 from '../dummydata/camp2.jpg';
-import camp3 from '../dummydata/camp3.jpg';
+const list = ['리스트1','리스트2','리스트3','리스트4','리스트5'];
 
 const Review = styled.div`
   display : flex;
@@ -38,8 +39,7 @@ const ReviewList = styled.ul`
 const ReviewItem = styled.li`
   margin : 5px; padding: 20px;
   text-align: center;
-  border: var(--main-color-orange) solid 2px;
-  border-radius: 20px;
+  border-bottom: var(--main-color-orange) solid 2px;
   &:hover {
     background-color: #ffa07a;
   }
@@ -55,43 +55,62 @@ const BestReviewContext = styled.p`
   position: absolute; top: 25%;
   text-align: center;
   color: white;
-`
+`;
+const More = styled.a`
+  text-decoration-line: none;
+  float: right;
+  margin-top: 50px;
+  &:hover{
+    color: var(--main-color-green);
+  }
+`;
 
 
 const ReviewPage = () => {
   const slide = SwiperTool();
+  
+  function slideArray() {
+    let array = [];
+    for(let i=1; i<=camp.length; i++){
+      array.push(
+        <SwiperSlide>
+        <BestReviewImg src={camp[0]} />{/* 삽입 이미지 */}
+        <BestReviewTitle>{/* 삽입 제목 */}
+          제목 {i}
+        </BestReviewTitle>
+        <BestReviewContext>{/* 삽입 내용 */}
+          {i}번째 게시물
+        </BestReviewContext>
+      </SwiperSlide>
+      );
+    };
+    return array;
+  };
+  function listArray() {
+    let array = [];
+    for(let i=0; i<list.length; i++){
+      array.push(
+        <ReviewItem>{list[i]}</ReviewItem>
+      );
+    };
+    return array;
+  };
+
   return (
     <Review>
       <BestReviewContainer>
         <StyleSwiper {...slide.swiperParams} ref={slide.setswiper}>
-          <SwiperSlide>
-            <BestReviewImg src={camp1} />{/* 삽입 이미지 */}
-            <BestReviewTitle>{/* 삽입 제목 */}
-              응애
-            </BestReviewTitle>
-            <BestReviewContext>{/* 삽입 내용 */}
-              삽사르기
-            </BestReviewContext>
-          </SwiperSlide>
-          <SwiperSlide>
-            <BestReviewImg src={camp2} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <BestReviewImg src={camp3} />
-          </SwiperSlide>
+          {slideArray()}
         </StyleSwiper>
       </BestReviewContainer>
       {/* 베스트 리뷰 컨테이너 끝 */}
+
       {/* 리뷰 리스트 시작 */}
       <ReviewListContainer>
         <ReviewList>
-          <ReviewItem>응앵애응애</ReviewItem>
-          <ReviewItem>응앵애응애</ReviewItem>
-          <ReviewItem>응앵애응애</ReviewItem>
-          <ReviewItem>응앵애응애</ReviewItem>
-          <ReviewItem>응앵애응애</ReviewItem>
+          {listArray()}
         </ReviewList>
-        <p>더보기</p>
+        <More>더보기</More>
       </ReviewListContainer>
     </Review>
   );
