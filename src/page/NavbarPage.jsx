@@ -69,7 +69,7 @@ const NavLink = styled(Link)`
   height: 80px;
   font-weight: 500;
   text-decoration: none;
-  color: white;
+  color: black;
 
   &:hover {
     color: var(--main-color-orange);
