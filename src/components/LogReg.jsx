@@ -254,6 +254,6 @@ if(!openModal) return null
     </ContentTabs>
   </Taps>
   )
-}
+} 
 
 export default LogReg
