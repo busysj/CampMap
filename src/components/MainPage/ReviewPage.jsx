@@ -35,9 +35,10 @@ const ReviewList = styled.ul`
   margin: 0; padding: 0;
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
 const ReviewItem = styled.li`
-  margin : 5px; padding: 20px;
+  padding: 30px;
   text-align: center;
   border-bottom: var(--main-color-orange) solid 2px;
   &:hover {
