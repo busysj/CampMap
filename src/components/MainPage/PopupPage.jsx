@@ -6,7 +6,7 @@ import Safety from "../../assets/Safety.png";
 // import { Modal } from "antd";
 
 const Popup = styled.div`
-    position: absolute;
+    position: fixed;
     width: 350px;
     height: 500px;
     border-radius: 5px;
@@ -67,7 +67,7 @@ const PopupPage = (props) => {
                         X
                     </PopupButton>
                 </PopupHeader>
-                <PopupImage src={Safety} to="/"></PopupImage>
+                <PopupImage src={Safety} to="/" />
             </Popup>
         </Draggable>
     );
