@@ -60,7 +60,10 @@ const InputCampName = styled(Input)`
 
 const SelectAddress = styled(Select)`
   width: 100px;
+  margin-left: 15px;
 `;
+
+const SelectBox = styled.div``;
 
 const SearchButton = styled.button`
   width: 150px;
@@ -232,6 +235,109 @@ const districtData = {
     "청주시",
     "충주시",
   ],
+  충청남도: [
+    "계룡시",
+    "공주시",
+    "금산군",
+    "논산시",
+    "당진시",
+    "보령시",
+    "부여군",
+    "서산시",
+    "서천군",
+    "아산시",
+    "예산군",
+    "천안시",
+    "청양군",
+    "태안군",
+    "홍성군",
+  ],
+  전라북도: [
+    "고창군",
+    "군산시",
+    "김제시",
+    "남원시",
+    "무주군",
+    "부안군",
+    "순창군",
+    "완주군",
+    "익산시",
+    "임실군",
+    "장수군",
+    "전주시",
+    "정읍시",
+    "진안군",
+  ],
+  전라남도: [
+    "강진군",
+    "고흥군",
+    "곡성군",
+    "광양시",
+    "구례군",
+    "나주시",
+    "담양군",
+    "목포시",
+    "무안군",
+    "보성군",
+    "순천시",
+    "신안군",
+    "여수시",
+    "영광군",
+    "영암군",
+    "완도군",
+    "장성군",
+    "장흥군",
+    "진도군",
+    "함평군",
+    "해남군",
+    "화순군",
+  ],
+  경상북도: [
+    "경산시",
+    "경주시",
+    "고령군",
+    "구미시",
+    "군위군",
+    "김천시",
+    "문경시",
+    "봉화군",
+    "상주시",
+    "성주군",
+    "안동시",
+    "영덕군",
+    "영양군",
+    "영주시",
+    "영천시",
+    "예천군",
+    "울릉군",
+    "울진군",
+    "의성군",
+    "청도군",
+    "청송군",
+    "칠곡군",
+    "포항시",
+  ],
+  경상남도: [
+    "거제시",
+    "거창군",
+    "고성군",
+    "김해시",
+    "남해군",
+    "밀양시",
+    "사천시",
+    "산청군",
+    "양산시",
+    "의령군",
+    "진주시",
+    "창녕군",
+    "창원시",
+    "통영시",
+    "하동군",
+    "함안군",
+    "함양군",
+    "합천군",
+  ],
+  제주도: ["서귀포시", "제주시"],
 };
 
 const MapPage = () => {
@@ -265,16 +371,18 @@ const MapPage = () => {
           </FormBox>
           <FormBox>
             <InputTitle>지역</InputTitle>
-            <SelectAddress defaultValue="전체" onChange={handleCityChange}>
-              {cityData.map((city) => (
-                <Option key={city}>{city}</Option>
-              ))}
-            </SelectAddress>
-            <SelectAddress defaultValue="전체" onChange={onDistrictChange}>
-              {cities.map((district) => (
-                <Option key={district}>{district}</Option>
-              ))}
-            </SelectAddress>
+            <SelectBox>
+              <SelectAddress defaultValue="전체" onChange={handleCityChange}>
+                {cityData.map((city) => (
+                  <Option key={city}>{city}</Option>
+                ))}
+              </SelectAddress>
+              <SelectAddress defaultValue="전체" onChange={onDistrictChange}>
+                {cities.map((district) => (
+                  <Option key={district}>{district}</Option>
+                ))}
+              </SelectAddress>
+            </SelectBox>
           </FormBox>
         </Form>
         <SearchButton>검색</SearchButton>
