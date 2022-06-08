@@ -15,9 +15,10 @@ const Nav = styled.div`
   font-size: 1.2rem;
   position: sticky;
   box-shadow: 0 1px 8px gray;
+  z-index: 3;
 `;
 
-const NavLogo = styled.div`
+const NavLogo = styled(Link)`
   display: flex;
   font-size: 2rem;
   align-items: center;
@@ -71,6 +72,7 @@ const NavLink = styled(Link)`
   height: 80px;
   font-weight: 500;
   text-decoration: none;
+  color: black;
 
   &:hover {
     color: var(--main-color-orange);
