@@ -1,7 +1,9 @@
-import React from "react";
+import React ,{useState} from "react";
 import styled from "styled-components";
 import Logo from "../assets/Logo.png";
 import { Link } from "react-router-dom";
+import LogReg from './../components/LogReg';
+import OutsideClick from './../components/OutsideClick';
 
 const Nav = styled.div`
   background: #fff;
@@ -77,6 +79,12 @@ const NavLink = styled(Link)`
 `;
 
 const NavbarPage = () => {
+
+  const[openModal,setOpenModal] =useState(false)
+  const handleClose = () => {
+    setOpenModal(false);
+  }
+
   return (
     <Nav>
       <NavLogo to="/">
@@ -91,11 +99,16 @@ const NavbarPage = () => {
         <NavItem>
           <NavLink to="/">커뮤니티</NavLink>
         </NavItem>
-        <NavButton to="/">로그인</NavButton>
+        <NavButton to="/"  onClick={()=>setOpenModal(true)}>로그인</NavButton>
         {/* <NavButton to="/">로그아웃</NavButton> */}
         <NavButton to="/">회원가입</NavButton>
         {/* <NavButton to="/">마이페이지</NavButton> */}
       </NavMenu>
+
+      <OutsideClick onClickOutside={handleClose} >
+      <LogReg openModal={openModal} setOpenModal={setOpenModal} />
+      </OutsideClick> 
+
     </Nav>
   );
 };
