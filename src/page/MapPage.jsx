@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import { ZoomControl } from "react-kakao-maps-sdk";
 import { Input, Select } from "antd";
 import RotateLeftIcon from "@material-ui/icons/RotateLeft";
-import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
+import UseCurrentLocation from "../hooks/UseCurrentLocation";
+
 const { Option } = Select;
 
 const FindMap = styled.div`
@@ -77,6 +79,7 @@ const SearchButton = styled.button`
 `;
 
 const cityData = [
+  "전체",
   "서울시",
   "부산시",
   "대구시",
@@ -96,7 +99,9 @@ const cityData = [
   "제주도",
 ];
 const districtData = {
+  전체: [""],
   서울시: [
+    "전체",
     "강남구",
     "강동구",
     "강북구",
@@ -124,6 +129,7 @@ const districtData = {
     "중랑구",
   ],
   부산시: [
+    "전체",
     "강서구",
     "금정구",
     "기장군",
@@ -142,6 +148,7 @@ const districtData = {
     "해운대구",
   ],
   대구시: [
+    "전체",
     "남구",
     "달서구",
     "달성군",
@@ -153,6 +160,7 @@ const districtData = {
     "중구",
   ],
   인천시: [
+    "전체",
     "강화군",
     "계양구",
     "남구",
@@ -164,11 +172,12 @@ const districtData = {
     "옹진군",
     "중구",
   ],
-  광주시: ["광산구", "남구", "동구", "북구", "서구"],
-  대전시: ["대덕구", "동구", "서구", "유성구", "중구"],
-  울산시: ["남구", "동구", "북구", "울주군", "중구"],
-  세종시: ["금남면", "세종시", "소정면", "연서면", "전동면"],
+  광주시: ["전체", "광산구", "남구", "동구", "북구", "서구"],
+  대전시: ["전체", "대덕구", "동구", "서구", "유성구", "중구"],
+  울산시: ["전체", "남구", "동구", "북구", "울주군", "중구"],
+  세종시: ["전체", "금남면", "세종시", "소정면", "연서면", "전동면"],
   경기도: [
+    "전체",
     "가평군",
     "고양시",
     "과천시",
@@ -202,6 +211,7 @@ const districtData = {
     "화성시",
   ],
   강원도: [
+    "전체",
     "강릉시",
     "고성군",
     "동해시",
@@ -222,6 +232,7 @@ const districtData = {
     "횡성군",
   ],
   충청북도: [
+    "전체",
     "괴산군",
     "단양군",
     "보은군",
@@ -236,6 +247,7 @@ const districtData = {
     "충주시",
   ],
   충청남도: [
+    "전체",
     "계룡시",
     "공주시",
     "금산군",
@@ -253,6 +265,7 @@ const districtData = {
     "홍성군",
   ],
   전라북도: [
+    "전체",
     "고창군",
     "군산시",
     "김제시",
@@ -269,6 +282,7 @@ const districtData = {
     "진안군",
   ],
   전라남도: [
+    "전체",
     "강진군",
     "고흥군",
     "곡성군",
@@ -293,6 +307,7 @@ const districtData = {
     "화순군",
   ],
   경상북도: [
+    "전체",
     "경산시",
     "경주시",
     "고령군",
@@ -318,6 +333,7 @@ const districtData = {
     "포항시",
   ],
   경상남도: [
+    "전체",
     "거제시",
     "거창군",
     "고성군",
@@ -337,13 +353,25 @@ const districtData = {
     "함양군",
     "합천군",
   ],
-  제주도: ["서귀포시", "제주시"],
+  제주도: ["전체", "서귀포시", "제주시"],
+};
+
+const geolocationOptions = {
+  enableHighAccuracy: true,
+  timeout: 1000 * 60 * 1, // 1 min (1000 ms * 60 sec * 1 minute = 60 000ms)
+  maximumAge: 1000 * 3600 * 24, // 24 hour
 };
 
 const MapPage = () => {
   const [cities, setCities] = useState(districtData[cityData[0]]);
   const [district, setDistrict] = useState(districtData[cityData[0]]);
   const [level, setLevel] = useState();
+
+  const { location, error } = UseCurrentLocation(geolocationOptions);
+
+  useEffect(() => {
+    console.log("렌더링");
+  }, []);
 
   const handleCityChange = (value) => {
     setCities(districtData[value]);
@@ -388,16 +416,31 @@ const MapPage = () => {
         <SearchButton>검색</SearchButton>
       </Search>
 
-      <Map
-        center={{ lat: 33.450701, lng: 126.570667 }}
-        style={{ width: "60%", height: "500px" }}
-        onZoomChanged={(map) => setLevel(map.getLevel())}
-      >
-        <ZoomControl />
-        <MapMarker position={{ lat: 33.450701, lng: 126.570667 }}>
-          <div style={{ color: "#000" }}> Hello World</div>
-        </MapMarker>
-      </Map>
+      {location ? (
+        <Map
+          center={{ lat: location.latitude, lng: location.longitude }}
+          style={{ width: "60%", height: "500px" }}
+          onZoomChanged={(map) => setLevel(map.getLevel())}
+        >
+          <ZoomControl />
+          <MapMarker
+            position={{ lat: location.latitude, lng: location.longitude }}
+          >
+            <div style={{ color: "#000" }}> 현재 위치</div>
+          </MapMarker>
+        </Map>
+      ) : (
+        <Map
+          center={{ lat: 33.450701, lng: 126.570667 }}
+          style={{ width: "60%", height: "500px" }}
+          onZoomChanged={(map) => setLevel(map.getLevel())}
+        >
+          <ZoomControl />
+          <MapMarker position={{ lat: 33.450701, lng: 126.570667 }}>
+            <div style={{ color: "#000" }}> 카카오</div>
+          </MapMarker>
+        </Map>
+      )}
     </FindMap>
   );
 };
