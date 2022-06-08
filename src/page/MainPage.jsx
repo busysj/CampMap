@@ -9,10 +9,8 @@ const MainPage = () => {
   const [popup, setPopup] = useState(true);
   return (
     <div>
-      <h1>Main Page</h1>
       {popup ? <PopupPage onClose={setPopup} /> : null}
       <SearchPage />
-      <p>응애</p>
       <RecommendPage />
       <ReviewPage />
       <YoutubePage />

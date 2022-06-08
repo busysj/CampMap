@@ -106,7 +106,7 @@ const SeachPage = () => {
         <SearchBackgroundimg>
             <div className="search__backgroundimg">
                 <div style={{ padding: "1px" }}></div>
-                <form action="">
+                <form>
                     <SearchInput>
                         <span>
                             <input
