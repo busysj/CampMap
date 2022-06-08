@@ -11,7 +11,6 @@ const MainPage = () => {
     <div>
       {popup ? <PopupPage onClose={setPopup} /> : null}
       <SearchPage />
-      <p>응애</p>
       <RecommendPage />
       <ReviewPage />
       <YoutubePage />
