@@ -7,13 +7,6 @@ import SwiperTool, {
   SwiperSlide
 } from "../tools/SwiperTool";
 
-const camp = [ //이미지 api로 받아올것
-  require('../dummydata/camp1.jpg'),
-  require('../dummydata/camp2.jpg'),
-  require('../dummydata/camp3.jpg')];
-
-const list = ['리스트1','리스트2','리스트3','리스트4','리스트5'];
-
 const Review = styled.div`
   display : flex;
   width : 100%; height : 500px;
@@ -50,12 +43,20 @@ const BestReviewTitle = styled.h2`
   color: white;
   position: absolute; top: 10%;
   text-align: center;
+  visibility: hidden;
 `;
 const BestReviewContext = styled.p`
   width: 100%; height: 100%;
   position: absolute; top: 25%;
   text-align: center;
   color: white;
+  visibility: hidden;
+  &:hover{
+    visibility: visible;
+    ${BestReviewTitle} {
+      visibility: visible;
+    }
+  }
 `;
 const More = styled.a`
   text-decoration-line: none;
@@ -69,13 +70,19 @@ const More = styled.a`
 
 const ReviewPage = () => {
   const slide = SwiperTool();
+  const camp = [ //이미지 api로 받아올것
+  require('../dummydata/camp1.jpg'),
+  require('../dummydata/camp2.jpg'),
+  require('../dummydata/camp3.jpg')];
+
+  const list = ['리스트1','리스트2','리스트3','리스트4','리스트5'];
   
   function slideArray() {
     let array = [];
     for(let i=1; i<=camp.length; i++){
       array.push(
-        <SwiperSlide>
-        <BestReviewImg src={camp[0]} />{/* 삽입 이미지 */}
+      <SwiperSlide key={i}>
+        <BestReviewImg src={camp[i-1]} />{/* 삽입 이미지 */}
         <BestReviewTitle>{/* 삽입 제목 */}
           제목 {i}
         </BestReviewTitle>
@@ -91,7 +98,7 @@ const ReviewPage = () => {
     let array = [];
     for(let i=0; i<list.length; i++){
       array.push(
-        <ReviewItem>{list[i]}</ReviewItem>
+        <ReviewItem key={i}>{list[i]}</ReviewItem>
       );
     };
     return array;

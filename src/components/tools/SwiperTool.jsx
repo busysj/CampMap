@@ -18,7 +18,7 @@ const BestReviewContainer = styled.div`
 const BestReviewImg = styled.img`
   width: 100%; height: 100%;
   margin: 0;
-  filter: brightness(30%);
+  border-radius: 20px;
 `;
 const SwiperTool = () => {
   const [swiper, setswiper] = useState(null);
