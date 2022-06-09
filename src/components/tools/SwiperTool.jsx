@@ -10,6 +10,23 @@ const StyleSwiper = styled(Swiper)`
   position: relative;
   width: 100%;
   height: 100%;
+  .swiper-pagination-bullet{
+    background-color: var(--main-color-orange);
+  }
+  .swiper-button-next{
+    color: var(--main-color-orange);
+    opacity: 0.5;
+    &:hover{
+      opacity: 1;
+    }
+  }
+  .swiper-button-prev{
+    color: var(--main-color-orange);
+    opacity: 0.5;
+    &:hover{
+      opacity: 1;
+    }
+  }
 `;
 const BestReviewContainer = styled.div`
   width : 48%; height : 100%;
@@ -27,7 +44,7 @@ const SwiperTool = () => {
     navigation : true,
     spaceBetween : 100,
     slidesPerView : 1,
-    pagination : {clickable : true, styled : {color : 'var(--main-color-orange)'}},
+    pagination : {clickable : true},
     autoplay : {delay : 7000, disableOnInteraction : false},
     loop : true
   };

@@ -109,7 +109,7 @@ const NavbarPage = () => {
 
       <OutsideClick onClickOutside={handleClose} >
       <LogReg openModal={openModal} setOpenModal={setOpenModal} />
-      </OutsideClick> 
+      </OutsideClick>
 
     </Nav>
   );

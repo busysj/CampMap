@@ -5,6 +5,8 @@ import EmailIcon from "@material-ui/icons/Email";
 import styled from "styled-components";
 
 const FooterSection = styled.div`
+    width: 100%;
+    clear: both;
     height: 230px;
     padding: 30px 0px;
     background-color: var(--main-color-yellow-light);

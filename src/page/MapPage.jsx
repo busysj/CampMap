@@ -4,7 +4,7 @@ import { Map, MapMarker } from "react-kakao-maps-sdk";
 import { ZoomControl } from "react-kakao-maps-sdk";
 import { Input, Select } from "antd";
 import RotateLeftIcon from "@material-ui/icons/RotateLeft";
-import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
 const { Option } = Select;
 
 const FindMap = styled.div`
