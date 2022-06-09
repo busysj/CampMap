@@ -14,7 +14,6 @@ import Camping06 from "../../assets/Camping06.jpg";
 import button from "../../assets/button.png";
 
 const Container = styled.div`
-<<<<<<< HEAD
     width: 100%;
     height: 100vh;
     margin: 0 auto;
