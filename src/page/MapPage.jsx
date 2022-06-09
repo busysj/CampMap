@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import { ZoomControl } from "react-kakao-maps-sdk";
-import { Input, Select } from "antd";
+import { Input, Select, Tag } from "antd";
 import RotateLeftIcon from "@material-ui/icons/RotateLeft";
 import "antd/dist/antd.min.css";
 import UseCurrentLocation from "../hooks/UseCurrentLocation";
@@ -48,7 +48,7 @@ const FormBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 18px;
+  margin-bottom: 25px;
 `;
 
 const InputTitle = styled.div`
@@ -58,6 +58,15 @@ const InputTitle = styled.div`
 
 const InputCampName = styled(Input)`
   width: 350px;
+
+  &:hover {
+    border-color: var(--main-color-orange);
+  }
+
+  &:focus {
+    border-color: var(--main-color-orange);
+    box-shadow: 0 0 0 0.5px var(--main-color-orange);
+  }
 `;
 
 const SelectAddress = styled(Select)`
@@ -65,7 +74,25 @@ const SelectAddress = styled(Select)`
   margin-left: 15px;
 `;
 
-const SelectBox = styled.div``;
+const SelectBox = styled.div`
+  display: flex;
+`;
+
+const SearchTagList = styled.div`
+  margin: 15px;
+`;
+const SearchTag = styled(Tag)`
+  border-radius: 20px;
+  padding: 3px 18px;
+  margin: 5px;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--main-color-orange);
+    font-weight: bold;
+    border-color: var(--main-color-orange);
+  }
+`;
 
 const SearchButton = styled.button`
   width: 150px;
@@ -412,6 +439,22 @@ const MapPage = () => {
               </SelectAddress>
             </SelectBox>
           </FormBox>
+
+          <InputTitle>상세 검색</InputTitle>
+          <SearchTagList>
+            <SearchTag>전기</SearchTag>
+            <SearchTag>무선인터넷</SearchTag>
+            <SearchTag>장작판매</SearchTag>
+            <SearchTag>온수</SearchTag>
+            <SearchTag>트렘폴린</SearchTag>
+            <SearchTag>물놀이장</SearchTag>
+            <SearchTag>놀이터</SearchTag>
+            <SearchTag>산책로</SearchTag>
+            <SearchTag>운동장</SearchTag>
+            <SearchTag>운동시설</SearchTag>
+            <SearchTag>마트,편의점</SearchTag>
+            <SearchTag>애견동반</SearchTag>
+          </SearchTagList>
         </Form>
         <SearchButton>검색</SearchButton>
       </Search>
@@ -419,7 +462,7 @@ const MapPage = () => {
       {location ? (
         <Map
           center={{ lat: location.latitude, lng: location.longitude }}
-          style={{ width: "60%", height: "500px" }}
+          style={{ width: "60%", height: "700px" }}
           onZoomChanged={(map) => setLevel(map.getLevel())}
         >
           <ZoomControl />
@@ -432,7 +475,7 @@ const MapPage = () => {
       ) : (
         <Map
           center={{ lat: 33.450701, lng: 126.570667 }}
-          style={{ width: "60%", height: "500px" }}
+          style={{ width: "60%", height: "700px" }}
           onZoomChanged={(map) => setLevel(map.getLevel())}
         >
           <ZoomControl />
