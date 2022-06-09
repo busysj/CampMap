@@ -8,14 +8,15 @@ import 'swiper/components/pagination/pagination.scss';
 import button from '../../assets/button.png';
 
 const Container = styled.div`
-      width: 100%;
-      height: 100vh;
-      margin: 0 auto;
- 
+
+  width: 90%;
+  height: 45vh;
+  margin: 0 auto;
+  
     .swiper {
-      width: 100%;
-      height: 100%;
-      margin: 0 auto;
+    padding: 0;
+    
+    width: 525px;
     }
     .swiper-slide {
       background-color: ${(props) => props.theme.carouselColor};
@@ -23,11 +24,14 @@ const Container = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 0;
+      width: 0;
+      
       
       img{
         display: block;
-        width: 100%;
-        height: auto;
+        width: 70%;
+        height: 20vh;
         object-fit: cover;
       }
     }
@@ -77,21 +81,29 @@ const Container = styled.div`
 `;
 
 const Youtube = styled.iframe`
-      width: 100%;
-      height: 50vh;
+        width: 70%;
+        height: 23vh;
 `
 const Title = styled.h1`
-  
+  color:white;
+  display: inline-block;
+  padding: 10px;
+  font-weight: bold;
+  border-radius: 10px;
+  font-size: 30px;
+  margin: 30px 0 30px 30px;
+
+
 `
 const YoutubePage = () => {
 
   return <Container>
    <Title>캠핑안내채널</Title>
       <Swiper
-       slidesPerView={3}
-       spaceBetween={40}
-        navigation={true}
-        scrollbar={{
+       slidesPerView={4}
+       spaceBetween={0}
+       navigation={true}
+       scrollbar={{
           draggable: true,
         }}
         modules={[ Pagination, Navigation, Autoplay]}

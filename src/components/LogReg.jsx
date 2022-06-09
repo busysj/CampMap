@@ -7,7 +7,6 @@ import { faComment, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 
 const Taps = styled.div`
-     
       display: flex;
       flex-direction: column;
       position: relative;
@@ -17,9 +16,9 @@ const Taps = styled.div`
       background: white;
       text-align: center; 
       min-height: 400px;
-      z-index: 1;
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-      overflow:hidden;
+      
+
 ` 
 const XbtnP =styled.div`
       display: flex;

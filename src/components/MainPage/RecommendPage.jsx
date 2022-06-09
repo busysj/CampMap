@@ -14,29 +14,34 @@ import Camping06 from '../../assets/Camping06.jpg';
 import button from '../../assets/button.png';
 
 const Container = styled.div`
-  width: 100%;
-  height: 100vh;
+
+  width: 90%;
+  height: 45vh;
   margin: 0 auto;
+
+  .swiper-container{
+    width: 80%;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+.ddddd {
+  position: relative;
+}
 
   .swiper-button-next {
     width: 50px;
     height: 50px;
     background : url(${button});
-    background-position:-3px -4px;
     transform: scaleX(-1);
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     position: absolute;
-    top: 0;
-    bottom: 0;
-    margin: auto;
+    left: 90%;
+    right: auto;
     cursor: pointer;
     opacity: 0.8;
     z-index : 10;
     
-      &:after {
+    &:after {
         display:none;
       }
     
@@ -46,14 +51,10 @@ const Container = styled.div`
     height: 50px;
     border-radius: 50%;
     background : url(${button});
-    background-position:-3px -4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     position: absolute;
-    top: 0;
-    bottom: 0;
-    margin: auto;
+    left: auto;
+    right: 90%;
+    
     cursor: pointer;
     opacity: 0.8;
     z-index :10;
@@ -62,39 +63,45 @@ const Container = styled.div`
     }
    
   }
-  .swiper {
-    width: 100%;
-    height: 100%;
 
-  }
   .swiper-slide {
-    background-color: ${(props) => props.theme.carouselColor};
     align-items: center;
     justify-content: center;
     display: flex;
     flex-direction: column;
-    margin: 0 auto;
+    
     img{
       border-radius:24px 24px 0 0;
       display: block;
       width: 100%;
-      height: 40vh;
+      height: 20vh;
       object-fit: cover;
     }
   }
 
 `;
 const Title = styled.h1`
-  
+  color:white;
+  display: inline-block;
+  padding: 10px;
+  font-weight: bold;
+  border-radius: 10px;
+  font-size: 30px;
+  margin: 30px 0 20px 30px;
 `
 const CampingBack = styled.div`
-   background: black; 
+   background-color: black;
    width: 100%; 
+   height: 6vh;
    border-radius: 0 0 24px 24px;
+   align-items: center;
 `
 const CampingName = styled.h2`
   color:rgb(255, 198, 64);
   text-align:center;
+  margin-top: 20px;
+  justify-content: center;
+  font-size: 20px;
 `
 
 
@@ -102,13 +109,14 @@ const RecommendPage = () => {
   return (
   
     <Container>
-     <Title >캠핑장추천</Title>
+     <Title >캠핑장 추천</Title>
+     <div className='ddddd'>
       <Swiper
        slidesPerView={3}
        spaceBetween={30}
         autoplay={{
           delay: 2000,
-          disableOnInteraction: false,
+          disableOnInteraction: true,
         }}
        
         navigation={true}
@@ -163,7 +171,7 @@ const RecommendPage = () => {
         </SwiperSlide>
       
       </Swiper>
-    
+      </div>
     </Container>
   );
 };
