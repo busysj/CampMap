@@ -6,34 +6,35 @@ import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { faComment, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const Taps = styled.div`
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  width: 400px;
-  height: 600px;
-  margin: 0 auto;
-  background: white;
-  text-align: center;
-  min-height: 400px;
-  z-index: 1;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  overflow: hidden;
-`;
-const XbtnP = styled.div`
-  display: flex;
-  justify-content: end;
-  align-items: center;
-  flex-direction: row;
-`;
-const Xbtn = styled.button`
-  font-size: 25px;
-  box-sizing: border-box;
-  height: 10px;
-  width: 10px;
-  border: none;
-  background: white;
-  z-index: 2;
-`;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      width: 400px;
+      height: 600px;
+      margin: 0 auto;
+      background: white;
+      text-align: center; 
+      min-height: 400px;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      
+
+` 
+const XbtnP =styled.div`
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      flex-direction: row;
+`
+const Xbtn =styled.button`
+      font-size: 25px;
+      box-sizing: border-box;
+      height: 10px;
+      width: 10px;
+      border: none;
+      background: white;
+      z-index: 2;
+      
+`
 
 const TapList = styled.div`
   display: flex;

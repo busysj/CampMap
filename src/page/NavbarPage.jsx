@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Logo from "../assets/Logo.png";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import LogReg from "./../components/LogReg";
 import OutsideClick from "./../components/OutsideClick";
 import SearchIcon from "@material-ui/icons/Search";
@@ -81,8 +81,8 @@ const NavLink = styled(Link)`
     }
 `;
 
-//////////////////// 네브바 검색창 수정중입니다(start) -by.재라
-const SearchInput = styled.div`
+/* 재라 : 네브바 검색창 코드 CSS start - 0610 */
+const SearchInput1 = styled.div`
     min-width: 180px;
     span {
         width: 190px;
@@ -120,14 +120,20 @@ const SearchInput = styled.div`
 const BtnIcon = styled.div`
     font-size: small;
 `;
-
-//////////////////// 네브바 검색창 수정중입니다(end) -by.재라
+/* 재라 : 네브바 검색창 코드 CSS start - 0610 */
 
 const NavbarPage = () => {
     const [openModal, setOpenModal] = useState(false);
+    const location = useLocation();
+
     const handleClose = () => {
         setOpenModal(false);
+        console.log(location.pathname); // 네브바 주소접근 확인 콘솔 -by.재라
     };
+
+    // useEffect(() => (
+
+    // ),[window.location.href])
 
     return (
         <Nav>
@@ -152,23 +158,27 @@ const NavbarPage = () => {
                 <NavItem>
                     <NavLink to="/youtube">유튜브</NavLink>
                 </NavItem>
+                {/* 재라 : 네브바 검색창 코드start - 0610 */}
+                {location.pathname !== "/" ? (
+                    <form>
+                        <SearchInput1>
+                            <span>
+                                <input
+                                    type="text"
+                                    placeholder="검색어를 입력 해 주세요"
+                                />
+                                <button>
+                                    <BtnIcon>
+                                        <SearchIcon viewBox="0 0 25 25" />
+                                    </BtnIcon>
+                                    {/* className="btn_icon" */}
+                                </button>
+                            </span>
+                        </SearchInput1>
+                    </form>
+                ) : null}
+                {/* 재라 : 네브바 검색창 코드end - 0610 */}
 
-                <form>
-                    <SearchInput>
-                        <span>
-                            <input
-                                type="text"
-                                placeholder="검색어를 입력 해 주세요"
-                            />
-                            <button>
-                                <BtnIcon>
-                                    <SearchIcon viewBox="0 0 25 25" />
-                                </BtnIcon>
-                                {/* className="btn_icon" */}
-                            </button>
-                        </span>
-                    </SearchInput>
-                </form>
                 <NavButton to="/" onClick={() => setOpenModal(true)}>
                     로그인
                 </NavButton>
