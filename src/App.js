@@ -4,8 +4,8 @@ import MainPage from "./page/MainPage";
 import NavbarPage from "./page/NavbarPage";
 import FooterPage from "./page/FooterPage";
 import { Route, Routes } from "react-router-dom";
-import MapPage from "./page/MapPage";
 import Community from "./components/CommunityPage/Community";
+import MapPage from "./page/MapPage";
 import SearchResultList from "./components/SearchResultList";
 
 function App() {
