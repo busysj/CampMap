@@ -86,6 +86,8 @@ const NavbarPage = () => {
     setOpenModal(false);
   };
 
+  const [typeIndex, setTypeIndex] = useState(0)
+
   return (
     <Nav>
       <NavLogo to="/">
@@ -100,16 +102,17 @@ const NavbarPage = () => {
         <NavItem>
           <NavLink to="/community">커뮤니티</NavLink>
         </NavItem>
-        <NavButton to="/" onClick={() => setOpenModal(true)}>
+        <NavButton to="/" onClick={() => {setTypeIndex(0); setOpenModal(true)}}>
           로그인
         </NavButton>
         {/* <NavButton to="/">로그아웃</NavButton> */}
-        <NavButton to="/">회원가입</NavButton>
+        <NavButton to="/" onClick={()=>{setTypeIndex(1); setOpenModal(true)}}>
+          회원가입</NavButton>
         {/* <NavButton to="/">마이페이지</NavButton> */}
       </NavMenu>
 
       <OutsideClick onClickOutside={handleClose}>
-        <LogReg openModal={openModal} setOpenModal={setOpenModal} />
+        <LogReg openModal={openModal} setOpenModal={setOpenModal} index={typeIndex} setIndex={setTypeIndex} />
       </OutsideClick>
     </Nav>
   );

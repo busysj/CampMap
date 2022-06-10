@@ -194,8 +194,7 @@ const Google = styled.button`
   cursor: pointer;
 `;
 
-const LogReg = ({ openModal, setOpenModal }) => {
-  const [index, setIndex] = useState(0);
+const LogReg = ({ openModal, setOpenModal, index, setIndex }) => {
 
   if (!openModal) return null;
 
