@@ -5,8 +5,12 @@ import NavbarPage from "./page/NavbarPage";
 import FooterPage from "./page/FooterPage";
 import { Route, Routes } from "react-router-dom";
 import Community from "./components/CommunityPage/Community";
-import MapPage from "./page/MapPage";
+
+import MapPage from './page/MapPage';
+import CampingNav from './components/MainPage/CampingNav';
+
 import SearchResultList from "./components/SearchResultList";
+
 
 function App() {
   return (
@@ -18,6 +22,7 @@ function App() {
           <Route index element={<SearchResultList />}></Route>
         </Route>
         <Route path="/community" element={<Community />}></Route>
+        <Route path="/youtube" element={<CampingNav />}></Route>
       </Routes>
       <FooterPage />
     </div>

@@ -96,7 +96,7 @@ const CampingNav = () => {
     ])
   return (
     <Videos>
-            <Title>캠핑안내채널</Title>
+            <Title>유튜브페이지</Title>
             <Search>
              <Input type="text" placeholder='검색' />
             <FontAwesomeIcon icon={faMagnifyingGlass} style={{height: "17px", fontSize:"16px" ,color:"white"
