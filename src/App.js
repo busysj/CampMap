@@ -6,6 +6,7 @@ import FooterPage from "./page/FooterPage";
 import { Route, Routes } from "react-router-dom";
 import Community from "./components/CommunityPage/Community";
 import MapPage from './page/MapPage';
+import CampingNav from './components/MainPage/CampingNav';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" element={<MainPage />}></Route>
         <Route path="/map" element={<MapPage />}></Route>
         <Route path="/community" element={<Community />}></Route>
+        <Route path="/youtube" element={<CampingNav />}></Route>
       </Routes>
       <FooterPage />
     </div>
