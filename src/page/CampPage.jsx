@@ -1,10 +1,12 @@
 import styled from "styled-components";
+import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import LanguageIcon from '@material-ui/icons/Language'
 import DirectionIcon from '@material-ui/icons/Directions'
 import ShareIcon from '@material-ui/icons/Share'
 
 const CampBody = styled.div`
   display: flex;
+  margin: 50px;
 `
 const CampContext = styled.div`
   width: 60%; height: 500px;
@@ -23,7 +25,7 @@ const CampContext = styled.div`
     display: flex;
     div{
       width: 120px; height: 120px;
-      padding: 30px; margin: 50px;
+      padding: 30px; margin: 60px;
       background: var(--main-color-orange);
       border-radius: 120px;
       &:hover{
@@ -33,14 +35,12 @@ const CampContext = styled.div`
   }
   h3 {
     margin-top: 30px; margin-bottom: 30px;
-    background-color: var(--main-color-orange-light);
   }
 `;
-const MapContainer = styled.div`
+const MapContainer = styled(Map)`
   width: 40%; height: 470px;
-  margin: 30px;
+  margin-left: 30px;
   box-shadow: 3px 3px 10px black;
-  background-color: var(--main-color-orange);
   display: block;
 `;
 const AbleContainer = styled.div`
@@ -78,8 +78,11 @@ const CampPage = () => {
           </div>
         </div>
       </CampContext>
-      <MapContainer>
-      <h2>MAP</h2>
+      <MapContainer center={{ lat: 33.450701, lng: 126.570667 }}
+        style={{ width: "60%", height: "500px" }}>
+        <MapMarker position={{ lat: 33.450701, lng: 126.570667 }}>
+          <div style={{ color: "#000" }}> Hello World</div>
+        </MapMarker>
       </MapContainer>
     </CampBody>
     <AbleContainer>
