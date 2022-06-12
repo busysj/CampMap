@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Logo from "../assets/Logo.png";
 import { Link, useLocation } from "react-router-dom";
@@ -126,6 +126,8 @@ const NavbarPage = () => {
     const [openModal, setOpenModal] = useState(false);
     const location = useLocation();
 
+    const [typeIndex, setTypeIndex] = useState(0)
+
     const handleClose = () => {
         setOpenModal(false);
         console.log(location.pathname); // 네브바 주소접근 확인 콘솔 -by.재라
@@ -179,16 +181,16 @@ const NavbarPage = () => {
                 ) : null}
                 {/* 재라 : 네브바 검색창 코드end - 0610 */}
 
-                <NavButton to="/" onClick={() => setOpenModal(true)}>
+                <NavButton to="/" onClick={() => {setTypeIndex(0); setOpenModal(true)}}>
                     로그인
                 </NavButton>
                 {/* <NavButton to="/">로그아웃</NavButton> */}
-                <NavButton to="/">회원가입</NavButton>
+                <NavButton to="/" onClick={() => {setTypeIndex(1); setOpenModal(true)}}>회원가입</NavButton>
                 {/* <NavButton to="/">마이페이지</NavButton> */}
             </NavMenu>
 
             <OutsideClick onClickOutside={handleClose}>
-                <LogReg openModal={openModal} setOpenModal={setOpenModal} />
+                <LogReg openModal={openModal} setOpenModal={setOpenModal} index={typeIndex} setIndex={setTypeIndex}/>
             </OutsideClick>
         </Nav>
     );
