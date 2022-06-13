@@ -4,7 +4,7 @@ import Logo from "../assets/Logo.png";
 import { Link, useLocation } from "react-router-dom";
 import LogReg from "./../components/LogReg";
 import OutsideClick from "./../components/OutsideClick";
-import SearchIcon from "@material-ui/icons/Search";
+import SearchIcon from "@mui/icons-material/Search";
 
 const Nav = styled.div`
     background: #fff;
