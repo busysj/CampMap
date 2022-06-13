@@ -1,5 +1,5 @@
 import React from "react";
-import SearchIcon from "@material-ui/icons/Search";
+import SearchIcon from "@mui/icons-material/Search";
 import styled from "styled-components";
 import backgroundImg from "../../assets/MainBackgroundImg.jpg";
 

@@ -28,11 +28,7 @@ const StyleSwiper = styled(Swiper)`
     }
   }
 `;
-const BestReviewContainer = styled.div`
-  width : 48%; height : 100%;
-  margin-left : 10px; margin-right : 10px;
-`;
-const BestReviewImg = styled.img`
+const CampImg = styled.img`
   width: 100%; height: 100%;
   margin: 0;
   border-radius: 20px;
@@ -54,5 +50,5 @@ const SwiperTool = () => {
   };
 };
 
-export {StyleSwiper, BestReviewImg, SwiperSlide, BestReviewContainer}
+export {StyleSwiper, CampImg, SwiperSlide}
 export default SwiperTool;
