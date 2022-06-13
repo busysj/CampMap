@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import { ZoomControl } from "react-kakao-maps-sdk";
-import { Outlet } from "react-router-dom";
 import { Input, Select, Tag } from "antd";
 import RotateLeftIcon from "@mui/icons-material/RotateLeft";
 import "antd/dist/antd.min.css";
 import UseCurrentLocation from "../hooks/UseCurrentLocation";
+import axios from "axios";
+import SearchResultList from "../components/SearchResultList";
 
 const { Option } = Select;
 
@@ -411,6 +412,35 @@ const MapPage = () => {
   const onDistrictChange = (value) => {
     setDistrict(value);
   };
+
+  const [allData, setAllData] = useState([]);
+  const [filteredData, setFilteredData] = useState(allData);
+  const [searchResult, setSearchResult] = useState("");
+
+  useEffect(() => {
+    axios(
+      "http://api.visitkorea.or.kr/openapi/service/rest/GoCamping/basedList?ServiceKey=DBx1v7ble2j4MNFWznYeeM5wQYthH5QTVeMOTXn5H%2FxvLP7Bbaa8IZvKxHq8r0425fyEMXvrs32EFDRIALvz5A%3D%3D&numOfRows=100&pageNo=1&MobileOS=ETC&MobileApp=TestApp&_type=json"
+    )
+      .then((response) => {
+        console.log(response.data.response.body.items.item);
+        setAllData(response.data.response.body.items.item);
+        setFilteredData(response.data.response.body.items.item);
+      })
+      .catch((error) => {
+        console.log("Error getting fake data: " + error);
+      });
+  }, []);
+
+  const handleSearch = (e) => {
+    let value = e.target.value.toLowerCase();
+    let result = [];
+    result = allData.filter((data) => {
+      return data.addr1.search(value) !== -1;
+    });
+    setFilteredData(result);
+    setSearchResult(value);
+  };
+
   return (
     <FindMap>
       {!search ? (
@@ -426,7 +456,10 @@ const MapPage = () => {
           <Form>
             <FormBox>
               <InputTitle>캠핑장 이름</InputTitle>
-              <InputCampName placeholder="캠핑장 이름을 검색하세요" />
+              <InputCampName
+                placeholder="캠핑장 이름을 검색하세요"
+                onChange={(e) => handleSearch(e)}
+              />
             </FormBox>
             <FormBox>
               <InputTitle>지역</InputTitle>
@@ -467,11 +500,24 @@ const MapPage = () => {
         <Search>
           <Header>
             캠핑장 조회
-            <ResetButton onClick={() => setSearch(false)}>
+            {searchResult ? (
+              <InputTitle>
+                "{searchResult}" 검색 결과 ({filteredData.length})
+              </InputTitle>
+            ) : (
+              <InputTitle>전체 결과 ({filteredData.length})</InputTitle>
+            )}
+            <ResetButton
+              onClick={() => {
+                setSearch(false);
+                setFilteredData(allData);
+                setSearchResult("");
+              }}
+            >
               뒤로 가기
             </ResetButton>
           </Header>
-          <Outlet />
+          <SearchResultList filteredData={filteredData} />
         </Search>
       )}
 

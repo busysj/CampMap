@@ -15,8 +15,27 @@
   border-color: var(--main-color-orange) !important;
 }
 
-.ant-select-selector:focus {
-  box-shadow: 0 0 0 2px var(--main-color-orange) !important;
+.ant-select-focused {
+  border-color: var(--main-color-orange);
+  box-shadow: 0 0 0 0.5px var(--main-color-orange);
+  border-radius: 2px;
+}
+
+.ant-pagination-item:hover {
+  color: var(--main-color-orange) !important;
+  border-color: var(--main-color-orange) !important;
+  font-weight: bold;
+}
+
+.ant-pagination-item-active {
+  color: var(--main-color-orange) !important;
+  border-color: var(--main-color-orange) !important;
+  font-weight: bold;
+}
+
+.ant-pagination-item-link:hover {
+  color: var(--main-color-orange) !important;
+  border-color: var(--main-color-orange) !important;
 }
 
 h1 {
