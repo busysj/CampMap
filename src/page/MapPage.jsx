@@ -4,7 +4,7 @@ import { Map, MapMarker } from "react-kakao-maps-sdk";
 import { ZoomControl } from "react-kakao-maps-sdk";
 import { Outlet } from "react-router-dom";
 import { Input, Select, Tag } from "antd";
-import RotateLeftIcon from "@material-ui/icons/RotateLeft";
+import RotateLeftIcon from "@mui/icons-material/RotateLeft";
 import "antd/dist/antd.min.css";
 import UseCurrentLocation from "../hooks/UseCurrentLocation";
 
@@ -55,6 +55,7 @@ const FormBox = styled.div`
 const InputTitle = styled.div`
   font-size: 15px;
   line-height: 25px;
+  font-weight: bold;
 `;
 
 const InputCampName = styled(Input)`
