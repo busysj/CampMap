@@ -67,7 +67,6 @@ const AbleContainer = styled.div`
   .icon-able{
     color: white;
     font-size: 10em;
-    align-content: space-around;
   }
 
 `;
