@@ -55,6 +55,7 @@ const FormBox = styled.div`
 const InputTitle = styled.div`
   font-size: 15px;
   line-height: 25px;
+  font-weight: bold;
 `;
 
 const InputCampName = styled(Input)`
