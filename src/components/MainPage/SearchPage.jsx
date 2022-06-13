@@ -38,6 +38,7 @@ const SearchInput = styled.div`
     margin-top: 200px;
     margin-left: auto;
     margin-right: auto;
+    min-width: 480px;
     span {
         width: 470px;
         height: 45px;
@@ -52,14 +53,15 @@ const SearchInput = styled.div`
     }
     input {
         width: 400px;
-        height: 31px;
+        height: 44px;
         border: none;
         line-height: 44px;
-        padding: 13px 0 0 10px;
+        padding: 2px 0 0 10px;
         border-radius: 20px 0 0 20px;
         font-size: 20px;
         z-index: -5;
         outline: none;
+        color: black;
     }
     button {
         border: none;
@@ -115,7 +117,7 @@ const SeachPage = () => {
                             />
                             <button>
                                 <BtnIcon>
-                                    <SearchIcon viewBox="3 3 15 15" />
+                                    <SearchIcon viewBox="3 3 25 25" />
                                 </BtnIcon>
                                 {/* className="btn_icon" */}
                             </button>
