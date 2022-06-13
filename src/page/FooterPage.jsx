@@ -1,7 +1,7 @@
 import React from "react";
 import Logo from "../assets/Logo.png";
-import PhoneIphoneIcon from "@material-ui/icons/PhoneIphone";
-import EmailIcon from "@material-ui/icons/Email";
+import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
+import EmailIcon from "@mui/icons-material/Email";
 import styled from "styled-components";
 
 const FooterSection = styled.div`

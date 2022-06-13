@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
-import LanguageIcon from '@material-ui/icons/Language'
-import DirectionIcon from '@material-ui/icons/Directions'
-import ShareIcon from '@material-ui/icons/Share'
+import LanguageIcon from '@mui/icons-material/Language';
+import DirectionsIcon from '@mui/icons-material/Directions';
+import ShareIcon from '@mui/icons-material/Share';
+import Car from '@mui/icons-material/DirectionsCarFilledOutlined';
 
 const CampBody = styled.div`
   display: flex;
@@ -44,8 +45,14 @@ const MapContainer = styled(Map)`
   display: block;
 `;
 const AbleContainer = styled.div`
-  width: 100%; height: 400px;
+  height: 400px;
+  margin: 50px;
   background-color: var(--main-color-orange);
+  text-align: center;
+  box-shadow: 3px 3px 10px black;
+  h2{
+    color: white;
+  }
 `
 
 
@@ -69,7 +76,7 @@ const CampPage = () => {
             <p>웹사이트</p>
           </div>
           <div>
-            <DirectionIcon fontSize="large"/>
+            <DirectionsIcon fontSize="large"/>
             <p>길찾기</p>
           </div>
           <div>
@@ -86,7 +93,8 @@ const CampPage = () => {
       </MapContainer>
     </CampBody>
     <AbleContainer>
-      <h2>제공가능한 시설(아이콘)</h2>
+      <h2>제공가능한 시설</h2>
+      <Car/>
     </AbleContainer>
   </div>
 
