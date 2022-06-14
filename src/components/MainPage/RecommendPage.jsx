@@ -1,16 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper";
 import "swiper/swiper.scss";
 import "swiper/components/navigation/navigation.scss";
 import "swiper/components/pagination/pagination.scss";
-import Camping01 from "../../assets/Camping01.jpg";
-import Camping02 from "../../assets/Camping02.jpg";
-import Camping03 from "../../assets/Camping03.jpg";
-import Camping04 from "../../assets/Camping04.jpg";
-import Camping05 from "../../assets/Camping05.jpg";
-import Camping06 from "../../assets/Camping06.jpg";
 
 const Title = styled.h1`
     color: white;
@@ -80,10 +74,35 @@ const CampingName = styled.h2`
 `;
 
 const RecommendPage = () => {
+    const [recomArr, setrecomArr] = useState([
+        {
+            img : require('../../assets/Camping01.jpg'),
+            title : '달천공원오토캠핑장'
+        },
+        {
+            img : require('../../assets/Camping02.jpg'),
+            title : '달콤한캠핑장'
+        },
+        {
+            img : require('../../assets/Camping03.jpg'),
+            title : '담양대나무골야영장'
+        },
+        {
+            img : require('../../assets/Camping04.jpg'),
+            title : '당진해양캠핑공원'
+        },
+        {
+            img : require('../../assets/Camping05.jpg'),
+            title : '마음이머무는곳'
+        },
+        {
+            img : require('../../assets/Camping06.jpg'),
+            title : '마이산풍혈냉천캠핑장'
+        },
+    ]);
     return (
         <Container>
             <Title>캠핑장 추천</Title>
-            
                 <Swiper
                     slidesPerView={3}
                     spaceBetween={35}
@@ -97,43 +116,18 @@ const RecommendPage = () => {
                     }}
                     modules={[Pagination, Navigation, Autoplay]}
                     className="mySwiper"
+                    loop={true}
                 >
-                    <SwiperSlide>
-                        <img src={Camping01} alt="CapmingName" />
-                        <CampingBack>
-                            <CampingName> 달천공원오토캠핑장</CampingName>
-                        </CampingBack>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <img src={Camping02} alt="CapmingName" />
-                        <CampingBack>
-                            <CampingName> 달콤한캠핑장</CampingName>
-                        </CampingBack>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <img src={Camping03} alt="CapmingName" />
-                        <CampingBack>
-                            <CampingName> 담양대나무골야영장</CampingName>
-                        </CampingBack>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <img src={Camping04} alt="CapmingName" />
-                        <CampingBack>
-                            <CampingName> 당진해양캠핑공원</CampingName>
-                        </CampingBack>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <img src={Camping05} alt="CapmingName" />
-                        <CampingBack>
-                            <CampingName> 마음이머무는곳</CampingName>
-                        </CampingBack>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <img src={Camping06} alt="CapmingName" />
-                        <CampingBack>
-                            <CampingName> 마이산풍혈냉천캠핑장</CampingName>
-                        </CampingBack>
-                    </SwiperSlide>
+                    {
+                       recomArr.map((num, index) => (
+                        <SwiperSlide key={index}>
+                            <img src={num.img} alt='Camping'/>
+                            <CampingBack>
+                                <CampingName>{num.title}</CampingName>
+                            </CampingBack>
+                        </SwiperSlide>
+                       )) 
+                    }
                 </Swiper>
         </Container>
     );
