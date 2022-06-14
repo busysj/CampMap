@@ -33,7 +33,7 @@ const Reservation = styled.a`
 
   &:hover {
     color: var(--main-color-orange);
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     font-weight: 900;
   }
 `;
