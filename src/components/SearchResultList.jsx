@@ -1,12 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { List } from "antd";
 import styled from "styled-components";
-import Campsite from "../assets/Camping06.jpg";
+// import Campsite from "../assets/Camping06.jpg";
+import defaultImage from "../assets/default-Image.png";
+import axios from "axios";
 
 const SearchBox = styled.div`
   height: 700px;
   padding: 15px;
   overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--main-color-orange-light);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #faecd3;
+  }
 `;
 
 const SearchList = styled(List)`
@@ -14,16 +29,38 @@ const SearchList = styled(List)`
   /* text-align: center; */
 `;
 
-const data = Array.from({
-  length: 50,
-}).map((_, i) => ({
-  href: "",
-  title: `캠핑장 ${i + 1}`,
-  address: `주소 ${i + 1} > 주소 > 주소`,
-  callnumber: "000-0000-0000",
-}));
+const Reservation = styled.a`
+  float: right;
+`;
 
 const SearchResultList = () => {
+  const [allData, setAllData] = useState([]);
+  const [filteredData, setFilteredData] = useState(allData);
+
+  // const handleSearch = (event) => {
+  //   let value = event.target.value.toLowerCase();
+  //   let result = [];
+  //   console.log(value);
+  //   result = allData.filter((data) => {
+  //     return data.addr1.search(value) !== -1;
+  //   });
+  //   setFilteredData(result);
+  // };
+
+  useEffect(() => {
+    axios(
+      "http://api.visitkorea.or.kr/openapi/service/rest/GoCamping/basedList?ServiceKey=DBx1v7ble2j4MNFWznYeeM5wQYthH5QTVeMOTXn5H%2FxvLP7Bbaa8IZvKxHq8r0425fyEMXvrs32EFDRIALvz5A%3D%3D&numOfRows=100&pageNo=1&MobileOS=ETC&MobileApp=TestApp&_type=json"
+    )
+      .then((response) => {
+        console.log(response.data.response.body.items.item);
+        setAllData(response.data.response.body.items.item);
+        setFilteredData(response.data.response.body.items.item);
+      })
+      .catch((error) => {
+        console.log("Error getting fake data: " + error);
+      });
+  }, []);
+
   return (
     <SearchBox>
       <SearchList
@@ -35,18 +72,25 @@ const SearchResultList = () => {
           },
           pageSize: 5,
         }}
-        dataSource={data}
+        dataSource={allData}
         renderItem={(item) => (
           <List.Item
-            key={item.title}
-            extra={<img width={200} alt="캠핑장 사진" src={Campsite} />}
+            key={item.index}
+            extra={
+              <img
+                width={200}
+                height={137}
+                alt="캠핑장 사진"
+                src={item.firstImageUrl ? item.firstImageUrl : defaultImage}
+              />
+            }
           >
             <List.Item.Meta
-              title={<a href={item.href}>{item.title}</a>}
-              description={item.address}
+              title={<a href={item.homepage}>{item.facltNm}</a>}
+              description={item.addr1}
             />
-            {item.callnumber} <br />
-            <button>예약</button>
+            {item.tel} <br />
+            <Reservation href={item.resveUrl}>예약하러 가기</Reservation>
           </List.Item>
         )}
       />

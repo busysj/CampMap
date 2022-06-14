@@ -7,10 +7,18 @@
   --main-color-yellow-light: #fffbab;
 }
 
- /*body {
+/* body {
   margin: 0 3%;
-}*/
+}  */
+
+.ant-select-selector:hover {
+  border-color: var(--main-color-orange) !important;
+}
+
+.ant-select-selector:focus {
+  box-shadow: 0 0 0 2px var(--main-color-orange) !important;
+}
+
 h1 {
   background-color: var(--main-color-orange);
 }
-
