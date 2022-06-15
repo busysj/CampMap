@@ -19,15 +19,15 @@ const list = ["리스트1", "리스트2", "리스트3", "리스트4", "리스트
 
 const Review = styled.div`
     display: flex;
-    width: 100%;
+    width: 1600px;
     height: 500px;
+    margin: auto;
 `;
 
 const ReviewListContainer = styled.div`
-    width: 50%;
+    width: 40%;
     height: 100%;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin: auto;
 `;
 
 /*const VerticalLine = styled.div` 세로선은 일단 보류

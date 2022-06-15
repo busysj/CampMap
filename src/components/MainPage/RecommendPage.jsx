@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import styled from "styled-components";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper";
@@ -74,7 +73,7 @@ const CampingName = styled.h2`
 `;
 
 const RecommendPage = () => {
-    const [recomArr, setrecomArr] = useState([
+    const recomArr = [
         {
             img : require('../../assets/Camping01.jpg'),
             title : '달천공원오토캠핑장'
@@ -99,17 +98,18 @@ const RecommendPage = () => {
             img : require('../../assets/Camping06.jpg'),
             title : '마이산풍혈냉천캠핑장'
         },
-    ]);
+    ];
     return (
         <Container>
             <Title>캠핑장 추천</Title>
                 <Swiper
                     slidesPerView={3}
-                    spaceBetween={35}
+                    spaceBetween={100}
                     autoplay={{
-                        delay: 2000,
+                        delay : 100,
                         disableOnInteraction: true,
                     }}
+                    speed={6000}
                     navigation={true}
                     scrollbar={{
                         draggable: true,

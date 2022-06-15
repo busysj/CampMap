@@ -31,7 +31,7 @@ const StyleSwiper = styled(Swiper)`
 `;
 const BestReviewContainer = styled.div`
   width : 48%; height : 100%;
-  margin-left : 10px; margin-right : 10px;
+  margin: auto;
 `;
 const BestReviewImg = styled.img`
   width: 100%; height: 100%;
@@ -48,7 +48,8 @@ const SwiperTool = () => {
     slidesPerView : 1,
     pagination : {clickable : true},
     autoplay : {delay : 7000, disableOnInteraction : false},
-    loop : true
+    loop : true,
+    speed : 2000
   };
   SwiperCore.use([Navigation, Pagination, Autoplay]);
   return{

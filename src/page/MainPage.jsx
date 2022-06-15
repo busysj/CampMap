@@ -7,6 +7,7 @@ import YoutubePage from "../components/MainPage/YoutubePage";
 
 const MainPage = () => {
   const [popup, setPopup] = useState(true);
+
   return (
     <div>
       {popup ? <PopupPage onClose={setPopup} /> : null}

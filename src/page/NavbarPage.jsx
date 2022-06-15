@@ -10,7 +10,7 @@ const Nav = styled.div`
   background: #fff;
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  width: 1920px;
   height: 72px;
   top: 0;
   font-size: 1.2rem;
@@ -35,37 +35,41 @@ const NavLogo = styled(Link)`
   }
 `;
 
-const NavMenu = styled.ul`
+const NavMenu = styled.div`
   display: flex;
-  align-items: center;
+  right: 100%;
   list-style: none;
   margin: 0 80px 0 0;
 `;
 
-const NavItem = styled.li`
-  align-items: center;
+const NavItem = styled.div`
+  display: flex;
+  position: absolute; right: 18%;
 `;
 
-const NavButton = styled.button`
-  background: var(--main-color-orange);
-  display: flex;
-  align-items: center;
-  font-size: 15px;
-  padding: 12px;
-  margin: 5px;
-  border-radius: 8px;
-  cursor: pointer;
-  color: #fff;
-  border: none;
-  font-weight: 500;
+const NavButtonContainer = styled.div`
+  position: absolute; right: 5%;
+  button{
+    background: var(--main-color-orange);
+    align-items: center;
+    font-size: 15px;
+    padding: 12px;
+    margin: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #fff;
+    border: none;
+    font-weight: 500;
 
-  &:hover {
-    background: var(--main-color-orange-light);
+    &:hover {
+      background: var(--main-color-orange-light);
+    }
   }
 `;
 
 const NavLink = styled(Link)`
   display: flex;
+  margin: 0 30px 0 30px;
   padding: 0 15px;
   font-size: 15px;
   align-items: center;
@@ -147,17 +151,9 @@ const NavbarPage = () => {
       <NavMenu>
         <NavItem>
           <NavLink to="/map">지도</NavLink>
-        </NavItem>
-        <NavItem>
           <NavLink to="/community">커뮤니티</NavLink>
-        </NavItem>
-        <NavItem>
           <NavLink to="/recommend">캠핑장추천</NavLink>
-        </NavItem>
-        <NavItem>
           <NavLink to="/review">리뷰</NavLink>
-        </NavItem>
-        <NavItem>
           <NavLink to="/youtube">유튜브</NavLink>
         </NavItem>
         {/* 재라 : 네브바 검색창 코드start - 0610 */}
@@ -177,28 +173,29 @@ const NavbarPage = () => {
           </form>
         ) : null}
         {/* 재라 : 네브바 검색창 코드end - 0610 */}
-
-        <NavButton
-          to="/"
-          onClick={() => {
-            setTypeIndex(0);
-            setOpenModal(true);
-          }}
-        >
-          로그인
-        </NavButton>
-        {/* <NavButton to="/">로그아웃</NavButton> */}
-        <NavButton
-          to="/"
-          onClick={() => {
-            setTypeIndex(1);
-            setOpenModal(true);
-          }}
-        >
-          회원가입
-        </NavButton>
-        {/* <NavButton to="/">마이페이지</NavButton> */}
-      </NavMenu>
+        <NavButtonContainer>
+          <button
+            to="/"
+            onClick={() => {
+              setTypeIndex(0);
+              setOpenModal(true);
+            }}
+          >
+            로그인
+          </button>
+          {/* <NavButton to="/">로그아웃</NavButton> */}
+          <button
+            to="/"
+            onClick={() => {
+              setTypeIndex(1);
+              setOpenModal(true);
+            }}
+          >
+            회원가입
+          </button>
+          {/* <NavButton to="/">마이페이지</NavButton> */}
+        </NavButtonContainer>
+        </NavMenu>
 
       <OutsideClick onClickOutside={handleClose}>
         <LogReg
