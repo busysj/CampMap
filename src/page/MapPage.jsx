@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Map, MapMarker } from "react-kakao-maps-sdk";
-import { ZoomControl } from "react-kakao-maps-sdk";
+import { CustomOverlayMap, Map, MapMarker, useMap } from "react-kakao-maps-sdk";
+import { ZoomControl, MapTypeControl } from "react-kakao-maps-sdk";
 import { Input, Select, Tag } from "antd";
 import RotateLeftIcon from "@mui/icons-material/RotateLeft";
 import "antd/dist/antd.min.css";
 import UseCurrentLocation from "../hooks/UseCurrentLocation";
 import axios from "axios";
 import SearchResultList from "../components/SearchResultList";
+import defaultImage from "../assets/default-Image.png";
 
 const { Option } = Select;
 
@@ -106,6 +107,111 @@ const SearchButton = styled.button`
   border-radius: 3px;
   cursor: pointer;
   float: right;
+`;
+
+const Wrap = styled.div`
+  position: absolute;
+  left: 0;
+  bottom: 40px;
+  width: 288px;
+  height: 132px;
+  margin-left: -141px;
+  text-align: left;
+  overflow: hidden;
+  font-size: 12px;
+  font-family: "Malgun Gothic", dotum, "돋움", sans-serif;
+  line-height: 1.5;
+
+  * {
+    padding: 0;
+    margin: 0;
+  }
+`;
+
+const Info = styled.div`
+  width: 286px;
+  height: 120px;
+  border-radius: 5px;
+  border-bottom: 2px solid #ccc;
+  border-right: 1px solid #ccc;
+  overflow: hidden;
+  background: #fff;
+
+  .title {
+    padding: 5px 0 0 10px;
+    height: 35px;
+    background: #eee;
+    border-bottom: 1px solid #ddd;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #888;
+    width: 17px;
+    height: 17px;
+    background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png");
+  }
+
+  .close:hover {
+    cursor: pointer;
+  }
+
+  .body {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .img {
+    position: absolute;
+    top: 6px;
+    left: 5px;
+    width: 73px;
+    height: 71px;
+    border: 1px solid #ddd;
+    color: #888;
+    overflow: hidden;
+  }
+
+  .link {
+    color: #5085bb;
+  }
+
+  &:nth-child(1) {
+    border: 0;
+    box-shadow: 0px 1px 2px #888;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    margin-left: -12px;
+    left: 50%;
+    bottom: 0;
+    width: 22px;
+    height: 12px;
+    background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png");
+  }
+`;
+
+const Description = styled.div`
+  position: relative;
+  margin: 13px 0 0 90px;
+  height: 75px;
+
+  .ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .jibun {
+    font-size: 11px;
+    color: #888;
+    margin-top: -2px;
+  }
 `;
 
 const cityData = [
@@ -443,6 +549,77 @@ const MapPage = () => {
     setSearchResult(value);
   };
 
+  const EventMarkerContainer = ({
+    position,
+    content,
+    campName,
+    firstImg,
+    description,
+    homepage,
+    callNumber,
+  }) => {
+    const map = useMap();
+    const [isVisible, setIsVisible] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+
+    return (
+      <>
+        <MapMarker
+          position={position}
+          onClick={(marker) => {
+            map.panTo(marker.getPosition());
+            setIsOpen(true);
+          }}
+          onMouseOver={() => setIsVisible(true)}
+          onMouseOut={() => setIsVisible(false)}
+        >
+          {isVisible && content}
+        </MapMarker>
+        {isOpen && (
+          <CustomOverlayMap position={position}>
+            <Wrap>
+              <Info>
+                <div className="title">
+                  {campName}
+                  <div
+                    className="close"
+                    onClick={() => setIsOpen(false)}
+                    title="닫기"
+                  ></div>
+                </div>
+                <div className="body">
+                  <div className="img">
+                    <img
+                      src={firstImg ? firstImg : defaultImage}
+                      width="73"
+                      height="70"
+                      alt={campName}
+                    />
+                  </div>
+                  <Description>
+                    <div className="ellipsis">{description}</div>
+                    <div className="jibun ellipsis">{callNumber}</div>
+                    <div>
+                      <a
+                        href={homepage}
+                        target="_blank"
+                        className="link"
+                        rel="noreferrer"
+                      >
+                        홈페이지
+                      </a>
+                    </div>
+                  </Description>
+                </div>
+              </Info>
+            </Wrap>
+            ;
+          </CustomOverlayMap>
+        )}
+      </>
+    );
+  };
+
   return (
     <>
       {!search ? (
@@ -582,15 +759,23 @@ const MapPage = () => {
               onZoomChanged={(map) => setLevel(map.getLevel())}
             >
               <ZoomControl />
-              {filteredData.map((item) => (
-                <MapMarker
-                  position={{
-                    lat: item.mapY,
-                    lng: item.mapX,
-                  }}
-                >
-                  <div style={{ color: "#000" }}> {item.facltNm}</div>
-                </MapMarker>
+              <MapTypeControl />
+              {filteredData.map((item, index) => (
+                <EventMarkerContainer
+                  key={index}
+                  position={{ lat: item.mapY, lng: item.mapX }}
+                  content={
+                    <div style={{ padding: "3px", color: "black" }}>
+                      {" "}
+                      {item.facltNm}
+                    </div>
+                  }
+                  campName={item.facltNm}
+                  firstImg={item.firstImageUrl}
+                  description={item.addr1}
+                  homepage={item.homepage}
+                  callNumber={item.tel}
+                />
               ))}
             </Map>
           ) : (
