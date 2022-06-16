@@ -214,6 +214,12 @@ const Description = styled.div`
   }
 `;
 
+// 마커 css
+const MarkerPoint = styled.div`
+  padding: 3px;
+  color: black;
+`;
+
 const cityData = [
   "전체",
   "서울시",
@@ -500,7 +506,7 @@ const geolocationOptions = {
 
 const MapPage = () => {
   const [cities, setCities] = useState(districtData[cityData[0]]);
-  const [district, setDistrict] = useState(districtData[cityData[0]]);
+  const [district, setDistrict] = useState(districtData[cityData[0]][0]);
   const [level, setLevel] = useState();
   const [search, setSearch] = useState(false);
 
@@ -764,12 +770,7 @@ const MapPage = () => {
                 <EventMarkerContainer
                   key={index}
                   position={{ lat: item.mapY, lng: item.mapX }}
-                  content={
-                    <div style={{ padding: "3px", color: "black" }}>
-                      {" "}
-                      {item.facltNm}
-                    </div>
-                  }
+                  content={<MarkerPoint> {item.facltNm}</MarkerPoint>}
                   campName={item.facltNm}
                   firstImg={item.firstImageUrl}
                   description={item.addr1}

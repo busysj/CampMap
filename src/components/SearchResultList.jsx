@@ -48,7 +48,7 @@ const SearchResultList = (props) => {
           onChange: (page) => {
             console.log(page);
           },
-          pageSize: 5,
+          pageSize: 10,
         }}
         dataSource={props.filteredData}
         renderItem={(item) => (
