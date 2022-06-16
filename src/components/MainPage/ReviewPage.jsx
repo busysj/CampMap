@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 import SwiperTool, {
   StyleSwiper,
   BestReviewContainer,
@@ -9,24 +10,24 @@ import SwiperTool, {
 
 const camp = [
   //이미지 api로 받아올것
-  require("../dummydata/camp1.jpg"),
-  require("../dummydata/camp2.jpg"),
-  require("../dummydata/camp3.jpg"),
+  require("../../assets/Camping01.jpg"),
+  require("../../assets/Camping02.jpg"),
+  require("../../assets/Camping03.jpg"),
 ];
 
 const list = ["리스트1", "리스트2", "리스트3", "리스트4", "리스트5"];
 
 const Review = styled.div`
   display: flex;
-  width: 100%;
+  width: 1600px;
   height: 500px;
+  margin: auto;
 `;
 
 const ReviewListContainer = styled.div`
-  width: 50%;
+  width: 40%;
   height: 100%;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin: auto;
 `;
 
 /*const VerticalLine = styled.div` 세로선은 일단 보류
@@ -68,59 +69,52 @@ const BestReviewContext = styled.p`
   text-align: center;
   color: white;
 `;
-const More = styled.a`
+const More = styled(NavLink)`
   text-decoration-line: none;
   float: right;
   margin-top: 50px;
+  padding: 15px 25px;
+  color: white;
+  border-radius: 10px;
+  font-size: 15px;
+  background-color: var(--main-color-orange);
   &:hover {
-    color: var(--main-color-green);
   }
 `;
 
 const ReviewPage = () => {
   const slide = SwiperTool();
 
-  function slideArray() {
-    let array = [];
-    for (let i = 1; i <= camp.length; i++) {
-      array.push(
-        <SwiperSlide key={i}>
-          <BestReviewImg src={camp[0]} />
-          {/* 삽입 이미지 */}
-          <BestReviewTitle>
-            {/* 삽입 제목 */}
-            제목 {i}
-          </BestReviewTitle>
-          <BestReviewContext>
-            {/* 삽입 내용 */}
-            {i}번째 게시물
-          </BestReviewContext>
-        </SwiperSlide>
-      );
-    }
-    return array;
-  }
-  function listArray() {
-    let array = [];
-    for (let i = 0; i < list.length; i++) {
-      array.push(<ReviewItem key={i}>{list[i]}</ReviewItem>);
-    }
-    return array;
-  }
-
   return (
     <Review>
       <BestReviewContainer>
         <StyleSwiper {...slide.swiperParams} ref={slide.setswiper}>
-          {slideArray()}
+          {camp.map((camp, index) => (
+            <SwiperSlide key={index}>
+              <BestReviewImg src={camp} />
+              {/* 삽입 이미지 */}
+              <BestReviewTitle>
+                {/* 삽입 제목 */}
+                제목 {index + 1}
+              </BestReviewTitle>
+              <BestReviewContext>
+                {/* 삽입 내용 */}
+                {index + 1}번째 게시물
+              </BestReviewContext>
+            </SwiperSlide>
+          ))}
         </StyleSwiper>
       </BestReviewContainer>
       {/* 베스트 리뷰 컨테이너 끝 */}
 
       {/* 리뷰 리스트 시작 */}
       <ReviewListContainer>
-        <ReviewList>{listArray()}</ReviewList>
-        <More>더보기</More>
+        <ReviewList>
+          {list.map((title, i) => (
+            <ReviewItem key={i}>{title}</ReviewItem>
+          ))}
+        </ReviewList>
+        <More to={"/community"}>더보기</More>
       </ReviewListContainer>
     </Review>
   );
