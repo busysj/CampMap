@@ -222,14 +222,14 @@ const MarkerPoint = styled.div`
 
 const cityData = [
   "전체",
-  "서울시",
-  "부산시",
-  "대구시",
-  "인천시",
-  "광주시",
-  "대전시",
-  "울산시",
-  "세종시",
+  "서울",
+  "부산",
+  "대구",
+  "인천",
+  "광주",
+  "대전",
+  "울산",
+  "세종",
   "경기도",
   "강원도",
   "충청북도",
@@ -238,11 +238,11 @@ const cityData = [
   "전라남도",
   "경상북도",
   "경상남도",
-  "제주도",
+  "제주",
 ];
 const districtData = {
   전체: [""],
-  서울시: [
+  서울: [
     "전체",
     "강남구",
     "강동구",
@@ -270,7 +270,7 @@ const districtData = {
     "중구",
     "중랑구",
   ],
-  부산시: [
+  부산: [
     "전체",
     "강서구",
     "금정구",
@@ -289,7 +289,7 @@ const districtData = {
     "중구",
     "해운대구",
   ],
-  대구시: [
+  대구: [
     "전체",
     "남구",
     "달서구",
@@ -301,7 +301,7 @@ const districtData = {
     "수성구",
     "중구",
   ],
-  인천시: [
+  인천: [
     "전체",
     "강화군",
     "계양구",
@@ -314,10 +314,10 @@ const districtData = {
     "옹진군",
     "중구",
   ],
-  광주시: ["전체", "광산구", "남구", "동구", "북구", "서구"],
-  대전시: ["전체", "대덕구", "동구", "서구", "유성구", "중구"],
-  울산시: ["전체", "남구", "동구", "북구", "울주군", "중구"],
-  세종시: ["전체", "금남면", "세종시", "소정면", "연서면", "전동면"],
+  광주: ["전체", "광산구", "남구", "동구", "북구", "서구"],
+  대전: ["전체", "대덕구", "동구", "서구", "유성구", "중구"],
+  울산: ["전체", "남구", "동구", "북구", "울주군", "중구"],
+  세종: ["전체", "금남면", "세종시", "소정면", "연서면", "전동면"],
   경기도: [
     "전체",
     "가평군",
@@ -495,7 +495,7 @@ const districtData = {
     "함양군",
     "합천군",
   ],
-  제주도: ["전체", "서귀포시", "제주시"],
+  제주: ["전체", "서귀포시", "제주시"],
 };
 
 const geolocationOptions = {
@@ -507,6 +507,7 @@ const geolocationOptions = {
 const MapPage = () => {
   const [cities, setCities] = useState(districtData[cityData[0]]);
   const [district, setDistrict] = useState(districtData[cityData[0]][0]);
+  const [selected, setSelected] = useState(cityData[0]);
   const [level, setLevel] = useState();
   const [search, setSearch] = useState(false);
 
@@ -519,6 +520,7 @@ const MapPage = () => {
   const handleCityChange = (value) => {
     setCities(districtData[value]);
     setDistrict(districtData[value][0]);
+    setSelected(value);
   };
 
   const onDistrictChange = (value) => {
@@ -548,7 +550,10 @@ const MapPage = () => {
     let result = [];
     result = allData.filter((data) => {
       return (
-        data.addr1.search(value) !== -1 || data.facltNm.search(value) !== -1
+        data.addr1.search(value) !== -1 ||
+        data.facltNm.search(value) !== -1 ||
+        data.addr1.search(selected) !== -1 ||
+        data.addr1.search(district) !== -1
       );
     });
     setFilteredData(result);
@@ -637,6 +642,9 @@ const MapPage = () => {
                 onClick={() => {
                   setSearchResult("");
                   setFilteredData(allData);
+                  setSelected(cityData[0]);
+                  setDistrict(districtData[cityData[0]]);
+                  setCities(districtData[cityData[0]]);
                 }}
               >
                 {" "}
@@ -656,20 +664,18 @@ const MapPage = () => {
               <FormBox>
                 <InputTitle>지역</InputTitle>
                 <SelectBox>
-                  <SelectAddress
-                    defaultValue="전체"
-                    onChange={handleCityChange}
-                  >
+                  <SelectAddress value={selected} onChange={handleCityChange}>
                     {cityData.map((city) => (
-                      <Option key={city}>{city}</Option>
+                      <Option key={city} value={city}>
+                        {city}
+                      </Option>
                     ))}
                   </SelectAddress>
-                  <SelectAddress
-                    defaultValue="전체"
-                    onChange={onDistrictChange}
-                  >
+                  <SelectAddress value={district} onChange={onDistrictChange}>
                     {cities.map((district) => (
-                      <Option key={district}>{district}</Option>
+                      <Option key={district} value={district}>
+                        {district}
+                      </Option>
                     ))}
                   </SelectAddress>
                 </SelectBox>
@@ -750,6 +756,9 @@ const MapPage = () => {
                   setSearch(false);
                   setFilteredData(allData);
                   setSearchResult("");
+                  setSelected(cityData[0]);
+                  setDistrict(districtData[cityData[0]]);
+                  setCities(districtData[cityData[0]]);
                 }}
               >
                 뒤로 가기
