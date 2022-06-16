@@ -4,20 +4,24 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { faComment, faXmark } from "@fortawesome/free-solid-svg-icons";
 
-const Taps = styled.div`
+/*const ModalBackground = styled.div`
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.3);
+`; 모달창 오픈시 화면 반투명*/
+
+const Taps = styled.div` //모달창
       display: flex;
       flex-direction: column;
-      position: relative;
+      position: absolute; left: 40%; top: 300%;
       width: 400px;
       height: 600px;
       margin: 0 auto;
       background: white;
-      text-align: center; 
-      min-height: 400px;
+      text-align: center;
+      min-height: 600px;
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-      
-
-` 
+`;
 const XbtnP =styled.div`
       display: flex;
       justify-content: end;
@@ -55,7 +59,7 @@ const BtnTap = styled.button`
 
 const ContentTabs = styled.div`
   position: relative;
-  padding: 0 20px 32px;
+  padding: 0 15px 32px;
   box-sizing: border-box;
   display: flex;
   justify-content: center;
@@ -64,10 +68,12 @@ const ContentTabs = styled.div`
 const TapContant = styled.div`
   background-color: white;
   color: black;
+  height: 100%;
 `;
 
 const Title = styled.h2`
   text-align: center;
+  margin-top: 20px;
 `;
 
 const LoginForm = styled.form``;
@@ -176,7 +182,7 @@ const SignupBtn = styled.button`
   cursor: pointer;
 `;
 
-const Google = styled.button`
+/*const Google = styled.button`
   margin-bottom: 30px;
   background-color: #548bf5;
   color: white;
@@ -191,7 +197,7 @@ const Google = styled.button`
   border: none;
   text-align: center;
   cursor: pointer;
-`;
+`;*/
 
 const LogReg = ({ openModal, setOpenModal, index, setIndex }) => {
 
@@ -280,13 +286,13 @@ const LogReg = ({ openModal, setOpenModal, index, setIndex }) => {
               />
               <SignupBtn type="submit">회원등록</SignupBtn>
             </SignUpForm>
-            <Google>
+            {/*<Google>
               <FontAwesomeIcon
                 icon={faGoogle}
                 style={{ width: "24px", height: "25px" }}
               />
               <GoogleText>Google 등록</GoogleText>
-            </Google>
+          </Google>*/}
           </InputContainer>
         </TapContant>
       </ContentTabs>

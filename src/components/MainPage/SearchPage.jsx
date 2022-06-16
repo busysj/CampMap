@@ -4,7 +4,7 @@ import styled from "styled-components";
 import backgroundImg from "../../assets/MainBackgroundImg.jpg";
 
 const SearchBackgroundimg = styled.div`
-    width: 100%;
+    width: 1920px;
     height: 500px;
     position: relative;
     z-index: 1;
