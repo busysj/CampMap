@@ -103,11 +103,11 @@ const RecommendPage = () => {
         <Container>
             <Title>캠핑장 추천</Title>
                 <Swiper
-                    slidesPerView={3}
-                    spaceBetween={100}
+                    slidesPerView={4}
+                    spaceBetween={50}
                     autoplay={{
                         delay : 100,
-                        disableOnInteraction: true,
+                        disableOnInteraction: false,
                     }}
                     speed={6000}
                     navigation={true}

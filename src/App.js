@@ -10,10 +10,12 @@ import Community from "./components/CommunityPage/Community";
 import CampingNav from "./components/MainPage/CampingNav";
 import SearchResultList from "./components/SearchResultList";
 
+
 function App() {
+
   return (
     <div className="App">
-      <NavbarPage />
+      <NavbarPage/>
       <Routes>
         <Route path="/" element={<MainPage />}></Route>
         <Route path="/map" element={<MapPage />}>

@@ -63,11 +63,6 @@ const FooterPage = () => {
             email: "tkdwox31__@naver.com",
         },
         {
-            name: "유채언",
-            phone: "010-9990-7471",
-            email: "seren0120@naver.com",
-        },
-        {
             name: "유영준",
             phone: "010-7937-7735",
             email: "princewns@gmail.com",
