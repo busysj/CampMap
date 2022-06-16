@@ -10,6 +10,7 @@ const StyleSwiper = styled(Swiper)`
   position: relative;
   width: 100%;
   height: 100%;
+  border-radius: 20px;
   .swiper-pagination-bullet{
     background-color: var(--main-color-orange);
   }
@@ -30,12 +31,13 @@ const StyleSwiper = styled(Swiper)`
 `;
 const BestReviewContainer = styled.div`
   width : 48%; height : 100%;
-  margin-left : 10px; margin-right : 10px;
+  margin: auto;
 `;
 const BestReviewImg = styled.img`
   width: 100%; height: 100%;
   margin: 0;
   border-radius: 20px;
+  filter: brightness(30%);
 `;
 const SwiperTool = () => {
   const [swiper, setswiper] = useState(null);
@@ -46,7 +48,8 @@ const SwiperTool = () => {
     slidesPerView : 1,
     pagination : {clickable : true},
     autoplay : {delay : 7000, disableOnInteraction : false},
-    loop : true
+    loop : true,
+    speed : 2000
   };
   SwiperCore.use([Navigation, Pagination, Autoplay]);
   return{

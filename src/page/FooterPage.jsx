@@ -50,6 +50,12 @@ const FooterCopyright = styled.div`
     line-height: 1.9;
 `;
 
+const People = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+
 const FooterPage = () => {
     const people = [
         {
@@ -61,11 +67,6 @@ const FooterPage = () => {
             name: "유상재",
             phone: "010-2086-9759",
             email: "tkdwox31__@naver.com",
-        },
-        {
-            name: "유채언",
-            phone: "010-9990-7471",
-            email: "seren0120@naver.com",
         },
         {
             name: "유영준",
@@ -103,7 +104,7 @@ const FooterPage = () => {
                         </span>
                         <span>. All rights reserved.</span>
                         <br />
-                        <div>
+                        <People>
                             {people.map((person, index) => (
                                 <div key={index}>
                                     <span>
@@ -121,7 +122,7 @@ const FooterPage = () => {
                                     </span>
                                 </div>
                             ))}
-                        </div>
+                        </People>
                     </FooterCopyright>
                 </FooterCenter>
             </FooterBox>

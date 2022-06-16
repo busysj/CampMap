@@ -10,24 +10,25 @@ import Community from "./components/CommunityPage/Community";
 import CampingNav from "./components/MainPage/CampingNav";
 import SearchResultList from "./components/SearchResultList";
 import WriteModal from "./components/CommunityPage/WriteModal";
+import Layout from "./page/Layout";
 
 function App() {
     return (
         <div className="App">
-            <NavbarPage />
             <Routes>
-                <Route path="/" element={<MainPage />}></Route>
-                <Route path="/camppage" element={<CampPage />}></Route>
-                <Route path="/map" element={<MapPage />}>
-                    <Route index element={<SearchResultList />}></Route>
-                </Route>
-                <Route path="/camppage" element={<CampPage />}></Route>
-                <Route path="/community" element={<Community />}></Route>
-                <Route path="/write" element={<WriteModal />}></Route>
+                <Route path="/" element={<Layout />}>
+                    <Route path="/" element={<MainPage />}></Route>
+                    <Route path="/camppage" element={<CampPage />}></Route>
+                    <Route path="/map" element={<MapPage />}>
+                        <Route index element={<SearchResultList />}></Route>
+                    </Route>
+                    <Route path="/camppage" element={<CampPage />}></Route>
+                    <Route path="/community" element={<Community />}></Route>
+                    <Route path="/write" element={<WriteModal />}></Route>
 
-                <Route path="/youtube" element={<CampingNav />}></Route>
+                    <Route path="/youtube" element={<CampingNav />}></Route>
+                </Route>
             </Routes>
-            <FooterPage />
         </div>
     );
 }

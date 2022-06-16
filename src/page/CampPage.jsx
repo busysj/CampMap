@@ -1,9 +1,17 @@
 import styled from "styled-components";
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
+import { NavLink } from "react-router-dom";
+
+//아이콘 import
 import LanguageIcon from '@mui/icons-material/Language';
 import DirectionsIcon from '@mui/icons-material/Directions';
 import ShareIcon from '@mui/icons-material/Share';
 import Car from '@mui/icons-material/DirectionsCarFilledOutlined';
+import Sink from '@mui/icons-material/CountertopsOutlined';
+import Shower from '@mui/icons-material/ShowerOutlined';
+import LocalFire from '@mui/icons-material/LocalFireDepartmentOutlined';
+import Extinguisher from '@mui/icons-material/FireExtinguisherOutlined';
+import Pet from '@mui/icons-material/PetsOutlined';
 
 const CampBody = styled.div`
   display: flex;
@@ -45,15 +53,26 @@ const MapContainer = styled(Map)`
   display: block;
 `;
 const AbleContainer = styled.div`
-  height: 400px;
+  height: 300px;
   margin: 50px;
   background-color: var(--main-color-orange);
   text-align: center;
   box-shadow: 3px 3px 10px black;
+  display: flex;
+  justify-content: space-around;
   h2{
     color: white;
   }
-`
+  p{
+    color: white;
+    font-size: 20px;
+  }
+  .icon-able{
+    color: white;
+    font-size: 10em;
+  }
+
+`;
 
 
 const CampPage = () => {
@@ -93,8 +112,30 @@ const CampPage = () => {
       </MapContainer>
     </CampBody>
     <AbleContainer>
-      <h2>제공가능한 시설</h2>
-      <Car/>
+      <div>
+        <Car className="icon-able"/>
+        <p>차량입장가능</p>
+      </div>
+      <div>
+        <Sink className="icon-able"/>
+        <p>개수대 이용 가능</p>
+      </div>
+      <div>
+        <Shower className="icon-able"/>
+        <p>샤워실 이용 가능</p>
+      </div>
+      <div>
+        <LocalFire className="icon-able"/>
+        <p>화구 사용 가능</p>
+      </div>
+      <div>
+        <Extinguisher className="icon-able"/>
+        <p>소화기 설치</p>
+      </div>
+      <div>
+        <Pet className="icon-able"/>
+        <p>반려동물 입장 가능</p>
+      </div>
     </AbleContainer>
   </div>
 
