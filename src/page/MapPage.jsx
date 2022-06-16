@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Map, MapMarker } from "react-kakao-maps-sdk";
-import { ZoomControl } from "react-kakao-maps-sdk";
-import { Outlet } from "react-router-dom";
+import { CustomOverlayMap, Map, MapMarker, useMap } from "react-kakao-maps-sdk";
+import { ZoomControl, MapTypeControl } from "react-kakao-maps-sdk";
 import { Input, Select, Tag } from "antd";
 import RotateLeftIcon from "@mui/icons-material/RotateLeft";
 import "antd/dist/antd.min.css";
 import UseCurrentLocation from "../hooks/UseCurrentLocation";
+import axios from "axios";
+import SearchResultList from "../components/SearchResultList";
+import defaultImage from "../assets/default-Image.png";
 
 const { Option } = Select;
 
@@ -105,6 +107,117 @@ const SearchButton = styled.button`
   border-radius: 3px;
   cursor: pointer;
   float: right;
+`;
+
+const Wrap = styled.div`
+  position: absolute;
+  left: 0;
+  bottom: 40px;
+  width: 288px;
+  height: 132px;
+  margin-left: -141px;
+  text-align: left;
+  overflow: hidden;
+  font-size: 12px;
+  font-family: "Malgun Gothic", dotum, "돋움", sans-serif;
+  line-height: 1.5;
+
+  * {
+    padding: 0;
+    margin: 0;
+  }
+`;
+
+const Info = styled.div`
+  width: 286px;
+  height: 120px;
+  border-radius: 5px;
+  border-bottom: 2px solid #ccc;
+  border-right: 1px solid #ccc;
+  overflow: hidden;
+  background: #fff;
+
+  .title {
+    padding: 5px 0 0 10px;
+    height: 35px;
+    background: #eee;
+    border-bottom: 1px solid #ddd;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #888;
+    width: 17px;
+    height: 17px;
+    background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png");
+  }
+
+  .close:hover {
+    cursor: pointer;
+  }
+
+  .body {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .img {
+    position: absolute;
+    top: 6px;
+    left: 5px;
+    width: 73px;
+    height: 71px;
+    border: 1px solid #ddd;
+    color: #888;
+    overflow: hidden;
+  }
+
+  .link {
+    color: #5085bb;
+  }
+
+  &:nth-child(1) {
+    border: 0;
+    box-shadow: 0px 1px 2px #888;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    margin-left: -12px;
+    left: 50%;
+    bottom: 0;
+    width: 22px;
+    height: 12px;
+    background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png");
+  }
+`;
+
+const Description = styled.div`
+  position: relative;
+  margin: 13px 0 0 90px;
+  height: 75px;
+
+  .ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .jibun {
+    font-size: 11px;
+    color: #888;
+    margin-top: -2px;
+  }
+`;
+
+// 마커 css
+const MarkerPoint = styled.div`
+  padding: 3px;
+  color: black;
 `;
 
 const cityData = [
@@ -393,7 +506,7 @@ const geolocationOptions = {
 
 const MapPage = () => {
   const [cities, setCities] = useState(districtData[cityData[0]]);
-  const [district, setDistrict] = useState(districtData[cityData[0]]);
+  const [district, setDistrict] = useState(districtData[cityData[0]][0]);
   const [level, setLevel] = useState();
   const [search, setSearch] = useState(false);
 
@@ -411,99 +524,267 @@ const MapPage = () => {
   const onDistrictChange = (value) => {
     setDistrict(value);
   };
+
+  const [allData, setAllData] = useState([]);
+  const [filteredData, setFilteredData] = useState(allData);
+  const [searchResult, setSearchResult] = useState("");
+
+  useEffect(() => {
+    axios(
+      "http://api.visitkorea.or.kr/openapi/service/rest/GoCamping/basedList?ServiceKey=DBx1v7ble2j4MNFWznYeeM5wQYthH5QTVeMOTXn5H%2FxvLP7Bbaa8IZvKxHq8r0425fyEMXvrs32EFDRIALvz5A%3D%3D&numOfRows=100&pageNo=1&MobileOS=ETC&MobileApp=TestApp&_type=json"
+    )
+      .then((response) => {
+        console.log(response.data.response.body.items.item);
+        setAllData(response.data.response.body.items.item);
+        setFilteredData(response.data.response.body.items.item);
+      })
+      .catch((error) => {
+        console.log("Error getting fake data: " + error);
+      });
+  }, []);
+
+  const handleSearch = (e) => {
+    let value = e.target.value.toLowerCase();
+    let result = [];
+    result = allData.filter((data) => {
+      return (
+        data.addr1.search(value) !== -1 || data.facltNm.search(value) !== -1
+      );
+    });
+    setFilteredData(result);
+    setSearchResult(value);
+  };
+
+  const EventMarkerContainer = ({
+    position,
+    content,
+    campName,
+    firstImg,
+    description,
+    homepage,
+    callNumber,
+  }) => {
+    const map = useMap();
+    const [isVisible, setIsVisible] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+
+    return (
+      <>
+        <MapMarker
+          position={position}
+          onClick={(marker) => {
+            map.panTo(marker.getPosition());
+            setIsOpen(true);
+          }}
+          onMouseOver={() => setIsVisible(true)}
+          onMouseOut={() => setIsVisible(false)}
+        >
+          {isVisible && content}
+        </MapMarker>
+        {isOpen && (
+          <CustomOverlayMap position={position}>
+            <Wrap>
+              <Info>
+                <div className="title">
+                  {campName}
+                  <div
+                    className="close"
+                    onClick={() => setIsOpen(false)}
+                    title="닫기"
+                  ></div>
+                </div>
+                <div className="body">
+                  <div className="img">
+                    <img
+                      src={firstImg ? firstImg : defaultImage}
+                      width="73"
+                      height="70"
+                      alt={campName}
+                    />
+                  </div>
+                  <Description>
+                    <div className="ellipsis">{description}</div>
+                    <div className="jibun ellipsis">{callNumber}</div>
+                    <div>
+                      <a
+                        href={homepage}
+                        target="_blank"
+                        className="link"
+                        rel="noreferrer"
+                      >
+                        홈페이지
+                      </a>
+                    </div>
+                  </Description>
+                </div>
+              </Info>
+            </Wrap>
+            ;
+          </CustomOverlayMap>
+        )}
+      </>
+    );
+  };
+
   return (
-    <FindMap>
+    <>
       {!search ? (
-        <Search>
-          <Header>
-            캠핑장 조회
-            <ResetButton>
-              {" "}
-              <RotateLeftIcon fontSize="small" />
-              전체 초기화
-            </ResetButton>
-          </Header>
-          <Form>
-            <FormBox>
-              <InputTitle>캠핑장 이름</InputTitle>
-              <InputCampName placeholder="캠핑장 이름을 검색하세요" />
-            </FormBox>
-            <FormBox>
-              <InputTitle>지역</InputTitle>
-              <SelectBox>
-                <SelectAddress defaultValue="전체" onChange={handleCityChange}>
-                  {cityData.map((city) => (
-                    <Option key={city}>{city}</Option>
-                  ))}
-                </SelectAddress>
-                <SelectAddress defaultValue="전체" onChange={onDistrictChange}>
-                  {cities.map((district) => (
-                    <Option key={district}>{district}</Option>
-                  ))}
-                </SelectAddress>
-              </SelectBox>
-            </FormBox>
+        <FindMap>
+          <Search>
+            <Header>
+              캠핑장 조회
+              <ResetButton
+                onClick={() => {
+                  setSearchResult("");
+                  setFilteredData(allData);
+                }}
+              >
+                {" "}
+                <RotateLeftIcon fontSize="small" />
+                전체 초기화
+              </ResetButton>
+            </Header>
+            <Form>
+              <FormBox>
+                <InputTitle>캠핑장 검색</InputTitle>
+                <InputCampName
+                  placeholder="캠핑장 또는 지역을 검색하세요"
+                  onChange={(e) => handleSearch(e)}
+                  value={searchResult}
+                />
+              </FormBox>
+              <FormBox>
+                <InputTitle>지역</InputTitle>
+                <SelectBox>
+                  <SelectAddress
+                    defaultValue="전체"
+                    onChange={handleCityChange}
+                  >
+                    {cityData.map((city) => (
+                      <Option key={city}>{city}</Option>
+                    ))}
+                  </SelectAddress>
+                  <SelectAddress
+                    defaultValue="전체"
+                    onChange={onDistrictChange}
+                  >
+                    {cities.map((district) => (
+                      <Option key={district}>{district}</Option>
+                    ))}
+                  </SelectAddress>
+                </SelectBox>
+              </FormBox>
 
-            <InputTitle>상세 검색</InputTitle>
-            <SearchTagList>
-              <SearchTag>전기</SearchTag>
-              <SearchTag>무선인터넷</SearchTag>
-              <SearchTag>장작판매</SearchTag>
-              <SearchTag>온수</SearchTag>
-              <SearchTag>트렘폴린</SearchTag>
-              <SearchTag>물놀이장</SearchTag>
-              <SearchTag>놀이터</SearchTag>
-              <SearchTag>산책로</SearchTag>
-              <SearchTag>운동장</SearchTag>
-              <SearchTag>운동시설</SearchTag>
-              <SearchTag>마트,편의점</SearchTag>
-              <SearchTag>애견동반</SearchTag>
-            </SearchTagList>
-          </Form>
+              <InputTitle>상세 검색</InputTitle>
+              <SearchTagList>
+                <SearchTag>전기</SearchTag>
+                <SearchTag>무선인터넷</SearchTag>
+                <SearchTag>장작판매</SearchTag>
+                <SearchTag>온수</SearchTag>
+                <SearchTag>트렘폴린</SearchTag>
+                <SearchTag>물놀이장</SearchTag>
+                <SearchTag>놀이터</SearchTag>
+                <SearchTag>산책로</SearchTag>
+                <SearchTag>운동장</SearchTag>
+                <SearchTag>운동시설</SearchTag>
+                <SearchTag>마트,편의점</SearchTag>
+                <SearchTag>애견동반</SearchTag>
+              </SearchTagList>
+            </Form>
 
-          <SearchButton onClick={() => setSearch(true)}>검색</SearchButton>
-        </Search>
+            <SearchButton
+              onClick={() => {
+                filteredData[0]
+                  ? setSearch(true)
+                  : alert("검색 결과가 없습니다");
+              }}
+            >
+              검색
+            </SearchButton>
+          </Search>
+          {location ? (
+            <Map
+              center={{ lat: location.latitude, lng: location.longitude }}
+              style={{ width: "63%", height: "800px" }}
+              level={4}
+              onZoomChanged={(map) => setLevel(map.getLevel())}
+            >
+              <ZoomControl />
+              <MapMarker
+                position={{
+                  lat: location.latitude,
+                  lng: location.longitude,
+                }}
+              >
+                <div style={{ color: "#000" }}> 현재 위치</div>
+              </MapMarker>
+            </Map>
+          ) : (
+            <Map
+              center={{ lat: 33.450701, lng: 126.570667 }}
+              style={{ width: "63%", height: "800px" }}
+              level={4}
+              onZoomChanged={(map) => setLevel(map.getLevel())}
+            >
+              <ZoomControl />
+              <MapMarker position={{ lat: 33.450701, lng: 126.570667 }}>
+                <div style={{ color: "#000" }}> 카카오</div>
+              </MapMarker>
+            </Map>
+          )}
+        </FindMap>
       ) : (
-        <Search>
-          <Header>
-            캠핑장 조회
-            <ResetButton onClick={() => setSearch(false)}>
-              뒤로 가기
-            </ResetButton>
-          </Header>
-          <Outlet />
-        </Search>
+        <FindMap>
+          <Search>
+            <Header>
+              캠핑장 조회
+              {searchResult ? (
+                <InputTitle>
+                  "{searchResult}" 검색 결과 ({filteredData.length})
+                </InputTitle>
+              ) : (
+                <InputTitle>전체 결과 ({filteredData.length})</InputTitle>
+              )}
+              <ResetButton
+                onClick={() => {
+                  setSearch(false);
+                  setFilteredData(allData);
+                  setSearchResult("");
+                }}
+              >
+                뒤로 가기
+              </ResetButton>
+            </Header>
+            <SearchResultList filteredData={filteredData} />
+          </Search>
+          {filteredData[0] ? (
+            <Map
+              center={{ lat: filteredData[0].mapY, lng: filteredData[0].mapX }}
+              style={{ width: "63%", height: "800px" }}
+              level={10}
+              onZoomChanged={(map) => setLevel(map.getLevel())}
+            >
+              <ZoomControl />
+              <MapTypeControl />
+              {filteredData.map((item, index) => (
+                <EventMarkerContainer
+                  key={index}
+                  position={{ lat: item.mapY, lng: item.mapX }}
+                  content={<MarkerPoint> {item.facltNm}</MarkerPoint>}
+                  campName={item.facltNm}
+                  firstImg={item.firstImageUrl}
+                  description={item.addr1}
+                  homepage={item.homepage}
+                  callNumber={item.tel}
+                />
+              ))}
+            </Map>
+          ) : (
+            setSearch(false)
+          )}
+        </FindMap>
       )}
-
-      {location ? (
-        <Map
-          center={{ lat: location.latitude, lng: location.longitude }}
-          style={{ width: "63%", height: "800px" }}
-          onZoomChanged={(map) => setLevel(map.getLevel())}
-        >
-          <ZoomControl />
-          <MapMarker
-            position={{
-              lat: location.latitude,
-              lng: location.longitude,
-            }}
-          >
-            <div style={{ color: "#000" }}> 현재 위치</div>
-          </MapMarker>
-        </Map>
-      ) : (
-        <Map
-          center={{ lat: 33.450701, lng: 126.570667 }}
-          style={{ width: "63%", height: "800px" }}
-          onZoomChanged={(map) => setLevel(map.getLevel())}
-        >
-          <ZoomControl />
-          <MapMarker position={{ lat: 33.450701, lng: 126.570667 }}>
-            <div style={{ color: "#000" }}> 카카오</div>
-          </MapMarker>
-        </Map>
-      )}
-    </FindMap>
+    </>
   );
 };
 
