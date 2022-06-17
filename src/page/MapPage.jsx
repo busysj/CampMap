@@ -517,16 +517,6 @@ const MapPage = () => {
     console.log("렌더링");
   }, []);
 
-  const handleCityChange = (value) => {
-    setCities(districtData[value]);
-    setDistrict(districtData[value][0]);
-    setSelected(value);
-  };
-
-  const onDistrictChange = (value) => {
-    setDistrict(value);
-  };
-
   const [allData, setAllData] = useState([]);
   const [filteredData, setFilteredData] = useState(allData);
   const [searchResult, setSearchResult] = useState("");
@@ -548,16 +538,35 @@ const MapPage = () => {
   const handleSearch = (e) => {
     let value = e.target.value.toLowerCase();
     let result = [];
-    result = allData.filter((data) => {
+
+    result = filteredData.filter((data) => {
       return (
-        data.addr1.search(value) !== -1 ||
-        data.facltNm.search(value) !== -1 ||
-        data.addr1.search(selected) !== -1 ||
-        data.addr1.search(district) !== -1
+        data.addr1.search(value) !== -1 || data.facltNm.search(value) !== -1
       );
     });
+
     setFilteredData(result);
     setSearchResult(value);
+  };
+
+  const handleCityChange = (value) => {
+    setCities(districtData[value]);
+    setDistrict(districtData[value][0]);
+    setSelected(value);
+    let result = [];
+    result = filteredData.filter((data) => {
+      return data.addr1.search(value) !== -1;
+    });
+    setFilteredData(result);
+  };
+
+  const onDistrictChange = (value) => {
+    setDistrict(value);
+    let result = [];
+    result = filteredData.filter((data) => {
+      return data.addr1.search(value) !== -1;
+    });
+    setFilteredData(result);
   };
 
   const EventMarkerContainer = ({
@@ -768,7 +777,10 @@ const MapPage = () => {
           </Search>
           {filteredData[0] ? (
             <Map
-              center={{ lat: filteredData[0].mapY, lng: filteredData[0].mapX }}
+              center={{
+                lat: filteredData[0].mapY,
+                lng: filteredData[0].mapX,
+              }}
               style={{ width: "63%", height: "800px" }}
               level={10}
               onZoomChanged={(map) => setLevel(map.getLevel())}
