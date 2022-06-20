@@ -68,6 +68,7 @@ const SearchResultList = (props) => {
               description={item.addr1}
             />
             {item.tel} <br />
+            {item.sbrsCl} <br />
             <Reservation href={item.resveUrl}>예약하러 가기</Reservation>
           </List.Item>
         )}

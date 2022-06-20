@@ -84,6 +84,12 @@ const SelectBox = styled.div`
 
 const SearchTagList = styled.div`
   margin: 15px;
+
+  .active {
+    color: var(--main-color-orange);
+    font-weight: bold;
+    border-color: var(--main-color-orange);
+  }
 `;
 const SearchTag = styled(Tag)`
   border-radius: 20px;
@@ -497,6 +503,20 @@ const districtData = {
   ],
   제주: ["전체", "서귀포시", "제주시"],
 };
+const facility = [
+  "전기",
+  "무선인터넷",
+  "장작판매",
+  "온수",
+  "트렘폴린",
+  "물놀이장",
+  "놀이터",
+  "산책로",
+  "운동장",
+  "운동시설",
+  "마트.편의점",
+  "애견동반",
+];
 
 const geolocationOptions = {
   enableHighAccuracy: true,
@@ -535,17 +555,20 @@ const MapPage = () => {
       });
   }, []);
 
+  const [keywordResult, setKeywordResult] = useState();
+  const [selectedResult, setSelectedResult] = useState();
+  const [districtResult, setDistrictResult] = useState();
+
   const handleSearch = (e) => {
     let value = e.target.value.toLowerCase();
     let result = [];
-
-    result = filteredData.filter((data) => {
+    result = allData.filter((data) => {
       return (
         data.addr1.search(value) !== -1 || data.facltNm.search(value) !== -1
       );
     });
 
-    setFilteredData(result);
+    setKeywordResult(result);
     setSearchResult(value);
   };
 
@@ -554,19 +577,87 @@ const MapPage = () => {
     setDistrict(districtData[value][0]);
     setSelected(value);
     let result = [];
-    result = filteredData.filter((data) => {
+    result = allData.filter((data) => {
       return data.addr1.search(value) !== -1;
     });
-    setFilteredData(result);
+    setSelectedResult(result);
   };
 
   const onDistrictChange = (value) => {
     setDistrict(value);
     let result = [];
-    result = filteredData.filter((data) => {
+    result = allData.filter((data) => {
       return data.addr1.search(value) !== -1;
     });
-    setFilteredData(result);
+    setDistrictResult(result);
+  };
+
+  const handleTagSearch = (e) => {
+    let value = e.target.value;
+    console.log(value);
+  };
+
+  const onClickSearch = () => {
+    if (keywordResult) {
+      setFilteredData(keywordResult);
+      if (selectedResult) {
+        let result = keywordResult.filter((data) =>
+          selectedResult.includes(data)
+        );
+
+        setFilteredData(result);
+        if (districtResult) {
+          let result2 = keywordResult.filter((data) =>
+            selectedResult.includes(data)
+          );
+          let result3 = result2.filter((data) => districtResult.includes(data));
+
+          setFilteredData(result3);
+        }
+      }
+    } else if (!keywordResult && selectedResult) {
+      setFilteredData(selectedResult);
+      if (districtResult) {
+        let result = filteredData.filter((data) =>
+          districtResult.includes(data)
+        );
+
+        setFilteredData(result);
+      }
+    } else {
+      setFilteredData(allData);
+    }
+    setSearch(true);
+  };
+
+  const onClickReset = () => {
+    search && setSearch(false);
+    setSearchResult("");
+    setKeywordResult(null);
+    setSelectedResult(null);
+    setDistrictResult(null);
+    setFilteredData(allData);
+    setSelected(cityData[0]);
+    setDistrict(districtData[cityData[0]]);
+    setCities(districtData[cityData[0]]);
+  };
+
+  const Tags = ({ data }) => {
+    const [isTagClick, setIsTagClick] = useState(false);
+
+    return (
+      <>
+        <SearchTag
+          onClick={(e) => {
+            !isTagClick ? setIsTagClick(true) : setIsTagClick(false);
+            handleTagSearch(e);
+          }}
+          className={isTagClick && "active"}
+        >
+          {data}
+        </SearchTag>
+      </>
+    );
   };
 
   const EventMarkerContainer = ({
@@ -647,15 +738,7 @@ const MapPage = () => {
           <Search>
             <Header>
               캠핑장 조회
-              <ResetButton
-                onClick={() => {
-                  setSearchResult("");
-                  setFilteredData(allData);
-                  setSelected(cityData[0]);
-                  setDistrict(districtData[cityData[0]]);
-                  setCities(districtData[cityData[0]]);
-                }}
-              >
+              <ResetButton onClick={onClickReset}>
                 {" "}
                 <RotateLeftIcon fontSize="small" />
                 전체 초기화
@@ -692,30 +775,13 @@ const MapPage = () => {
 
               <InputTitle>상세 검색</InputTitle>
               <SearchTagList>
-                <SearchTag>전기</SearchTag>
-                <SearchTag>무선인터넷</SearchTag>
-                <SearchTag>장작판매</SearchTag>
-                <SearchTag>온수</SearchTag>
-                <SearchTag>트렘폴린</SearchTag>
-                <SearchTag>물놀이장</SearchTag>
-                <SearchTag>놀이터</SearchTag>
-                <SearchTag>산책로</SearchTag>
-                <SearchTag>운동장</SearchTag>
-                <SearchTag>운동시설</SearchTag>
-                <SearchTag>마트,편의점</SearchTag>
-                <SearchTag>애견동반</SearchTag>
+                {facility.map((data) => (
+                  <Tags key={data} value={data} data={data} />
+                ))}
               </SearchTagList>
             </Form>
 
-            <SearchButton
-              onClick={() => {
-                filteredData[0]
-                  ? setSearch(true)
-                  : alert("검색 결과가 없습니다");
-              }}
-            >
-              검색
-            </SearchButton>
+            <SearchButton onClick={onClickSearch}>검색</SearchButton>
           </Search>
           {location ? (
             <Map
@@ -760,18 +826,7 @@ const MapPage = () => {
               ) : (
                 <InputTitle>전체 결과 ({filteredData.length})</InputTitle>
               )}
-              <ResetButton
-                onClick={() => {
-                  setSearch(false);
-                  setFilteredData(allData);
-                  setSearchResult("");
-                  setSelected(cityData[0]);
-                  setDistrict(districtData[cityData[0]]);
-                  setCities(districtData[cityData[0]]);
-                }}
-              >
-                뒤로 가기
-              </ResetButton>
+              <ResetButton onClick={onClickReset}>뒤로 가기</ResetButton>
             </Header>
             <SearchResultList filteredData={filteredData} />
           </Search>
@@ -801,7 +856,7 @@ const MapPage = () => {
               ))}
             </Map>
           ) : (
-            setSearch(false)
+            (alert("검색 결과가 없습니다"), setSearch(false))
           )}
         </FindMap>
       )}
