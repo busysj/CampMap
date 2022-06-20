@@ -4,6 +4,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 // import { faComment } from "@fortawesome/free-solid-svg-icons"; // 카카오톡 제거
+import { useState } from "react";
+import { auth } from "../firebase";
+import {
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    updateProfile,
+    signInWithPopup,
+    GoogleAuthProvider,
+} from "firebase/auth";
+import { useDispatch } from "react-redux";
+import { login, logout } from "../store/userSlice";
+import { useNavigate } from "react-router-dom";
 
 /*const ModalBackground = styled.div`
   position: fixed;
@@ -88,8 +100,8 @@ const InputContainer = styled.div`
     justify-content: center;
     flex-direction: column;
 `;
-const LoginForm = styled.div``;
-const SignUpForm = styled.div``;
+const LoginForm = styled.form``;
+const SignUpForm = styled.form``;
 const Input = styled.input`
     margin-top: 30px;
     border-radius: 2px;
@@ -203,6 +215,118 @@ const SignupBtn = styled.button`
 // `;
 
 const LogReg = ({ openModal, setOpenModal, index, setIndex }) => {
+    const dispatch = useDispatch();
+    const navigator = useNavigate();
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [nickname, setNickname] = useState("");
+
+    //사용자가 인증되었는지 페이지 로드 시 확인
+    // useEffect(() => {
+    //     onAuthStateChanged(auth, (userAuth) => {
+    //         if (userAuth) {
+    //             // 사용자가 로그인되어 있으면 사용자의 세부 정보를 redux에 보내고
+    //             // 현재 사용자를 상태에 저장합니다.
+    //             dispatch(
+    //                 login({
+    //                     email: userAuth.email,
+    //                     uid: userAuth.uid,
+    //                     displayName: userAuth.displayName,
+    //                     photoUrl: userAuth.photoURL,
+    //                 })
+    //             );
+    //         } else {
+    //             dispatch(logout());
+    //         }
+    //     });
+    // }, []);
+
+    const loginToApp = (e) => {
+        e.preventDefault();
+        console.log("로그인시도");
+        // Firebase로 기존 사용자 로그인
+        signInWithEmailAndPassword(auth, email, password)
+            // 성공적인 인증 후 auth 객체를 반환합니다.
+            // userAuth.user는 모든 사용자 세부 정보를 포함합니다.
+            .then((userAuth) => {
+                // 사용자 정보를 redux 상태에 저장
+                dispatch(
+                    login({
+                        email: userAuth.user.email,
+                        uid: userAuth.user.uid,
+                        displayName: userAuth.user.displayName,
+                        // photoUrl: userAuth.user.photoURL,
+                    })
+                );
+                alert("로그인 완료");
+                console.log(`로그인 완료`);
+                setOpenModal(false);
+                navigator("/");
+            })
+
+            // 오류가 있는 경우 표시
+            .catch((err) => {
+                alert(err);
+            });
+    };
+
+    // 필수 항목으로 만들기 위해 이름 필드에 대한 빠른 확인
+    const register = (e) => {
+        e.preventDefault();
+        if (!nickname) {
+            return alert("닉네임을 입력하시오~");
+        } else if (!email) {
+            return alert("이메일을 입력하시오~");
+        } else if (!password) {
+            return alert("비밀번호를 입력하시오~");
+        }
+        // Firebase로 새 사용자 생성
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userAuth) => {
+                // 표시 이름과 사진으로 새로 생성된 사용자를 업데이트합니다.
+                updateProfile(userAuth.user, {
+                    displayName: nickname,
+                    // photoURL: profilePic,
+                })
+                    .then(
+                        // redux 상태에서 지속성을 위해 사용자 정보를 전달합니다.
+
+                        alert("회원가입완료"),
+                        console.log(`회원가입 완료`),
+                        setOpenModal(false)
+                    )
+
+                    .catch((error) => {
+                        console.log("user not updated");
+                    });
+            })
+            .catch((err) => {
+                alert(err);
+            });
+    };
+
+    const googleSigiIn = () => {
+        const provider = new GoogleAuthProvider();
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                dispatch(
+                    login({
+                        email: result.user.email,
+                        uid: result.user.uid,
+                        displayName: result.user.displayName,
+                    })
+                );
+                console.log("구글, 디스패치완료");
+                navigator("/");
+                setOpenModal(false);
+            })
+            .catch((error) => {
+                // Handle Errors here.
+                console.log(error);
+            });
+    };
+
     if (!openModal) return null;
 
     return (
@@ -243,11 +367,26 @@ const LogReg = ({ openModal, setOpenModal, index, setIndex }) => {
                 <TapContant hidden={index !== 0}>
                     <InputContainer>
                         <Title>로그인</Title>
-                        <LoginForm>
-                            <Input type="email" placeholder="아이디" required />
+                        <LoginForm onSubmit={loginToApp}>
                             <Input
-                                type="password"
+                                value={nickname}
+                                onChange={(e) => setNickname(e.target.value)}
+                                placeholder="닉네임 (필수)"
+                                type="text"
+                                required
+                            />
+                            <Input
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="이메일 주소"
+                                type="email"
+                                required
+                            />
+                            <Input
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                                 placeholder="비밀번호"
+                                type="password"
                                 required
                             />
                             <LogniBtn type="submit">로그인</LogniBtn>
@@ -258,7 +397,9 @@ const LogReg = ({ openModal, setOpenModal, index, setIndex }) => {
                                 icon={faGoogle}
                                 style={{ width: "24px", height: "25px" }}
                             />
-                            <GoogleText>Google 계정으로 로그인</GoogleText>{" "}
+                            <GoogleText onClick={googleSigiIn}>
+                                Google 계정으로 로그인
+                            </GoogleText>{" "}
                         </GoogleBtn>
                         {/* <KakaoiBtn>
                             <FontAwesomeIcon
@@ -273,36 +414,28 @@ const LogReg = ({ openModal, setOpenModal, index, setIndex }) => {
                 <TapContant hidden={index !== 1}>
                     <InputContainer>
                         <Title>회원가입</Title>
-                        <SignUpForm>
+                        <SignUpForm onSubmit={register}>
                             <Input
+                                value={nickname}
+                                onChange={(e) => setNickname(e.target.value)}
+                                placeholder="닉네임 (필수)"
                                 type="text"
-                                name=""
-                                id=""
-                                placeholder="아이디"
                                 required
                             />
                             <Input
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="이메일 주소"
                                 type="email"
-                                name=""
-                                id=""
-                                placeholder="이메일"
-                                required
                             />
                             <Input
-                                type="password"
-                                name=""
-                                id=""
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                                 placeholder="비밀번호"
-                                required
-                            />
-                            <Input
                                 type="password"
-                                name=""
-                                id=""
-                                placeholder="비밀번호확인"
                                 required
                             />
-                            <SignupBtn type="submit">회원등록</SignupBtn>
+                            <SignupBtn type="submit">회원가입 완료</SignupBtn>
                         </SignUpForm>
                         {/*<Google>
               <FontAwesomeIcon
