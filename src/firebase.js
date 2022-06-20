@@ -7,7 +7,7 @@ import { getFirestore } from "firebase/firestore"; // firestore 사용
 const firebaseConfig = {
     // firebase 설정과 관련된 개인 정보
     apiKey: process.env.REACT_APP_FIREBASE_KEY,
-    //apiKey: "AIzaSyCuYSoKkUEg1DENSyKREAOOvVe4CHCC168", // 인증 key
+    //apiKey: "본인 SDK 인증키 입력해야함. .env 에 입력하면됩니다", // 인증 key
     authDomain: "campmap-dc086.firebaseapp.com",
     projectId: "campmap-dc086",
     storageBucket: "campmap-dc086.appspot.com",
