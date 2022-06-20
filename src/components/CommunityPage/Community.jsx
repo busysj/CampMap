@@ -4,6 +4,7 @@ import "./Community.css";
 import postImg from "../../assets/thumbnail_post_IMG.png";
 import { useNavigate } from "react-router-dom";
 import WriteModal from "./WriteModal";
+import BoardList from "./BoardList";
 
 const Community = () => {
     const [user, setUser] = useState(null);
@@ -14,7 +15,14 @@ const Community = () => {
         <div className="total">
             <h1>커뮤니티 페이지</h1>
             <div className="wirte_section_header">
-                <WriteModal className="write_btn">글쓰기</WriteModal>
+                <WriteModal
+                    className="write_btn"
+                    onClick={() => {
+                        navigator("/write");
+                    }}
+                >
+                    글쓰기
+                </WriteModal>
             </div>
             <div className="best_section">
                 <div className="description">
@@ -79,7 +87,7 @@ const Community = () => {
                 </div>
                 <div className="category_section_body">
                     {num.map((m, index) => (
-                        <div className="board_item">
+                        <div key={index} className="board_item">
                             <div className="board_post">
                                 <div className="thumbnail_author">
                                     <img
@@ -91,7 +99,7 @@ const Community = () => {
                                 <div className="board_header">
                                     <em className="name_author">user 아이디</em>
                                     <p className="time">
-                                        {new Date().getFullYear} 몇시에 작성함
+                                        {new Date().getFullYear()} 몇시에 작성함
                                     </p>
                                 </div>
                                 <div className="board_body">
@@ -128,10 +136,18 @@ const Community = () => {
                         </div>
                     ))}
                 </div>
+                <BoardList />
                 <div className="category_section_footer">
                     글리스트 밑에 글작성 버튼
                     <div className="wirte_section_end">
-                        <button className="write_btn">글쓰기</button>
+                        <button
+                            className="write_btn"
+                            onClick={() => {
+                                navigator("/write");
+                            }}
+                        >
+                            글쓰기
+                        </button>
                     </div>
                 </div>
             </div>

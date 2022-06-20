@@ -9,7 +9,7 @@ import CampPage from "./page/CampPage";
 import Community from "./components/CommunityPage/Community";
 import CampingNav from "./components/MainPage/CampingNav";
 import SearchResultList from "./components/SearchResultList";
-import WriteModal from "./components/CommunityPage/WriteModal";
+import BoardWrite from "./components/CommunityPage/BoardWrite";
 import Layout from "./page/Layout";
 // 로그인
 
@@ -34,9 +34,10 @@ function App() {
                     <Route path="/community" element={<Community />}></Route>
 
                     {!user ? ( // user
-                        <Route path="/" element={<LogReg />}></Route>
+                        //<Route path="/" element={<LogReg />}></Route>
+                        <Route path="/" element={<MainPage />}></Route>
                     ) : (
-                        <Route path="/write" element={<WriteModal />}></Route>
+                        <Route path="/write" element={<BoardWrite />}></Route>
                     )}
 
                     <Route path="/youtube" element={<CampingNav />}></Route>

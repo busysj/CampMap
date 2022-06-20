@@ -15,7 +15,7 @@ const WriteModal = () => {
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Modal heading</Modal.Title>
+                    <Modal.Title>글 작성하기</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
