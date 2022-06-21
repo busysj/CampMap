@@ -592,8 +592,8 @@ const MapPage = () => {
     setDistrictResult(result);
   };
 
-  const handleTagSearch = (e) => {
-    let value = e.target.value;
+  const handleTagSearch = (data) => {
+    let value = document.getElementById(data).innerHTML;
     console.log(value);
   };
 
@@ -648,10 +648,11 @@ const MapPage = () => {
     return (
       <>
         <SearchTag
-          onClick={(e) => {
+          onClick={() => {
             !isTagClick ? setIsTagClick(true) : setIsTagClick(false);
-            handleTagSearch(e);
+            handleTagSearch(data);
           }}
+          id={data}
           className={isTagClick && "active"}
         >
           {data}
