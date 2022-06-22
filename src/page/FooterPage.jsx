@@ -50,6 +50,12 @@ const FooterCopyright = styled.div`
     line-height: 1.9;
 `;
 
+const People = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+
 const FooterPage = () => {
     const people = [
         {
@@ -98,7 +104,7 @@ const FooterPage = () => {
                         </span>
                         <span>. All rights reserved.</span>
                         <br />
-                        <div>
+                        <People>
                             {people.map((person, index) => (
                                 <div key={index}>
                                     <span>
@@ -116,7 +122,7 @@ const FooterPage = () => {
                                     </span>
                                 </div>
                             ))}
-                        </div>
+                        </People>
                     </FooterCopyright>
                 </FooterCenter>
             </FooterBox>

@@ -2,16 +2,19 @@ import React, { useState } from "react";
 import { Nav } from "react-bootstrap";
 import "./Community.css";
 import postImg from "../../assets/thumbnail_post_IMG.png";
+import { useNavigate } from "react-router-dom";
+import WriteModal from "./WriteModal";
 
 const Community = () => {
     const [user, setUser] = useState(null);
     const [num, setNum] = useState([1, 2, 3, 4]);
+    const navigator = useNavigate();
 
     return (
         <div className="total">
             <h1>커뮤니티 페이지</h1>
             <div className="wirte_section_header">
-                <button className="write_btn">글쓰기</button>
+                <WriteModal className="write_btn">글쓰기</WriteModal>
             </div>
             <div className="best_section">
                 <div className="description">
