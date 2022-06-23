@@ -1,8 +1,6 @@
 import "./App.css";
 
 import MainPage from "./page/MainPage";
-import NavbarPage from "./page/NavbarPage";
-import FooterPage from "./page/FooterPage";
 import { Route, Routes } from "react-router-dom";
 import MapPage from "./page/MapPage";
 import CampPage from "./page/CampPage";
@@ -16,7 +14,8 @@ import Layout from "./page/Layout";
 import { useSelector } from "react-redux";
 import { selectUser } from "./store/userSlice";
 
-import LogReg from "./components/LogReg";
+import LogReg from "./components/tools/LogReg";
+
 
 function App() {
     const user = useSelector(selectUser);

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Logo from "../assets/Logo.png";
 import { Link, useLocation } from "react-router-dom";
-import LogReg from "./../components/LogReg";
-import OutsideClick from "./../components/OutsideClick";
+import LogReg from "../components/tools/LogReg";
+import OutsideClick from "../components/tools/OutsideClick";
 import SearchIcon from "@mui/icons-material/Search";
 
 import { useDispatch, useSelector } from "react-redux";

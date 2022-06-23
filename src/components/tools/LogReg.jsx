@@ -5,7 +5,7 @@ import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 // import { faComment } from "@fortawesome/free-solid-svg-icons"; // 카카오톡 제거
 import { useState } from "react";
-import { auth } from "../firebase";
+import { auth } from "../../firebase";
 import {
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
@@ -14,7 +14,7 @@ import {
     GoogleAuthProvider,
 } from "firebase/auth";
 import { useDispatch } from "react-redux";
-import { login, logout } from "../store/userSlice";
+import { login, logout } from "../../store/userSlice";
 import { useNavigate } from "react-router-dom";
 
 /*const ModalBackground = styled.div`
@@ -306,7 +306,7 @@ const LogReg = ({ openModal, setOpenModal, index, setIndex }) => {
             });
     };
 
-    const googleSigiIn = () => {
+    const googleSignIn = () => {
         const provider = new GoogleAuthProvider();
         signInWithPopup(auth, provider)
             .then((result) => {
@@ -397,7 +397,7 @@ const LogReg = ({ openModal, setOpenModal, index, setIndex }) => {
                                 icon={faGoogle}
                                 style={{ width: "24px", height: "25px" }}
                             />
-                            <GoogleText onClick={googleSigiIn}>
+                            <GoogleText onClick={googleSignIn}>
                                 Google 계정으로 로그인
                             </GoogleText>{" "}
                         </GoogleBtn>
