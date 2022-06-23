@@ -11,6 +11,7 @@ import Shower from '@mui/icons-material/ShowerOutlined';
 import LocalFire from '@mui/icons-material/LocalFireDepartmentOutlined';
 import Extinguisher from '@mui/icons-material/FireExtinguisherOutlined';
 import Pet from '@mui/icons-material/PetsOutlined';
+import { useState } from "react";
 
 const CampBody = styled.div`
   display: flex;
@@ -75,12 +76,19 @@ const AbleContainer = styled.div`
 
 
 const CampPage = () => {
+  const [coords, setCoords] = useState([]);
+  setCoords(
+    [{
+      mapX : 129.0462238,
+      mapY : 35.1160647
+    }]
+  )
 
   return(
   <div>
     <CampBody>
       <CampContext>
-        <h2 className="camp-title">캠핑장 이름</h2>
+        <h2 className="camp-title">캠프장 이름</h2>
         <div className="camp-title-icon">
 
         </div>
@@ -90,7 +98,7 @@ const CampPage = () => {
         <div className="horizon"/>
         <div className="camp-icon-container">
           <div>
-            <LanguageIcon fontSize="large"/>
+            <LanguageIcon fontSize="large" />
             <p>웹사이트</p>
           </div>
           <div>
@@ -103,9 +111,9 @@ const CampPage = () => {
           </div>
         </div>
       </CampContext>
-      <MapContainer center={{ lat: 33.450701, lng: 126.570667 }}
+      <MapContainer center={{ lat: coords.mapY, lng: coords.mapX }}
         style={{ width: "60%", height: "500px" }}>
-        <MapMarker position={{ lat: 33.450701, lng: 126.570667 }}>
+        <MapMarker position={{ lat: coords.mapY, lng: coords.mapX }}>
           <div style={{ color: "#000" }}> Hello World</div>
         </MapMarker>
       </MapContainer>
@@ -135,7 +143,7 @@ const CampPage = () => {
         <Pet className="icon-able"/>
         <p>반려동물 입장 가능</p>
       </div>
-    </AbleContainer>
+  </AbleContainer>
   </div>
 
   );

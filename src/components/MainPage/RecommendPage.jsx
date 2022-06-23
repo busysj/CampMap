@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import LocationBaseList from '../mapApi/LocationBaseList';
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper";
 import "swiper/swiper.scss";
@@ -47,13 +46,31 @@ const Container = styled.div`
         justify-content: center;
         display: flex;
         flex-direction: column;
-
+        span{
+            margin: 0; padding: 0;
+            opacity: 0;
+        }
         img {
             border-radius: 24px 24px 0 0;
             display: block;
             width: 100%;
             height: 30vh;
             object-fit: cover;
+        }
+        &:hover{
+            img{
+                filter: brightness(50%);
+            }
+            span {
+                display: inline;
+                opacity: 1;
+                position: absolute; top: 50%;
+                text-align: center;
+                background-color: transparent;
+                color: white;
+                font-size: 20px;
+                z-index: 1000;
+            }
         }
     }
 `;
@@ -73,8 +90,9 @@ const CampingName = styled.h2`
     font-size: 20px;
 `;
 
-const RecommendPage = () => {
-    const campData = LocationBaseList().locationData;
+const RecommendPage = ({campData}) => {
+    const camp = campData;
+    console.log(campData);
 
     return (
         <Container>
@@ -96,8 +114,9 @@ const RecommendPage = () => {
                     loop={true}
                 >
                     {
-                       campData.map((camp, index) => (
+                       camp.map((camp, index) => (
                         <SwiperSlide key={index}>
+                            <span>더 보기</span>
                             <img src={camp.firstImageUrl} alt='Camping'/>
                             <CampingBack>
                                 <CampingName>{camp.facltNm}</CampingName>
@@ -109,5 +128,4 @@ const RecommendPage = () => {
         </Container>
     );
 };
-
 export default RecommendPage;

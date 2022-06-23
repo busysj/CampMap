@@ -16,7 +16,6 @@ import { selectUser } from "./store/userSlice";
 
 import LogReg from "./components/tools/LogReg";
 
-
 function App() {
     const user = useSelector(selectUser);
 
