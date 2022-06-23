@@ -558,6 +558,7 @@ const MapPage = () => {
   const [keywordResult, setKeywordResult] = useState();
   const [selectedResult, setSelectedResult] = useState();
   const [districtResult, setDistrictResult] = useState();
+  const [tagValue, setTagValue] = useState([]);
 
   const handleSearch = (e) => {
     let value = e.target.value.toLowerCase();
@@ -592,12 +593,11 @@ const MapPage = () => {
     setDistrictResult(result);
   };
 
-  const handleTagSearch = (data) => {
-    let value = document.getElementById(data).innerHTML;
-    console.log(value);
-  };
-
   const onClickSearch = () => {
+    let value = document.querySelectorAll(".active");
+    for (let i = 0; i < value.length; i++) {
+      setTagValue(...tagValue, value[i].id);
+    }
     if (keywordResult) {
       setFilteredData(keywordResult);
       if (selectedResult) {
@@ -628,6 +628,7 @@ const MapPage = () => {
       setFilteredData(allData);
     }
     setSearch(true);
+    console.log(tagValue);
   };
 
   const onClickReset = () => {
@@ -636,6 +637,7 @@ const MapPage = () => {
     setKeywordResult(null);
     setSelectedResult(null);
     setDistrictResult(null);
+    setTagValue([]);
     setFilteredData(allData);
     setSelected(cityData[0]);
     setDistrict(districtData[cityData[0]]);
@@ -649,8 +651,13 @@ const MapPage = () => {
       <>
         <SearchTag
           onClick={() => {
-            !isTagClick ? setIsTagClick(true) : setIsTagClick(false);
-            handleTagSearch(data);
+            if (!isTagClick) {
+              setIsTagClick(true);
+              // setTagValue([...tagValue, data]);
+            } else {
+              setIsTagClick(false);
+              // setTagValue(tagValue.filter((value) => value.id !== data));
+            }
           }}
           id={data}
           className={isTagClick && "active"}
