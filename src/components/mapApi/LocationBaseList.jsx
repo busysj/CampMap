@@ -4,6 +4,7 @@ import UseCurrentLocation from "../../hooks/UseCurrentLocation";
 
 const geolocationOptions = {
   enableHighAccuracy: true,
+  timeout: 1000 * 10 * 1, // 10 sec (1000 ms * 60 sec * 1 minute = 60 000ms)
 };
 
 const LocationBaseList = () => {
@@ -23,7 +24,7 @@ const LocationBaseList = () => {
     };
     allData();
   },[location]);
-  console.log(locationData);
-  return(<div></div>);
+  
+  return {locationData};
 };
 export default LocationBaseList;
