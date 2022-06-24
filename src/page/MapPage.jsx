@@ -12,220 +12,6 @@ import defaultImage from "../assets/default-Image.png";
 
 const { Option } = Select;
 
-const FindMap = styled.div`
-  display: flex;
-  margin: 25px 50px;
-`;
-
-const Search = styled.div`
-  position: relative;
-  width: 35%;
-  height: 100%;
-  margin: 0 50px 25px 0;
-`;
-
-const Header = styled.header`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 30px 0 30px 0;
-  font-weight: bold;
-  font-size: 21px;
-  line-height: 20px;
-`;
-
-const ResetButton = styled.button`
-  border: 1px solid black;
-  background: white;
-  color: black;
-  padding: 10px;
-  align-items: center;
-  cursor: pointer;
-  font-size: 15px;
-  font-weight: bold;
-`;
-
-const Form = styled.form``;
-
-const FormBox = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 25px;
-`;
-
-const InputTitle = styled.div`
-  font-size: 15px;
-  line-height: 25px;
-  font-weight: bold;
-`;
-
-const InputCampName = styled(Input)`
-  width: 350px;
-
-  &:hover {
-    border-color: var(--main-color-orange);
-  }
-
-  &:focus {
-    border-color: var(--main-color-orange);
-    box-shadow: 0 0 0 0.5px var(--main-color-orange);
-  }
-`;
-
-const SelectAddress = styled(Select)`
-  width: 100px;
-  margin-left: 15px;
-`;
-
-const SelectBox = styled.div`
-  display: flex;
-`;
-
-const SearchTagList = styled.div`
-  margin: 15px;
-
-  .active {
-    color: var(--main-color-orange);
-    font-weight: bold;
-    border-color: var(--main-color-orange);
-  }
-`;
-const SearchTag = styled(Tag)`
-  border-radius: 20px;
-  padding: 3px 18px;
-  margin: 5px;
-  cursor: pointer;
-
-  &:hover {
-    color: var(--main-color-orange);
-    font-weight: bold;
-    border-color: var(--main-color-orange);
-  }
-`;
-
-const SearchButton = styled.button`
-  width: 150px;
-  height: 40px;
-  color: white;
-  background: var(--main-color-orange);
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-  float: right;
-`;
-
-const Wrap = styled.div`
-  position: absolute;
-  left: 0;
-  bottom: 40px;
-  width: 288px;
-  height: 132px;
-  margin-left: -141px;
-  text-align: left;
-  overflow: hidden;
-  font-size: 12px;
-  font-family: "Malgun Gothic", dotum, "돋움", sans-serif;
-  line-height: 1.5;
-
-  * {
-    padding: 0;
-    margin: 0;
-  }
-`;
-
-const Info = styled.div`
-  width: 286px;
-  height: 120px;
-  border-radius: 5px;
-  border-bottom: 2px solid #ccc;
-  border-right: 1px solid #ccc;
-  overflow: hidden;
-  background: #fff;
-
-  .title {
-    padding: 5px 0 0 10px;
-    height: 35px;
-    background: #eee;
-    border-bottom: 1px solid #ddd;
-    font-size: 18px;
-    font-weight: bold;
-  }
-
-  .close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    color: #888;
-    width: 17px;
-    height: 17px;
-    background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png");
-  }
-
-  .close:hover {
-    cursor: pointer;
-  }
-
-  .body {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .img {
-    position: absolute;
-    top: 6px;
-    left: 5px;
-    width: 73px;
-    height: 71px;
-    border: 1px solid #ddd;
-    color: #888;
-    overflow: hidden;
-  }
-
-  .link {
-    color: #5085bb;
-  }
-
-  &:nth-child(1) {
-    border: 0;
-    box-shadow: 0px 1px 2px #888;
-  }
-
-  &::after {
-    content: "";
-    position: absolute;
-    margin-left: -12px;
-    left: 50%;
-    bottom: 0;
-    width: 22px;
-    height: 12px;
-    background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png");
-  }
-`;
-
-const Description = styled.div`
-  position: relative;
-  margin: 13px 0 0 90px;
-  height: 75px;
-
-  .ellipsis {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .jibun {
-    font-size: 11px;
-    color: #888;
-    margin-top: -2px;
-  }
-`;
-
-// 마커 css
-const MarkerPoint = styled.div`
-  padding: 3px;
-  color: black;
-`;
-
 const cityData = [
   "전체",
   "서울",
@@ -558,7 +344,7 @@ const MapPage = () => {
   const [keywordResult, setKeywordResult] = useState();
   const [selectedResult, setSelectedResult] = useState();
   const [districtResult, setDistrictResult] = useState();
-  const [tagValue, setTagValue] = useState([]);
+  const [tagValueResult, setTagValueResult] = useState();
 
   const handleSearch = (e) => {
     let value = e.target.value.toLowerCase();
@@ -595,9 +381,17 @@ const MapPage = () => {
 
   const onClickSearch = () => {
     let value = document.querySelectorAll(".active");
+    let valueArray = [];
     for (let i = 0; i < value.length; i++) {
-      setTagValue(...tagValue, value[i].id);
+      valueArray[i] = value[i].id;
     }
+
+    let tagResult = allData.filter(
+      (data) => data.sbrsCl && data.sbrsCl.includes(valueArray)
+    );
+
+    value[0] && setTagValueResult(tagResult);
+
     if (keywordResult) {
       setFilteredData(keywordResult);
       if (selectedResult) {
@@ -613,7 +407,19 @@ const MapPage = () => {
           let result3 = result2.filter((data) => districtResult.includes(data));
 
           setFilteredData(result3);
+          if (value[0]) {
+            let tagResult2 = result3.filter((data) => tagResult.includes(data));
+            setFilteredData(tagResult2);
+          }
+        } else if (!districtResult && value[0]) {
+          let tagResult2 = result.filter((data) => tagResult.includes(data));
+          setFilteredData(tagResult2);
         }
+      } else if (!selectedResult && value[0]) {
+        let tagResult2 = keywordResult.filter((data) =>
+          tagResult.includes(data)
+        );
+        setFilteredData(tagResult2);
       }
     } else if (!keywordResult && selectedResult) {
       setFilteredData(selectedResult);
@@ -623,12 +429,27 @@ const MapPage = () => {
         );
 
         setFilteredData(result);
+        if (value[0]) {
+          let tagResult2 = selectedResult.filter((data) =>
+            districtResult.includes(data)
+          );
+          let tagResult3 = tagResult2.filter((data) =>
+            tagResult.includes(data)
+          );
+          setFilteredData(tagResult3);
+        }
+      } else if (!districtResult && value[0]) {
+        let tagResult2 = selectedResult.filter((data) =>
+          tagResult.includes(data)
+        );
+        setFilteredData(tagResult2);
       }
+    } else if (!keywordResult && !selectedResult && value[0]) {
+      setFilteredData(tagResult);
     } else {
       setFilteredData(allData);
     }
     setSearch(true);
-    console.log(tagValue);
   };
 
   const onClickReset = () => {
@@ -637,7 +458,7 @@ const MapPage = () => {
     setKeywordResult(null);
     setSelectedResult(null);
     setDistrictResult(null);
-    setTagValue([]);
+    setTagValueResult(null);
     setFilteredData(allData);
     setSelected(cityData[0]);
     setDistrict(districtData[cityData[0]]);
@@ -789,6 +610,7 @@ const MapPage = () => {
               </SearchTagList>
             </Form>
 
+            {/* <SearchButton onClick={onClickTagSearch}>상세 검색</SearchButton> */}
             <SearchButton onClick={onClickSearch}>검색</SearchButton>
           </Search>
           {location ? (
@@ -873,3 +695,217 @@ const MapPage = () => {
 };
 
 export default MapPage;
+
+const FindMap = styled.div`
+  display: flex;
+  margin: 25px 50px;
+`;
+
+const Search = styled.div`
+  position: relative;
+  width: 35%;
+  height: 100%;
+  margin: 0 50px 25px 0;
+`;
+
+const Header = styled.header`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 0 30px 0;
+  font-weight: bold;
+  font-size: 21px;
+  line-height: 20px;
+`;
+
+const ResetButton = styled.button`
+  border: 1px solid black;
+  background: white;
+  color: black;
+  padding: 10px;
+  align-items: center;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+`;
+
+const Form = styled.form``;
+
+const FormBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+`;
+
+const InputTitle = styled.div`
+  font-size: 15px;
+  line-height: 25px;
+  font-weight: bold;
+`;
+
+const InputCampName = styled(Input)`
+  width: 350px;
+
+  &:hover {
+    border-color: var(--main-color-orange);
+  }
+
+  &:focus {
+    border-color: var(--main-color-orange);
+    box-shadow: 0 0 0 0.5px var(--main-color-orange);
+  }
+`;
+
+const SelectAddress = styled(Select)`
+  width: 100px;
+  margin-left: 15px;
+`;
+
+const SelectBox = styled.div`
+  display: flex;
+`;
+
+const SearchTagList = styled.div`
+  margin: 15px;
+
+  .active {
+    color: var(--main-color-orange);
+    font-weight: bold;
+    border-color: var(--main-color-orange);
+  }
+`;
+const SearchTag = styled(Tag)`
+  border-radius: 20px;
+  padding: 3px 18px;
+  margin: 5px;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--main-color-orange);
+    font-weight: bold;
+    border-color: var(--main-color-orange);
+  }
+`;
+
+const SearchButton = styled.button`
+  width: 150px;
+  height: 40px;
+  color: white;
+  background: var(--main-color-orange);
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  float: right;
+`;
+
+const Wrap = styled.div`
+  position: absolute;
+  left: 0;
+  bottom: 40px;
+  width: 288px;
+  height: 132px;
+  margin-left: -141px;
+  text-align: left;
+  overflow: hidden;
+  font-size: 12px;
+  font-family: "Malgun Gothic", dotum, "돋움", sans-serif;
+  line-height: 1.5;
+
+  * {
+    padding: 0;
+    margin: 0;
+  }
+`;
+
+const Info = styled.div`
+  width: 286px;
+  height: 120px;
+  border-radius: 5px;
+  border-bottom: 2px solid #ccc;
+  border-right: 1px solid #ccc;
+  overflow: hidden;
+  background: #fff;
+
+  .title {
+    padding: 5px 0 0 10px;
+    height: 35px;
+    background: #eee;
+    border-bottom: 1px solid #ddd;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #888;
+    width: 17px;
+    height: 17px;
+    background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png");
+  }
+
+  .close:hover {
+    cursor: pointer;
+  }
+
+  .body {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .img {
+    position: absolute;
+    top: 6px;
+    left: 5px;
+    width: 73px;
+    height: 71px;
+    border: 1px solid #ddd;
+    color: #888;
+    overflow: hidden;
+  }
+
+  .link {
+    color: #5085bb;
+  }
+
+  &:nth-child(1) {
+    border: 0;
+    box-shadow: 0px 1px 2px #888;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    margin-left: -12px;
+    left: 50%;
+    bottom: 0;
+    width: 22px;
+    height: 12px;
+    background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png");
+  }
+`;
+
+const Description = styled.div`
+  position: relative;
+  margin: 13px 0 0 90px;
+  height: 75px;
+
+  .ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .jibun {
+    font-size: 11px;
+    color: #888;
+    margin-top: -2px;
+  }
+`;
+
+// 마커 css
+const MarkerPoint = styled.div`
+  padding: 3px;
+  color: black;
+`;
