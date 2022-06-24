@@ -76,13 +76,6 @@ const AbleContainer = styled.div`
 
 
 const CampPage = () => {
-  const [coords, setCoords] = useState([]);
-  setCoords(
-    [{
-      mapX : 129.0462238,
-      mapY : 35.1160647
-    }]
-  )
 
   return(
   <div>
@@ -111,9 +104,9 @@ const CampPage = () => {
           </div>
         </div>
       </CampContext>
-      <MapContainer center={{ lat: coords.mapY, lng: coords.mapX }}
+      <MapContainer center={{ lat: 35.1160647, lng: 129.0462238 }}
         style={{ width: "60%", height: "500px" }}>
-        <MapMarker position={{ lat: coords.mapY, lng: coords.mapX }}>
+        <MapMarker position={{ lat: 35.1160647, lng: 129.0462238 }}>
           <div style={{ color: "#000" }}> Hello World</div>
         </MapMarker>
       </MapContainer>

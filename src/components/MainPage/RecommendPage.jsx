@@ -92,7 +92,17 @@ const CampingName = styled.h2`
 
 const RecommendPage = ({campData}) => {
     const camp = campData;
-    console.log(campData);
+    const indexCheck = (id) => {
+        let resultData = camp.indexOf(i => i.contentId === id);
+        return resultData;
+    }
+    console.log(camp);
+    const clickTest = (e) => {
+        let searchId = e.target.getAttribute('id');
+        indexCheck(searchId);
+        return console.log(indexCheck());
+    };
+
 
     return (
         <Container>
@@ -115,9 +125,9 @@ const RecommendPage = ({campData}) => {
                 >
                     {
                        camp.map((camp, index) => (
-                        <SwiperSlide key={index}>
+                        <SwiperSlide key={index} onClick={clickTest}>
                             <span>더 보기</span>
-                            <img src={camp.firstImageUrl} alt='Camping'/>
+                            <img id={camp.contentId} src={camp.firstImageUrl} alt='Camping'/>
                             <CampingBack>
                                 <CampingName>{camp.facltNm}</CampingName>
                             </CampingBack>
