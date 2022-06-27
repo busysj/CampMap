@@ -504,170 +504,57 @@ const MapPage = () => {
 
     return (
       <>
-        {!search ? (
-          <FindMap>
-            <Search>
-              <Header>
-                캠핑장 조회
-                <ResetButton
-                  onClick={() => {
-                    setSearchResult("");
-                    setFilteredData(allData);
-                  }}
-                >
-                  {" "}
-                  <RotateLeftIcon fontSize="small" />
-                  전체 초기화
-                </ResetButton>
-              </Header>
-              <Form>
-                <FormBox>
-                  <InputTitle>캠핑장 검색</InputTitle>
-                  <InputCampName
-                    placeholder="캠핑장 또는 지역을 검색하세요"
-                    onChange={(e) => handleSearch(e)}
-                    value={searchResult}
-                  />
-                </FormBox>
-                <FormBox>
-                  <InputTitle>지역</InputTitle>
-                  <SelectBox>
-                    <SelectAddress
-                      defaultValue="전체"
-                      onChange={handleCityChange}
-                    >
-                      {cityData.map((city) => (
-                        <Option key={city}>{city}</Option>
-                      ))}
-                    </SelectAddress>
-                    <SelectAddress
-                      defaultValue="전체"
-                      onChange={onDistrictChange}
-                    >
-                      {cities.map((district) => (
-                        <Option key={district}>{district}</Option>
-                      ))}
-                    </SelectAddress>
-                  </SelectBox>
-                </FormBox>
-
-                <InputTitle>상세 검색</InputTitle>
-                <SearchTagList>
-                  <SearchTag>전기</SearchTag>
-                  <SearchTag>무선인터넷</SearchTag>
-                  <SearchTag>장작판매</SearchTag>
-                  <SearchTag>온수</SearchTag>
-                  <SearchTag>트렘폴린</SearchTag>
-                  <SearchTag>물놀이장</SearchTag>
-                  <SearchTag>놀이터</SearchTag>
-                  <SearchTag>산책로</SearchTag>
-                  <SearchTag>운동장</SearchTag>
-                  <SearchTag>운동시설</SearchTag>
-                  <SearchTag>마트,편의점</SearchTag>
-                  <SearchTag>애견동반</SearchTag>
-                </SearchTagList>
-              </Form>
-
-              <SearchButton
-                onClick={() => {
-                  filteredData[0]
-                    ? setSearch(true)
-                    : alert("검색 결과가 없습니다");
-                }}
-              >
-                검색
-              </SearchButton>
-            </Search>
-            {location ? (
-              <Map
-                center={{
-                  lat: location.latitude,
-                  lng: location.longitude,
-                }}
-                style={{ width: "63%", height: "800px" }}
-                level={4}
-                onZoomChanged={(map) => setLevel(map.getLevel())}
-              >
-                <ZoomControl />
-                <MapMarker
-                  position={{
-                    lat: location.latitude,
-                    lng: location.longitude,
-                  }}
-                >
-                  <div style={{ color: "#000" }}> 현재 위치</div>
-                </MapMarker>
-              </Map>
-            ) : (
-              <Map
-                center={{ lat: 33.450701, lng: 126.570667 }}
-                style={{ width: "63%", height: "800px" }}
-                level={4}
-                onZoomChanged={(map) => setLevel(map.getLevel())}
-              >
-                <ZoomControl />
-                <MapMarker position={{ lat: 33.450701, lng: 126.570667 }}>
-                  <div style={{ color: "#000" }}> 카카오</div>
-                </MapMarker>
-              </Map>
-            )}
-          </FindMap>
-        ) : (
-          <FindMap>
-            <Search>
-              <Header>
-                캠핑장 조회
-                {searchResult ? (
-                  <InputTitle>
-                    "{searchResult}" 검색 결과 ({filteredData.length})
-                  </InputTitle>
-                ) : (
-                  <InputTitle>전체 결과 ({filteredData.length})</InputTitle>
-                )}
-                <ResetButton
-                  onClick={() => {
-                    setSearch(false);
-                    setFilteredData(allData);
-                    setSearchResult("");
-                  }}
-                >
-                  뒤로 가기
-                </ResetButton>
-              </Header>
-              <SearchResultList filteredData={filteredData} />
-            </Search>
-            {filteredData[0] ? (
-              <Map
-                center={{
-                  lat: filteredData[0].mapY,
-                  lng: filteredData[0].mapX,
-                }}
-                style={{ width: "63%", height: "800px" }}
-                level={10}
-                onZoomChanged={(map) => setLevel(map.getLevel())}
-              >
-                <ZoomControl />
-                <MapTypeControl />
-                {filteredData.map((item, index) => (
-                  <EventMarkerContainer
-                    key={index}
-                    position={{
-                      lat: item.mapY,
-                      lng: item.mapX,
-                    }}
-                    content={<MarkerPoint> {item.facltNm}</MarkerPoint>}
-                    campName={item.facltNm}
-                    firstImg={item.firstImageUrl}
-                    description={item.addr1}
-                    homepage={item.homepage}
-                    callNumber={item.tel}
-                  />
-                ))}
-              </Map>
-            ) : (
-              setSearch(false)
-            )}
-          </FindMap>
+        <MapMarker
+          position={position}
+          onClick={(marker) => {
+            map.panTo(marker.getPosition());
+            setIsOpen(true);
+          }}
+          onMouseOver={() => setIsVisible(true)}
+          onMouseOut={() => setIsVisible(false)}
+        >
+          {isVisible && content}
+        </MapMarker>
+        {isOpen && (
+          <CustomOverlayMap position={position}>
+            <Wrap>
+              <Info>
+                <div className="title">
+                  {campName}
+                  <div
+                    className="close"
+                    onClick={() => setIsOpen(false)}
+                    title="닫기"
+                  ></div>
+                </div>
+                <div className="body">
+                  <div className="img">
+                    <img
+                      src={firstImg ? firstImg : defaultImage}
+                      width="73"
+                      height="70"
+                      alt={campName}
+                    />
+                  </div>
+                  <Description>
+                    <div className="ellipsis">{description}</div>
+                    <div className="jibun ellipsis">{callNumber}</div>
+                    <div>
+                      <a
+                        href={homepage}
+                        target="_blank"
+                        className="link"
+                        rel="noreferrer"
+                      >
+                        홈페이지
+                      </a>
+                    </div>
+                  </Description>
+                </div>
+              </Info>
+            </Wrap>
+            ;
+          </CustomOverlayMap>
         )}
       </>
     );
