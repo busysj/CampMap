@@ -5,6 +5,28 @@ import Safety from "../../assets/Safety.png";
 
 // import { Modal } from "antd";
 
+const PopupPage = (props) => {
+    const { onClose } = props;
+    return (
+        <Draggable>
+            <Popup>
+                <PopupHeader>
+                    <PopupButton
+                        onClick={() => {
+                            onClose(false);
+                        }}
+                    >
+                        X
+                    </PopupButton>
+                </PopupHeader>
+                <PopupImage src={Safety} to="/" />
+            </Popup>
+        </Draggable>
+    );
+};
+
+export default PopupPage;
+
 const Popup = styled.div`
     position: fixed;
     width: 350px;
@@ -52,25 +74,3 @@ const PopupButton = styled.button`
         opacity: 1;
     }
 `;
-
-const PopupPage = (props) => {
-    const { onClose } = props;
-    return (
-        <Draggable>
-            <Popup>
-                <PopupHeader>
-                    <PopupButton
-                        onClick={() => {
-                            onClose(false);
-                        }}
-                    >
-                        X
-                    </PopupButton>
-                </PopupHeader>
-                <PopupImage src={Safety} to="/" />
-            </Popup>
-        </Draggable>
-    );
-};
-
-export default PopupPage;

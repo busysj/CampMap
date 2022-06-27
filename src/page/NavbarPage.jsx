@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Logo from "../assets/Logo.png";
 import { Link, useLocation } from "react-router-dom";
@@ -9,6 +9,103 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../store/userSlice";
 import { logout } from "../store/userSlice";
+
+const NavbarPage = () => {
+    const user = useSelector(selectUser);
+    const dispatch = useDispatch();
+
+    const [openModal, setOpenModal] = useState(false);
+    const location = useLocation();
+
+    const [typeIndex, setTypeIndex] = useState(0);
+
+    const handleClose = () => {
+        setOpenModal(false);
+        console.log(location.pathname); // 네브바 주소접근 확인 콘솔 -by.재라
+    };
+
+    return (
+        <Nav>
+            <NavLogo to="/">
+                <img src={Logo} alt="logo" />
+                Camp
+            </NavLogo>
+
+            <NavMenu>
+                <NavItem>
+                    <NavLink to="/map">지도</NavLink>
+                    <NavLink to="/community">커뮤니티</NavLink>
+                    <NavLink to="/recommend">캠핑장추천</NavLink>
+                    <NavLink to="/review">리뷰</NavLink>
+                    <NavLink to="/youtube">유튜브</NavLink>
+                </NavItem>
+                {/* 재라 : 네브바 검색창 코드start - 0610 */}
+                {location.pathname !== "/" ? (
+                    <form>
+                        <SearchInput1>
+                            <span>
+                                <input type="text" placeholder="검색어를 입력 해 주세요" />
+                                <button>
+                                    <BtnIcon>
+                                        <SearchIcon viewBox="0 0 25 25" />
+                                    </BtnIcon>
+                                    {/* className="btn_icon" */}
+                                </button>
+                            </span>
+                        </SearchInput1>
+                    </form>
+                ) : null}
+                {/* 재라 : 네브바 검색창 코드end - 0610 */}
+                <NavButtonContainer>
+                    {!user ? ( // user값에 따라 네브바 (로그인,회원가입) 또는 (로그아웃,마이페이지) 로 나뉨
+                        <div>
+                            <button
+                                to="/"
+                                onClick={() => {
+                                    setTypeIndex(0);
+                                    setOpenModal(true);
+                                }}
+                            >
+                                로그인
+                            </button>
+                            <button
+                                to="/"
+                                onClick={() => {
+                                    setTypeIndex(1);
+                                    setOpenModal(true);
+                                }}
+                            >
+                                회원가입
+                            </button>
+                        </div>
+                    ) : (
+                        <div>
+                            <button
+                                to="/"
+                                onClick={() => {
+                                    dispatch(logout());
+                                }}
+                            >
+                                로그아웃
+                            </button>
+                        </div>
+                    )}
+                </NavButtonContainer>
+            </NavMenu>
+
+            <OutsideClick onClickOutside={handleClose}>
+                <LogReg
+                    openModal={openModal}
+                    setOpenModal={setOpenModal}
+                    index={typeIndex}
+                    setIndex={setTypeIndex}
+                />
+            </OutsideClick>
+        </Nav>
+    );
+};
+
+export default NavbarPage;
 
 const Nav = styled.div`
     background: #fff;
@@ -131,103 +228,3 @@ const BtnIcon = styled.div`
     font-size: small;
 `;
 /* 재라 : 네브바 검색창 코드 CSS end - 0610 */
-
-const NavbarPage = () => {
-    const user = useSelector(selectUser);
-    const dispatch = useDispatch();
-
-    const [openModal, setOpenModal] = useState(false);
-    const location = useLocation();
-
-    const [typeIndex, setTypeIndex] = useState(0);
-
-    const handleClose = () => {
-        setOpenModal(false);
-        console.log(location.pathname); // 네브바 주소접근 확인 콘솔 -by.재라
-    };
-
-    return (
-        <Nav>
-            <NavLogo to="/">
-                <img src={Logo} alt="logo" />
-                Camp
-            </NavLogo>
-
-            <NavMenu>
-                <NavItem>
-                    <NavLink to="/map">지도</NavLink>
-                    <NavLink to="/community">커뮤니티</NavLink>
-                    <NavLink to="/recommend">캠핑장추천</NavLink>
-                    <NavLink to="/review">리뷰</NavLink>
-                    <NavLink to="/youtube">유튜브</NavLink>
-                </NavItem>
-                {/* 재라 : 네브바 검색창 코드start - 0610 */}
-                {location.pathname !== "/" ? (
-                    <form>
-                        <SearchInput1>
-                            <span>
-                                <input
-                                    type="text"
-                                    placeholder="검색어를 입력 해 주세요"
-                                />
-                                <button>
-                                    <BtnIcon>
-                                        <SearchIcon viewBox="0 0 25 25" />
-                                    </BtnIcon>
-                                    {/* className="btn_icon" */}
-                                </button>
-                            </span>
-                        </SearchInput1>
-                    </form>
-                ) : null}
-                {/* 재라 : 네브바 검색창 코드end - 0610 */}
-                <NavButtonContainer>
-                    {!user ? ( // user값에 따라 네브바 (로그인,회원가입) 또는 (로그아웃,마이페이지) 로 나뉨
-                        <div>
-                            <button
-                                to="/"
-                                onClick={() => {
-                                    setTypeIndex(0);
-                                    setOpenModal(true);
-                                }}
-                            >
-                                로그인
-                            </button>
-                            <button
-                                to="/"
-                                onClick={() => {
-                                    setTypeIndex(1);
-                                    setOpenModal(true);
-                                }}
-                            >
-                                회원가입
-                            </button>
-                        </div>
-                    ) : (
-                        <div>
-                            <button
-                                to="/"
-                                onClick={() => {
-                                    dispatch(logout());
-                                }}
-                            >
-                                로그아웃
-                            </button>
-                        </div>
-                    )}
-                </NavButtonContainer>
-            </NavMenu>
-
-            <OutsideClick onClickOutside={handleClose}>
-                <LogReg
-                    openModal={openModal}
-                    setOpenModal={setOpenModal}
-                    index={typeIndex}
-                    setIndex={setTypeIndex}
-                />
-            </OutsideClick>
-        </Nav>
-    );
-};
-
-export default NavbarPage;

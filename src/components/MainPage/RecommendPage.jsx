@@ -1,10 +1,47 @@
 import styled from "styled-components";
-import LocationBaseList from '../mapApi/LocationBaseList';
+import LocationBaseList from "../mapApi/LocationBaseList";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper";
 import "swiper/swiper.scss";
 import "swiper/components/navigation/navigation.scss";
 import "swiper/components/pagination/pagination.scss";
+
+const RecommendPage = () => {
+    const campData = LocationBaseList().locationData;
+
+    return (
+        <Container>
+            <Title>주변 캠핑장 추천</Title>
+            <Swiper
+                slidesPerView={4}
+                spaceBetween={50}
+                autoplay={{
+                    delay: 100,
+                    disableOnInteraction: false,
+                }}
+                speed={6000}
+                navigation={true}
+                scrollbar={{
+                    draggable: true,
+                }}
+                modules={[Pagination, Navigation, Autoplay]}
+                className="mySwiper"
+                loop={true}
+            >
+                {campData.map((camp, index) => (
+                    <SwiperSlide key={index}>
+                        <img src={camp.firstImageUrl} alt="Camping" />
+                        <CampingBack>
+                            <CampingName>{camp.facltNm}</CampingName>
+                        </CampingBack>
+                    </SwiperSlide>
+                ))}
+            </Swiper>
+        </Container>
+    );
+};
+
+export default RecommendPage;
 
 const Title = styled.h1`
     color: white;
@@ -26,19 +63,18 @@ const Container = styled.div`
         padding-left: 50px;
         padding-right: 50px;
     }
-    
 
     .swiper-button-next {
-       right: 19px;
-       color: var(--main-color-orange);
+        right: 19px;
+        color: var(--main-color-orange);
     }
     .swiper-button-prev {
         left: 17px;
         color: var(--main-color-orange);
     }
 
-    .swiper-button-prev.swiper-button-disabled, 
-    .swiper-button-next.swiper-button-disabled{
+    .swiper-button-prev.swiper-button-disabled,
+    .swiper-button-next.swiper-button-disabled {
         opacity: 1;
     }
 
@@ -72,42 +108,3 @@ const CampingName = styled.h2`
     justify-content: center;
     font-size: 20px;
 `;
-
-const RecommendPage = () => {
-    const campData = LocationBaseList().locationData;
-
-    return (
-        <Container>
-            <Title>주변 캠핑장 추천</Title>
-                <Swiper
-                    slidesPerView={4}
-                    spaceBetween={50}
-                    autoplay={{
-                        delay : 100,
-                        disableOnInteraction: false,
-                    }}
-                    speed={6000}
-                    navigation={true}
-                    scrollbar={{
-                        draggable: true,
-                    }}
-                    modules={[Pagination, Navigation, Autoplay]}
-                    className="mySwiper"
-                    loop={true}
-                >
-                    {
-                       campData.map((camp, index) => (
-                        <SwiperSlide key={index}>
-                            <img src={camp.firstImageUrl} alt='Camping'/>
-                            <CampingBack>
-                                <CampingName>{camp.facltNm}</CampingName>
-                            </CampingBack>
-                        </SwiperSlide>
-                       )) 
-                    }
-                </Swiper>
-        </Container>
-    );
-};
-
-export default RecommendPage;
