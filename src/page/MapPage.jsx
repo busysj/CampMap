@@ -497,6 +497,7 @@ const MapPage = () => {
     description,
     homepage,
     callNumber,
+    conId,
   }) => {
     const map = useMap();
     const [isVisible, setIsVisible] = useState(false);
@@ -516,7 +517,7 @@ const MapPage = () => {
           {isVisible && content}
         </MapMarker>
         {isOpen && (
-          <CustomOverlayMap position={position}>
+          <CustomOverlayMap position={position} id={conId}>
             <Wrap>
               <Info>
                 <div className="title">
@@ -539,7 +540,8 @@ const MapPage = () => {
                   <Description>
                     <div className="ellipsis">{description}</div>
                     <div className="jibun ellipsis">{callNumber}</div>
-                    <div>
+                    <br />
+                    <div className="link_box">
                       <a
                         href={homepage}
                         target="_blank"
@@ -547,6 +549,9 @@ const MapPage = () => {
                         rel="noreferrer"
                       >
                         홈페이지
+                      </a>
+                      <a className="info_btn" href="/camppage">
+                        상세 정보
                       </a>
                     </div>
                   </Description>
@@ -682,6 +687,7 @@ const MapPage = () => {
                   description={item.addr1}
                   homepage={item.homepage}
                   callNumber={item.tel}
+                  conId={item.contentId}
                 />
               ))}
             </Map>
@@ -901,6 +907,25 @@ const Description = styled.div`
     font-size: 11px;
     color: #888;
     margin-top: -2px;
+  }
+
+  .link_box {
+    margin-top: -10px;
+  }
+
+  .info_btn {
+    float: right;
+    margin-right: 20px;
+    color: black;
+    background-color: white;
+    border: 0.2px solid lightgray;
+    padding: 3px 5px;
+    font-weight: 900;
+  }
+
+  .info_btn:hover {
+    border: 1px solid var(--main-color-orange);
+    color: var(--main-color-orange);
   }
 `;
 
