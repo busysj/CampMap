@@ -1,3 +1,5 @@
+import MapPage from "../../page/MapPage";
+
 import styled from "styled-components";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper";
@@ -90,23 +92,21 @@ const CampingName = styled.h2`
     font-size: 20px;
 `;
 
-const RecommendPage = ({campData}) => {
+const RecommendPage = ({campData}) => { // 로컬데이터 프롭값으로 받음
     const camp = campData;
-    const indexCheck = (id) => {
-        let resultData = camp.indexOf(i => i.contentId === id);
-        return resultData;
-    }
     console.log(camp);
-    const clickTest = (e) => {
-        let searchId = e.target.getAttribute('id');
-        indexCheck(searchId);
-        return console.log(indexCheck());
+    const clickPush = (i) => {
+        //해당하는 캠핑장 클릭시 id값 추출 및 해당하는 인덱스값 가져옴
+        const searchId = camp[i];
+        
+        return console.log(searchId);
     };
 
 
     return (
         <Container>
-            <Title>주변 캠핑장 추천</Title>
+            <Title
+            >주변 캠핑장 추천</Title>
                 <Swiper
                     slidesPerView={4}
                     spaceBetween={50}
@@ -125,7 +125,9 @@ const RecommendPage = ({campData}) => {
                 >
                     {
                        camp.map((camp, index) => (
-                        <SwiperSlide key={index} onClick={clickTest}>
+                        <SwiperSlide key={index} onClick={() => {
+                            clickPush(index);
+                        }}>
                             <span>더 보기</span>
                             <img id={camp.contentId} src={camp.firstImageUrl} alt='Camping'/>
                             <CampingBack>

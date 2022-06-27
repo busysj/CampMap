@@ -24,11 +24,10 @@ function App() {
             <Routes>
                 <Route path="/" element={<Layout />}>
                     <Route path="/" element={<MainPage />}></Route>
-                    <Route path="/camppage" element={<CampPage />}></Route>
+                    <Route path='/camppage' element={<CampPage/>}></Route>
                     <Route path="/map" element={<MapPage />}>
                         <Route index element={<SearchResultList />}></Route>
                     </Route>
-                    <Route path="/camppage" element={<CampPage />}></Route>
                     <Route path="/community" element={<Community />}></Route>
 
                     {!user ? ( // user

@@ -75,19 +75,20 @@ const AbleContainer = styled.div`
 `;
 
 
-const CampPage = () => {
+const CampPage = ({data}) => {
+  const getData = data;
 
   return(
   <div>
     <CampBody>
       <CampContext>
-        <h2 className="camp-title">캠프장 이름</h2>
+        <h2 className="camp-title">{getData.facltNm}</h2>
         <div className="camp-title-icon">
 
         </div>
         <div className="horizon"/>
-        <h3>주소 : </h3>
-        <h3>전번 : </h3>
+        <h3>주소 : {getData.addr1}</h3>
+        <h3>전번 : {getData.tel}</h3>
         <div className="horizon"/>
         <div className="camp-icon-container">
           <div>
@@ -104,9 +105,9 @@ const CampPage = () => {
           </div>
         </div>
       </CampContext>
-      <MapContainer center={{ lat: 35.1160647, lng: 129.0462238 }}
+      <MapContainer center={{ lat: getData.mapY, lng: getData.mapX }}
         style={{ width: "60%", height: "500px" }}>
-        <MapMarker position={{ lat: 35.1160647, lng: 129.0462238 }}>
+        <MapMarker position={{ lat: getData.mapY, lng: getData.mapX }}>
           <div style={{ color: "#000" }}> Hello World</div>
         </MapMarker>
       </MapContainer>

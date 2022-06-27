@@ -504,7 +504,7 @@ const geolocationOptions = {
     maximumAge: 1000 * 3600 * 24, // 24 hour
 };
 
-const MapPage = () => {
+const MapPage = ({localData, localAllData}) => {
     const [cities, setCities] = useState(districtData[cityData[0]]);
     const [district, setDistrict] = useState(districtData[cityData[0]][0]);
     const [level, setLevel] = useState();
