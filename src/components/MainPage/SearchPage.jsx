@@ -3,6 +3,38 @@ import SearchIcon from "@mui/icons-material/Search";
 import styled from "styled-components";
 import backgroundImg from "../../assets/MainBackgroundImg.jpg";
 
+const SeachPage = () => {
+    return (
+        <SearchBackgroundimg>
+            <div className="search__backgroundimg">
+                <div style={{ padding: "1px" }}></div>
+                <form>
+                    <SearchInput>
+                        <span>
+                            <input type="text" placeholder="검색어를 입력 해 주세요" />
+                            <button>
+                                <BtnIcon>
+                                    <SearchIcon viewBox="3 3 25 25" />
+                                </BtnIcon>
+                                {/* className="btn_icon" */}
+                            </button>
+                        </span>
+                    </SearchInput>
+                </form>
+                <SearchFilter>
+                    <li>#필터</li>
+                    <li>#부산</li>
+                    <li>#바다</li>
+                    <li>#노지</li>
+                    <li>#사상</li>
+                </SearchFilter>
+            </div>
+        </SearchBackgroundimg>
+    );
+};
+
+export default SeachPage;
+
 const SearchBackgroundimg = styled.div`
     width: 1920px;
     height: 500px;
@@ -102,38 +134,3 @@ const SearchFilter = styled.ul`
         box-shadow: rgb(61, 61, 61) 0px 0px 8px;
     }
 `;
-
-const SeachPage = () => {
-    return (
-        <SearchBackgroundimg>
-            <div className="search__backgroundimg">
-                <div style={{ padding: "1px" }}></div>
-                <form>
-                    <SearchInput>
-                        <span>
-                            <input
-                                type="text"
-                                placeholder="검색어를 입력 해 주세요"
-                            />
-                            <button>
-                                <BtnIcon>
-                                    <SearchIcon viewBox="3 3 25 25" />
-                                </BtnIcon>
-                                {/* className="btn_icon" */}
-                            </button>
-                        </span>
-                    </SearchInput>
-                </form>
-                <SearchFilter>
-                    <li>#필터</li>
-                    <li>#부산</li>
-                    <li>#바다</li>
-                    <li>#노지</li>
-                    <li>#사상</li>
-                </SearchFilter>
-            </div>
-        </SearchBackgroundimg>
-    );
-};
-
-export default SeachPage;

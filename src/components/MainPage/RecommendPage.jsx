@@ -98,8 +98,7 @@ const RecommendPage = ({campData}) => { // 로컬데이터 프롭값으로 받�
     const clickPush = (i) => {
         //해당하는 캠핑장 클릭시 id값 추출 및 해당하는 인덱스값 가져옴
         const searchId = camp[i];
-        
-        return console.log(searchId);
+        console.log(searchId);
     };
 
 
