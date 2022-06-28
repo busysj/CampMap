@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { Nav } from "react-bootstrap";
 import "./Community.css";
-import postImg from "../../assets/thumbnail_post_IMG.png";
 import { useNavigate } from "react-router-dom";
 import WriteModal from "./WriteModal";
+import BoardList from "./BoardList";
 
 const Community = () => {
     const [user, setUser] = useState(null);
-    const [num, setNum] = useState([1, 2, 3, 4]);
     const navigator = useNavigate();
 
     return (
@@ -78,55 +77,7 @@ const Community = () => {
                     </Nav>
                 </div>
                 <div className="category_section_body">
-                    {num.map((m, index) => (
-                        <div className="board_item">
-                            <div className="board_post">
-                                <div className="thumbnail_author">
-                                    <img
-                                        src=""
-                                        alt="author_img"
-                                        className="author_img"
-                                    />
-                                </div>
-                                <div className="board_header">
-                                    <em className="name_author">user 아이디</em>
-                                    <p className="time">
-                                        {new Date().getFullYear} 몇시에 작성함
-                                    </p>
-                                </div>
-                                <div className="board_body">
-                                    <strong>
-                                        글 제목입니당글 제목입니당글
-                                        제목입니당글 제목입니당제목입니당글
-                                        제목입니당글 제목입니당 글 제목입니당글
-                                        제목입니당제목입니당글 제목입니당글
-                                        제목입니당 글 제목입니당
-                                    </strong>
-                                    <p>
-                                        글 세부 내용입니다 글 세부 내용입니다 글
-                                        세부 내용입니다 글 세부 내용입니다 글
-                                        세부 내용입니다 글 세부 내용입니다 글
-                                        세부 내용입니다 글 세부 내용입니다글
-                                        세부 내용입니다 글 세부 내용입니다 글
-                                        세부 내용입니다 글 세부 내용입니다 글
-                                        세부 내용입니다 글 세부 내용입니다 글
-                                        세부 내용입니다 글 세부 내용입니다
-                                    </p>
-                                </div>
-                                <div className="comments">
-                                    <span className="like">공감 99</span>
-                                    <span className="reply">댓글 19</span>
-                                </div>
-                            </div>
-                            <div className="thumbnail_post">
-                                <img
-                                    src={postImg}
-                                    alt="thumbnail_post"
-                                    className="thumbnail_post"
-                                />
-                            </div>
-                        </div>
-                    ))}
+                    <BoardList />
                 </div>
                 <div className="category_section_footer">
                     글리스트 밑에 글작성 버튼

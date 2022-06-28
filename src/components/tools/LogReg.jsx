@@ -17,6 +17,203 @@ import { useDispatch } from "react-redux";
 import { login, logout } from "../../store/userSlice";
 import { useNavigate } from "react-router-dom";
 
+/*const ModalBackground = styled.div`
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.3);
+`; 모달창 오픈시 화면 반투명*/
+
+const Taps = styled.div`
+    //모달창
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 40%;
+    top: 300%;
+    width: 400px;
+    height: 600px;
+    margin: 0 auto;
+    background: white;
+    text-align: center;
+    min-height: 600px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+`;
+const XbtnP = styled.div`
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    flex-direction: row;
+`;
+const Xbtn = styled.button`
+    font-size: 25px;
+    box-sizing: border-box;
+    height: 10px;
+    width: 10px;
+    border: none;
+    background: white;
+    z-index: 2;
+`;
+
+const TapList = styled.div`
+    display: flex;
+    justify-content: center;
+    .active {
+        background: #ff8807;
+        color: white;
+    }
+`;
+const BtnTap = styled.button`
+    padding: 10px;
+    margin-top: 30px;
+    width: 100%;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+`;
+
+const ContentTabs = styled.div`
+    position: relative;
+    padding: 0 15px 32px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+`;
+const TapContant = styled.div`
+    background-color: white;
+    color: black;
+    height: 100%;
+`;
+
+const Title = styled.h2`
+    text-align: center;
+    margin-top: 20px;
+`;
+
+const InputContainer = styled.div`
+    margin: 0 auto;
+    position: relative;
+    padding: 0 20px 32px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+`;
+const LoginForm = styled.form``;
+const SignUpForm = styled.form``;
+const Input = styled.input`
+    margin-top: 30px;
+    border-radius: 2px;
+    width: 100%;
+    height: 40px;
+    border: 1px solid #e5e5e5;
+    padding: 9px 12px;
+    outline: none;
+    box-sizing: border-box;
+    background-color: #f8f8f8;
+    ::placeholder {
+        color: #999999;
+    }
+`;
+const LogniBtn = styled.button`
+    width: 100%;
+    height: 40px;
+    font-size: 14px;
+    padding: 13px 30px;
+    cursor: pointer;
+    background-color: #ff8807;
+    color: white;
+    line-height: 1px;
+    margin-top: 40px;
+    margin-bottom: 12px;
+    border-radius: 3px;
+    border-style: none;
+    font-weight: bold;
+`;
+const GoogleBtn = styled.button`
+    margin-bottom: 30px;
+    background-color: #548bf5;
+    color: white;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    font-weight: bold;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+`;
+const GoogleText = styled.div`
+    width: 300px;
+    font-size: 15px;
+    text-align: center;
+    display: inline-block;
+    box-sizing: border-box;
+`;
+
+// const KakaoiBtn = styled.button`
+//     background-color: #feec34;
+//     color: #4e3821;
+//     height: 40px;
+//     border-radius: 3px;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     box-sizing: border-box;
+//     margin-bottom: 10px;
+//     font-weight: bold;
+//     border: none;
+//     cursor: pointer;
+// `;
+
+// const KakaoText = styled.div`
+//     width: 300px;
+//     font-size: 15px;
+//     text-align: center;
+//     display: inline-block;
+//     box-sizing: border-box;
+// `;
+
+const SignupBtn = styled.button`
+    width: 100%;
+    margin-top: 40px;
+    margin-bottom: 30px;
+    background-color: #ff8807;
+    color: white;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    font-weight: bold;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+`;
+
+// const Google = styled.button`
+//     margin-bottom: 30px;
+//     background-color: #548bf5;
+//     color: white;
+//     height: 40px;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     border-radius: 3px;
+//     box-sizing: border-box;
+//     margin-bottom: 10px;
+//     font-weight: bold;
+//     border: none;
+//     text-align: center;
+//     cursor: pointer;
+// `;
+
 const LogReg = ({ openModal, setOpenModal, index, setIndex }) => {
     const dispatch = useDispatch();
     const navigator = useNavigate();
@@ -247,200 +444,3 @@ const LogReg = ({ openModal, setOpenModal, index, setIndex }) => {
 };
 
 export default LogReg;
-
-/*const ModalBackground = styled.div`
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0,0,0,0.3);
-`; 모달창 오픈시 화면 반투명*/
-
-const Taps = styled.div`
-    //모달창
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    left: 40%;
-    top: 300%;
-    width: 400px;
-    height: 600px;
-    margin: 0 auto;
-    background: white;
-    text-align: center;
-    min-height: 600px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-`;
-const XbtnP = styled.div`
-    display: flex;
-    justify-content: end;
-    align-items: center;
-    flex-direction: row;
-`;
-const Xbtn = styled.button`
-    font-size: 25px;
-    box-sizing: border-box;
-    height: 10px;
-    width: 10px;
-    border: none;
-    background: white;
-    z-index: 2;
-`;
-
-const TapList = styled.div`
-    display: flex;
-    justify-content: center;
-    .active {
-        background: #ff8807;
-        color: white;
-    }
-`;
-const BtnTap = styled.button`
-    padding: 10px;
-    margin-top: 30px;
-    width: 100%;
-    font-size: 20px;
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-`;
-
-const ContentTabs = styled.div`
-    position: relative;
-    padding: 0 15px 32px;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-`;
-const TapContant = styled.div`
-    background-color: white;
-    color: black;
-    height: 100%;
-`;
-
-const Title = styled.h2`
-    text-align: center;
-    margin-top: 20px;
-`;
-
-const InputContainer = styled.div`
-    margin: 0 auto;
-    position: relative;
-    padding: 0 20px 32px;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-`;
-const LoginForm = styled.form``;
-const SignUpForm = styled.form``;
-const Input = styled.input`
-    margin-top: 30px;
-    border-radius: 2px;
-    width: 100%;
-    height: 40px;
-    border: 1px solid #e5e5e5;
-    padding: 9px 12px;
-    outline: none;
-    box-sizing: border-box;
-    background-color: #f8f8f8;
-    ::placeholder {
-        color: #999999;
-    }
-`;
-const LogniBtn = styled.button`
-    width: 100%;
-    height: 40px;
-    font-size: 14px;
-    padding: 13px 30px;
-    cursor: pointer;
-    background-color: #ff8807;
-    color: white;
-    line-height: 1px;
-    margin-top: 40px;
-    margin-bottom: 12px;
-    border-radius: 3px;
-    border-style: none;
-    font-weight: bold;
-`;
-const GoogleBtn = styled.button`
-    margin-bottom: 30px;
-    background-color: #548bf5;
-    color: white;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 3px;
-    box-sizing: border-box;
-    margin-bottom: 10px;
-    font-weight: bold;
-    border: none;
-    text-align: center;
-    cursor: pointer;
-`;
-const GoogleText = styled.div`
-    width: 300px;
-    font-size: 15px;
-    text-align: center;
-    display: inline-block;
-    box-sizing: border-box;
-`;
-
-// const KakaoiBtn = styled.button`
-//     background-color: #feec34;
-//     color: #4e3821;
-//     height: 40px;
-//     border-radius: 3px;
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     box-sizing: border-box;
-//     margin-bottom: 10px;
-//     font-weight: bold;
-//     border: none;
-//     cursor: pointer;
-// `;
-
-// const KakaoText = styled.div`
-//     width: 300px;
-//     font-size: 15px;
-//     text-align: center;
-//     display: inline-block;
-//     box-sizing: border-box;
-// `;
-
-const SignupBtn = styled.button`
-    width: 100%;
-    margin-top: 40px;
-    margin-bottom: 30px;
-    background-color: #ff8807;
-    color: white;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 3px;
-    box-sizing: border-box;
-    margin-bottom: 10px;
-    font-weight: bold;
-    border: none;
-    text-align: center;
-    cursor: pointer;
-`;
-
-// const Google = styled.button`
-//     margin-bottom: 30px;
-//     background-color: #548bf5;
-//     color: white;
-//     height: 40px;
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     border-radius: 3px;
-//     box-sizing: border-box;
-//     margin-bottom: 10px;
-//     font-weight: bold;
-//     border: none;
-//     text-align: center;
-//     cursor: pointer;
-// `;

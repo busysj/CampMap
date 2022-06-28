@@ -9,6 +9,7 @@ import CampingNav from "./components/MainPage/CampingNav";
 import SearchResultList from "./components/SearchResultList";
 import WriteModal from "./components/CommunityPage/WriteModal";
 import Layout from "./page/Layout";
+import DetailPage from "./page/DetailPage";
 // 로그인
 
 import { useSelector } from "react-redux";
@@ -29,6 +30,7 @@ function App() {
                         <Route index element={<SearchResultList />}></Route>
                     </Route>
                     <Route path="/community" element={<Community />}></Route>
+                    <Route path="/detail/:id" element={<DetailPage />}></Route>
 
                     {!user ? ( // user
                         <Route path="/" element={<LogReg />}></Route>
