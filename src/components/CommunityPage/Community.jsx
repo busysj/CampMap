@@ -97,7 +97,7 @@ const Community = () => {
                     <div className="tags_section_body">Tags Most Popular</div>
                 </div>
                 <div className="category_section_footer">
-                    글리스트 밑에 글작성 버튼
+                    글리스트 밑에 글작성 버튼dd
                     <div className="wirte_section_end">
                         <button
                             className="write_btn"
