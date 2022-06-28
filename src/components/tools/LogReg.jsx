@@ -257,7 +257,7 @@ const LogReg = ({ openModal, setOpenModal, index, setIndex }) => {
                         uid: userAuth.user.uid,
                         displayName: userAuth.user.displayName,
                         // photoUrl: userAuth.user.photoURL,
-                    })
+                    }),
                 );
                 alert("로그인 완료");
                 console.log(`로그인 완료`);
@@ -294,7 +294,7 @@ const LogReg = ({ openModal, setOpenModal, index, setIndex }) => {
 
                         alert("회원가입완료"),
                         console.log(`회원가입 완료`),
-                        setOpenModal(false)
+                        setOpenModal(false),
                     )
 
                     .catch((error) => {
@@ -315,7 +315,7 @@ const LogReg = ({ openModal, setOpenModal, index, setIndex }) => {
                         email: result.user.email,
                         uid: result.user.uid,
                         displayName: result.user.displayName,
-                    })
+                    }),
                 );
                 console.log("구글, 디스패치완료");
                 navigator("/");
@@ -350,16 +350,10 @@ const LogReg = ({ openModal, setOpenModal, index, setIndex }) => {
                 </Xbtn>
             </XbtnP>
             <TapList>
-                <BtnTap
-                    className={`${index === 0 ? "active" : null}`}
-                    onClick={() => setIndex(0)}
-                >
+                <BtnTap className={`${index === 0 ? "active" : null}`} onClick={() => setIndex(0)}>
                     로그인
                 </BtnTap>
-                <BtnTap
-                    className={`${index === 1 ? "active" : null}`}
-                    onClick={() => setIndex(1)}
-                >
+                <BtnTap className={`${index === 1 ? "active" : null}`} onClick={() => setIndex(1)}>
                     회원가입
                 </BtnTap>
             </TapList>
@@ -397,9 +391,7 @@ const LogReg = ({ openModal, setOpenModal, index, setIndex }) => {
                                 icon={faGoogle}
                                 style={{ width: "24px", height: "25px" }}
                             />
-                            <GoogleText onClick={googleSignIn}>
-                                Google 계정으로 로그인
-                            </GoogleText>{" "}
+                            <GoogleText onClick={googleSignIn}>Google 계정으로 로그인</GoogleText>{" "}
                         </GoogleBtn>
                         {/* <KakaoiBtn>
                             <FontAwesomeIcon

@@ -4,6 +4,78 @@ import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 import EmailIcon from "@mui/icons-material/Email";
 import styled from "styled-components";
 
+const FooterPage = () => {
+    const people = [
+        {
+            name: "김재라",
+            phone: "010-9990-7471",
+            email: "seren0120@naver.com",
+        },
+        {
+            name: "유상재",
+            phone: "010-2086-9759",
+            email: "tkdwox31__@naver.com",
+        },
+        {
+            name: "유영준",
+            phone: "010-7937-7735",
+            email: "princewns@gmail.com",
+        },
+    ];
+
+    return (
+        <FooterSection>
+            <FooterBox>
+                <FooterImg>
+                    <a href="/">
+                        <img src={Logo} alt="camping 로고" />
+                    </a>
+                </FooterImg>
+                <FooterCenter>
+                    <Footerbottommenu>
+                        <a href="/">개인정보 취급방침</a>
+                        <span>|</span>
+                        <a href="/">홈페이지 이용약관</a>
+                        <span>|</span>
+                        <a href="/">광고 및 제휴문의</a>
+                        <span>|</span>
+                        <a href="/">고객센터</a>
+                        <span>|</span>
+                        <a href="/">회원가입</a>
+                        <span>|</span>
+                        <a href="/">로그인</a>
+                    </Footerbottommenu>
+                    <FooterCopyright>
+                        <span>Copyright © 2022 </span>
+                        <span style={{ fontWeight: "bold" }}>www.camping.com</span>
+                        <span>. All rights reserved.</span>
+                        <br />
+                        <People>
+                            {people.map((person, index) => (
+                                <div key={index}>
+                                    <span>
+                                        <PhoneIphoneIcon />
+                                        <b>전화 </b>
+                                        {person.name} {person.phone}
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </span>
+                                    <span>
+                                        <EmailIcon />
+                                        <b>이메일 </b>
+                                        <a href="mailto:seren0120@naver.com">{person.email}</a>
+                                    </span>
+                                </div>
+                            ))}
+                        </People>
+                    </FooterCopyright>
+                </FooterCenter>
+            </FooterBox>
+        </FooterSection>
+    );
+};
+
+export default FooterPage;
+
 const FooterSection = styled.div`
     width: 100%;
     clear: both;
@@ -55,79 +127,3 @@ const People = styled.div`
     align-items: center;
     justify-content: center;
 `;
-
-const FooterPage = () => {
-    const people = [
-        {
-            name: "김재라",
-            phone: "010-9990-7471",
-            email: "seren0120@naver.com",
-        },
-        {
-            name: "유상재",
-            phone: "010-2086-9759",
-            email: "tkdwox31__@naver.com",
-        },
-        {
-            name: "유영준",
-            phone: "010-7937-7735",
-            email: "princewns@gmail.com",
-        },
-    ];
-
-    return (
-        <FooterSection>
-            <FooterBox>
-                <FooterImg>
-                    <a href="/">
-                        <img src={Logo} alt="camping 로고" />
-                    </a>
-                </FooterImg>
-                <FooterCenter>
-                    <Footerbottommenu>
-                        <a href="/">개인정보 취급방침</a>
-                        <span>|</span>
-                        <a href="/">홈페이지 이용약관</a>
-                        <span>|</span>
-                        <a href="/">광고 및 제휴문의</a>
-                        <span>|</span>
-                        <a href="/">고객센터</a>
-                        <span>|</span>
-                        <a href="/">회원가입</a>
-                        <span>|</span>
-                        <a href="/">로그인</a>
-                    </Footerbottommenu>
-                    <FooterCopyright>
-                        <span>Copyright © 2022 </span>
-                        <span style={{ fontWeight: "bold" }}>
-                            www.camping.com
-                        </span>
-                        <span>. All rights reserved.</span>
-                        <br />
-                        <People>
-                            {people.map((person, index) => (
-                                <div key={index}>
-                                    <span>
-                                        <PhoneIphoneIcon />
-                                        <b>전화 </b>
-                                        {person.name} {person.phone}
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    </span>
-                                    <span>
-                                        <EmailIcon />
-                                        <b>이메일 </b>
-                                        <a href="mailto:seren0120@naver.com">
-                                            {person.email}
-                                        </a>
-                                    </span>
-                                </div>
-                            ))}
-                        </People>
-                    </FooterCopyright>
-                </FooterCenter>
-            </FooterBox>
-        </FooterSection>
-    );
-};
-
-export default FooterPage;

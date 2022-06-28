@@ -317,11 +317,9 @@ const MapPage = () => {
   const [level, setLevel] = useState();
   const [search, setSearch] = useState(false);
 
-  const { location, error } = UseCurrentLocation(geolocationOptions);
+  const [itemContentId, setItemContentId] = useState();
 
-  useEffect(() => {
-    console.log("렌더링");
-  }, []);
+  const { location, error } = UseCurrentLocation(geolocationOptions);
 
   const [allData, setAllData] = useState([]);
   const [filteredData, setFilteredData] = useState(allData);
@@ -459,6 +457,7 @@ const MapPage = () => {
     setSelectedResult(null);
     setDistrictResult(null);
     setTagValueResult(null);
+    setItemContentId();
     setFilteredData(allData);
     setSelected(cityData[0]);
     setDistrict(districtData[cityData[0]]);
@@ -516,6 +515,51 @@ const MapPage = () => {
         >
           {isVisible && content}
         </MapMarker>
+        {itemContentId === conId && (
+          <CustomOverlayMap position={position} id={conId}>
+            <Wrap>
+              <Info>
+                <div className="title">
+                  {campName}
+                  <div
+                    className="close"
+                    onClick={() => setIsOpen(false)}
+                    title="닫기"
+                  ></div>
+                </div>
+                <div className="body">
+                  <div className="img">
+                    <img
+                      src={firstImg ? firstImg : defaultImage}
+                      width="73"
+                      height="70"
+                      alt={campName}
+                    />
+                  </div>
+                  <Description>
+                    <div className="ellipsis">{description}</div>
+                    <div className="jibun ellipsis">{callNumber}</div>
+                    <br />
+                    <div className="link_box">
+                      <a
+                        href={homepage}
+                        target="_blank"
+                        className="link"
+                        rel="noreferrer"
+                      >
+                        홈페이지
+                      </a>
+                      <a className="info_btn" href="/camppage">
+                        상세 정보
+                      </a>
+                    </div>
+                  </Description>
+                </div>
+              </Info>
+            </Wrap>
+            ;
+          </CustomOverlayMap>
+        )}
         {isOpen && (
           <CustomOverlayMap position={position} id={conId}>
             <Wrap>
@@ -663,7 +707,10 @@ const MapPage = () => {
               )}
               <ResetButton onClick={onClickReset}>뒤로 가기</ResetButton>
             </Header>
-            <SearchResultList filteredData={filteredData} />
+            <SearchResultList
+              filteredData={filteredData}
+              setItemContentId={setItemContentId}
+            />
           </Search>
           {filteredData[0] ? (
             <Map
@@ -688,6 +735,7 @@ const MapPage = () => {
                   homepage={item.homepage}
                   callNumber={item.tel}
                   conId={item.contentId}
+                  index={index}
                 />
               ))}
             </Map>
@@ -933,4 +981,5 @@ const Description = styled.div`
 const MarkerPoint = styled.div`
   padding: 3px;
   color: black;
+  z-index: -1;
 `;
