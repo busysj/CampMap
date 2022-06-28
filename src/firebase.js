@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth"; // 인증
 import { getFirestore } from "firebase/firestore"; // firestore 사용
-import { getStorage } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
     // firebase 설정과 관련된 개인 정보
@@ -14,11 +14,13 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth();
+const auth = getAuth(app);
 // import { signInWithEmailAndPassword } from "firebase/auth";
 // import { auth } from "../../firebase";
 // 사용할 js파일에서 이렇게 사용하믄댐
-
-export const db = getFirestore(app);
+const db = getFirestore(app);
 // 이런식으로 쓰면 사용할 js파일에 import db from '~~firebase.js' 하면됨
 //export const storage = getStorage(app);
+const storage = getStorage(app);
+
+export { auth, db, storage };

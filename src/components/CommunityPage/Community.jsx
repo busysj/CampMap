@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Nav } from "react-bootstrap";
 import "./Community.css";
 import { useNavigate } from "react-router-dom";
-import WriteModal from "./WriteModal";
 import BoardList from "./BoardList";
 
 const Community = () => {
@@ -13,7 +12,14 @@ const Community = () => {
         <div className="total">
             <h1>커뮤니티 페이지</h1>
             <div className="wirte_section_header">
-                <WriteModal className="write_btn">글쓰기</WriteModal>
+                <button
+                    className="write_btn"
+                    onClick={() => {
+                        navigator("/create");
+                    }}
+                >
+                    글쓰기
+                </button>
             </div>
             <div className="best_section">
                 <div className="description">
@@ -47,7 +53,15 @@ const Community = () => {
                 </div>
             ) : (
                 <div className="wirte_section_middle">
-                    글작성버튼 ? / 로그인 안했으면 로그인하라고 띄워주기
+                    <button
+                        className="write_btn"
+                        onClick={() => {
+                            navigator("/create");
+                        }}
+                    >
+                        글쓰기
+                    </button>
+                    / 로그인 안했으면 로그인하라고 띄워주기
                 </div>
             )}
 
@@ -76,13 +90,23 @@ const Community = () => {
                         </Nav.Item>
                     </Nav>
                 </div>
-                <div className="category_section_body">
-                    <BoardList />
+                <div className="category_tags_sum">
+                    <div className="category_section_body">
+                        <BoardList />
+                    </div>
+                    <div className="tags_section_body">Tags Most Popular</div>
                 </div>
                 <div className="category_section_footer">
                     글리스트 밑에 글작성 버튼
                     <div className="wirte_section_end">
-                        <button className="write_btn">글쓰기</button>
+                        <button
+                            className="write_btn"
+                            onClick={() => {
+                                navigator("/create");
+                            }}
+                        >
+                            글쓰기
+                        </button>
                     </div>
                 </div>
             </div>

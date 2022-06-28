@@ -80,6 +80,7 @@ const NavbarPage = () => {
                         </div>
                     ) : (
                         <div>
+                            <User>{`welcome to ${user.displayName}`}</User>
                             <button
                                 to="/"
                                 onClick={() => {
@@ -147,6 +148,11 @@ const NavItem = styled.div`
     display: flex;
     position: absolute;
     right: 18%;
+`;
+const User = styled.span`
+    font-size: smaller;
+    font-weight: bolder;
+    letter-spacing: -1px;
 `;
 
 const NavButtonContainer = styled.div`
