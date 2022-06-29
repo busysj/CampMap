@@ -22,6 +22,7 @@ import LogReg from "./components/tools/LogReg";
 
 function App() {
     const user = useSelector(selectUser);
+    console.log(`user가 없나요?`, user);
 
     return (
         <div className="App">
@@ -34,7 +35,10 @@ function App() {
                         <Route index element={<SearchResultList />} />
                     </Route>
                     <Route path="/camppage" element={<CampPage />} />
-                    <Route path="/community" element={<Community />} />
+                    <Route
+                        path="/community"
+                        element={<Community user={user} />}
+                    />
                     <Route path="/detail/:id" element={<DetailPage />} />
                     /
                     <Route

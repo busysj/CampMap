@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from "react";
 import ReactTagInput from "@pathofdev/react-tag-input";
-import "@pathofdev/react-tag-input/build/index.css";
+//import "@pathofdev/react-tag-input/build/index.css";
 import { storage, db } from "../firebase";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import styled from "styled-components";
 
-import { collection, serverTimestamp, addDoc } from "firebase/firestore";
+import {
+    collection,
+    serverTimestamp,
+    addDoc,
+    doc,
+    getDoc,
+    updateDoc,
+} from "firebase/firestore";
 
 const initialState = {
     title: "",
@@ -19,6 +26,7 @@ const initialState = {
 const categoryOption = ["전체", "노지캠", "캠핑 음식", "장비", "노하우&꿀팁"];
 
 const AddEditBlog = ({ user }) => {
+    const { id } = useParams();
     const navigate = useNavigate();
 
     const [form, setForm] = useState(initialState);
@@ -40,7 +48,8 @@ const AddEditBlog = ({ user }) => {
                 "state_changed", //업로드 상태변경, 스냅샷으로 전달
                 (snapshot) => {
                     // 진행 상황을 퍼센트로 체크
-                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    const progress =
+                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                     console.log("업로드... " + progress + "% 진행중..");
                     setProgress(progress);
                     switch (snapshot.state) {
@@ -58,17 +67,40 @@ const AddEditBlog = ({ user }) => {
                     console.log(error);
                 },
                 () => {
-                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                        setForm((prev) => ({ ...prev, imgUrl: downloadURL }));
-                        // const { title, tags, trending, category, description } = form;
-                        // 여기에 downloadURL을 넣어줌
-                    });
-                },
+                    getDownloadURL(uploadTask.snapshot.ref).then(
+                        (downloadURL) => {
+                            setForm((prev) => ({
+                                ...prev,
+                                imgUrl: downloadURL,
+                            }));
+                            // const { title, tags, trending, category, description } = form;
+                            // 여기에 downloadURL을 넣어줌
+                        }
+                    );
+                }
             );
         };
         file && uploadFile(); // 앞값이 trun여야함, flase이면 가차없이 false반환
         // 앞값이 true이면, 뒷값이 true이면 true반환, 뒷값이 flase이면 flase 반환
     }, [file]); // 파일 실행
+
+    // 업데이트 , 필드에 기존값 다 채워줘야한다
+    useEffect(() => {
+        // id값이 있으면 블로그 세부정보 들고올거임
+        id && getBlogDetail();
+    }, [id]); // id값이 바뀌면 실행할거고
+
+    const getBlogDetail = async () => {
+        // 게시글 수정페이지 열리면 세부정보 다들고오는 함수임 (비동기)
+        const docRef = doc(db, "blog", id); // 컬렉션 참조, id들고옴
+        const snapshot = await getDoc(docRef);
+        // if(snapshot.exists()) {
+        if (snapshot) {
+            // snapshot 있으면 데이터 전체 값 넣어줌
+            console.log("snapshot", snapshot.data());
+            setForm({ ...snapshot.data() });
+        }
+    };
 
     console.log("form", form);
 
@@ -90,16 +122,33 @@ const AddEditBlog = ({ user }) => {
         e.preventDefault();
         if (title && tags && trending && category && description) {
             //전부값이 들어가있어야 실행
-            try {
-                await addDoc(collection(db, "blog"), {
-                    //
-                    ...form,
-                    timestamp: serverTimestamp(),
-                    author: user.displayName,
-                    userId: user.uid,
-                });
-            } catch (error) {
-                console.log(error);
+            if (!id) {
+                // id값 없으면 업데이트
+                try {
+                    await addDoc(collection(db, "blog"), {
+                        //
+                        ...form,
+                        timestamp: serverTimestamp(),
+                        author: user.displayName,
+                        userId: user.uid,
+                    });
+                } catch (error) {
+                    console.log(error);
+                }
+            } else {
+                // id값 있으면 게시글 신규작성
+                try {
+                    await updateDoc(collection(db, "blog"), {
+                        // 인자 업데이트시 필드만 객체 형식으로 전달하면댐
+                        //
+                        ...form,
+                        timestamp: serverTimestamp(),
+                        author: user.displayName,
+                        userId: user.uid,
+                    });
+                } catch (error) {
+                    console.log("업데이트왜안댐?", error);
+                }
             }
         }
         navigate("/community");
@@ -111,7 +160,9 @@ const AddEditBlog = ({ user }) => {
         <div className="container-fluid mb-4">
             <div className="container">
                 <div className="col-12">
-                    <div className="text-center heading py-2">Create Blog</div>
+                    <div className="text-center heading py-2">
+                        <h1>{id ? "게시글 수정" : "게시글 작성"}</h1>
+                    </div>
                 </div>
                 <div className="row h-100 justify-content-center align-items-center">
                     <div className="col-10 col-md-8 col-lg-6">
@@ -120,7 +171,7 @@ const AddEditBlog = ({ user }) => {
                                 <input
                                     type="text"
                                     className="form-control input-text-box"
-                                    placeholder="Title"
+                                    placeholder="제목"
                                     name="title"
                                     value={title}
                                     onChange={handleChange}
@@ -129,12 +180,15 @@ const AddEditBlog = ({ user }) => {
                             <div className="col-12 py-3">
                                 <ReactTagInput
                                     tags={tags}
-                                    placeholder="Tags"
+                                    placeholder="원하는 태그입력"
                                     onChange={handleTags}
                                 />
                             </div>
                             <div className="col-12 py-3">
-                                <Trending>Is it trending blog ?</Trending>
+                                <Trending>
+                                    커뮤니티 상단에 글을
+                                    올리시겠습니까?&nbsp;&nbsp;
+                                </Trending>
                                 <div className="form-check-inline mx-2">
                                     <input
                                         type="radio"
@@ -144,8 +198,11 @@ const AddEditBlog = ({ user }) => {
                                         checked={trending === "yes"}
                                         onChange={handleTrending}
                                     />
-                                    <label htmlFor="radioOption" className="form-check-label">
-                                        &nbsp;Yes&nbsp;
+                                    <label
+                                        htmlFor="radioOption"
+                                        className="form-check-label"
+                                    >
+                                        &nbsp;예&nbsp;&nbsp;&nbsp;
                                     </label>
                                     <input
                                         type="radio"
@@ -155,16 +212,25 @@ const AddEditBlog = ({ user }) => {
                                         checked={trending === "no"}
                                         onChange={handleTrending}
                                     />
-                                    <label htmlFor="radioOption" className="form-check-label">
-                                        &nbsp;No&nbsp;
+                                    <label
+                                        htmlFor="radioOption"
+                                        className="form-check-label"
+                                    >
+                                        &nbsp;아니오&nbsp;
                                     </label>
                                 </div>
                             </div>
                             <div className="col-12 py-3">
-                                <CatgDropdown value={category} onChange={onCategoryChange}>
-                                    <option>Please select category</option>
+                                <CatgDropdown
+                                    value={category}
+                                    onChange={onCategoryChange}
+                                >
+                                    <option>카테고리 선택</option>
                                     {categoryOption.map((option, index) => (
-                                        <option value={option || ""} key={index}>
+                                        <option
+                                            value={option || ""}
+                                            key={index}
+                                        >
                                             {option}
                                         </option>
                                     ))}
@@ -173,7 +239,7 @@ const AddEditBlog = ({ user }) => {
                             <div className="col-12 py-3">
                                 <DescriptionBox
                                     className="form-control"
-                                    placeholder="Description"
+                                    placeholder="내용"
                                     value={description}
                                     name="description"
                                     onChange={handleChange}
@@ -190,10 +256,12 @@ const AddEditBlog = ({ user }) => {
                             <div className="col-12 py-3 text-center">
                                 <SubmitBtn
                                     type="submit"
-                                    disabled={progress !== null && progress < 100}
+                                    disabled={
+                                        progress !== null && progress < 100
+                                    }
                                     // progress null이 아니고, 100보다 작을때 비활성화 된다
                                 >
-                                    Submit
+                                    {id ? "업데이트 완료" : "게시글 작성"}
                                 </SubmitBtn>
                             </div>
                         </BlogForm>
