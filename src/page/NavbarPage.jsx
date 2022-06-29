@@ -28,7 +28,7 @@ const NavbarPage = () => {
     <Nav>
       <NavLogo to="/">
         <img src={Logo} alt="logo" />
-        Camp
+        CampMap
       </NavLogo>
 
       <NavMenu>

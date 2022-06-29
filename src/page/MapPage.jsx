@@ -501,6 +501,7 @@ const MapPage = () => {
     const map = useMap();
     const [isVisible, setIsVisible] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
+    const [isOpen2, setIsOpen2] = useState(false);
 
     return (
       <>
@@ -515,96 +516,101 @@ const MapPage = () => {
         >
           {isVisible && content}
         </MapMarker>
-        {itemContentId === conId && (
-          <CustomOverlayMap position={position} id={conId}>
-            <Wrap>
-              <Info>
-                <div className="title">
-                  {campName}
-                  <div
-                    className="close"
-                    onClick={() => setIsOpen(false)}
-                    title="닫기"
-                  ></div>
-                </div>
-                <div className="body">
-                  <div className="img">
-                    <img
-                      src={firstImg ? firstImg : defaultImage}
-                      width="73"
-                      height="70"
-                      alt={campName}
-                    />
+        {itemContentId === conId && setIsOpen2(true)}
+        {
+          (itemContentId === conId,
+          isOpen2 ? (
+            <CustomOverlayMap position={position} id={conId}>
+              <Wrap>
+                <Info>
+                  <div className="title">
+                    {campName}
+                    <div
+                      className="close"
+                      onClick={() => setIsOpen2(false)}
+                      title="닫기"
+                    ></div>
                   </div>
-                  <Description>
-                    <div className="ellipsis">{description}</div>
-                    <div className="jibun ellipsis">{callNumber}</div>
-                    <br />
-                    <div className="link_box">
-                      <a
-                        href={homepage}
-                        target="_blank"
-                        className="link"
-                        rel="noreferrer"
-                      >
-                        홈페이지
-                      </a>
-                      <a className="info_btn" href="/camppage">
-                        상세 정보
-                      </a>
+                  <div className="body">
+                    <div className="img">
+                      <img
+                        src={firstImg ? firstImg : defaultImage}
+                        width="73"
+                        height="70"
+                        alt={campName}
+                      />
                     </div>
-                  </Description>
-                </div>
-              </Info>
-            </Wrap>
-            ;
-          </CustomOverlayMap>
-        )}
-        {isOpen && (
-          <CustomOverlayMap position={position} id={conId}>
-            <Wrap>
-              <Info>
-                <div className="title">
-                  {campName}
-                  <div
-                    className="close"
-                    onClick={() => setIsOpen(false)}
-                    title="닫기"
-                  ></div>
-                </div>
-                <div className="body">
-                  <div className="img">
-                    <img
-                      src={firstImg ? firstImg : defaultImage}
-                      width="73"
-                      height="70"
-                      alt={campName}
-                    />
+                    <Description>
+                      <div className="ellipsis">{description}</div>
+                      <div className="jibun ellipsis">{callNumber}</div>
+                      <br />
+                      <div className="link_box">
+                        <a
+                          href={homepage}
+                          target="_blank"
+                          className="link"
+                          rel="noreferrer"
+                        >
+                          홈페이지
+                        </a>
+                        <a className="info_btn" href="/camppage">
+                          상세 정보
+                        </a>
+                      </div>
+                    </Description>
                   </div>
-                  <Description>
-                    <div className="ellipsis">{description}</div>
-                    <div className="jibun ellipsis">{callNumber}</div>
-                    <br />
-                    <div className="link_box">
-                      <a
-                        href={homepage}
-                        target="_blank"
-                        className="link"
-                        rel="noreferrer"
-                      >
-                        홈페이지
-                      </a>
-                      <a className="info_btn" href="/camppage">
-                        상세 정보
-                      </a>
+                </Info>
+              </Wrap>
+              ;
+            </CustomOverlayMap>
+          ) : (
+            isOpen && (
+              <CustomOverlayMap position={position} id={conId}>
+                <Wrap>
+                  <Info>
+                    <div className="title">
+                      {campName}
+                      <div
+                        className="close"
+                        onClick={() => setIsOpen(false)}
+                        title="닫기"
+                      ></div>
                     </div>
-                  </Description>
-                </div>
-              </Info>
-            </Wrap>
-            ;
-          </CustomOverlayMap>
-        )}
+                    <div className="body">
+                      <div className="img">
+                        <img
+                          src={firstImg ? firstImg : defaultImage}
+                          width="73"
+                          height="70"
+                          alt={campName}
+                        />
+                      </div>
+                      <Description>
+                        <div className="ellipsis">{description}</div>
+                        <div className="jibun ellipsis">{callNumber}</div>
+                        <br />
+                        <div className="link_box">
+                          <a
+                            href={homepage}
+                            target="_blank"
+                            className="link"
+                            rel="noreferrer"
+                          >
+                            홈페이지
+                          </a>
+                          <a className="info_btn" href="/camppage">
+                            상세 정보
+                          </a>
+                        </div>
+                      </Description>
+                    </div>
+                  </Info>
+                </Wrap>
+                ;
+              </CustomOverlayMap>
+            )
+          ))
+        }
       </>
     );
   };
@@ -886,7 +892,7 @@ const Info = styled.div`
     height: 35px;
     background: #eee;
     border-bottom: 1px solid #ddd;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: bold;
   }
 
