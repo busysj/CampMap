@@ -6,10 +6,10 @@ import ReviewPage from "../components/MainPage/ReviewPage";
 import SearchPage from "../components/MainPage/SearchPage";
 import YoutubePage from "../components/MainPage/YoutubePage";
 
+import LocationBaseList from "../components/mapApi/LocationBaseList";
 
 const MainPage = () => {
   const [popup, setPopup] = useState(true);
-
   return (
     <div>
       {popup ? <PopupPage onClose={setPopup} /> : null}
@@ -17,6 +17,9 @@ const MainPage = () => {
       <RecommendPage />
       <ReviewPage />
       <YoutubePage />
+
+      <LocationBaseList />
+      {/* 컴포넌트 실행용도로 선언 */}
     </div>
   );
 };
