@@ -1,6 +1,8 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import UseCurrentLocation from "../../hooks/UseCurrentLocation";
+import { addData } from "../../store/locationDataSlice";
 
 const geolocationOptions = {
   enableHighAccuracy: true,
@@ -8,23 +10,22 @@ const geolocationOptions = {
 };
 
 const LocationBaseList = () => {
-  const [locationData, setLocationData] = useState([]);
+  const dispatch = useDispatch();
   const {location, error} = UseCurrentLocation(geolocationOptions);
+  const allData = useCallback(async() => {
+    try{
+    const response = await axios.get(
+      `http://api.visitkorea.or.kr/openapi/service/rest/GoCamping/locationBasedList?ServiceKey=DBx1v7ble2j4MNFWznYeeM5wQYthH5QTVeMOTXn5H%2FxvLP7Bbaa8IZvKxHq8r0425fyEMXvrs32EFDRIALvz5A%3D%3D&mapX=${location.longitude}&mapY=${location.latitude}&radius=20000&numOfRows=100&pageNo=1&MobileOS=ETC&MobileApp=TestApp&_type=json`
+    );
+      dispatch(addData(response.data.response.body.items.item));
+    }
+    catch(error){
+      console.log(error);
+    };
+  },[dispatch,location]);
   
   useEffect(() => {
-    const allData = async() => {
-      try{
-      const response = await axios.get(
-        `http://api.visitkorea.or.kr/openapi/service/rest/GoCamping/locationBasedList?ServiceKey=DBx1v7ble2j4MNFWznYeeM5wQYthH5QTVeMOTXn5H%2FxvLP7Bbaa8IZvKxHq8r0425fyEMXvrs32EFDRIALvz5A%3D%3D&mapX=${location.longitude}&mapY=${location.latitude}&radius=20000&numOfRows=100&pageNo=1&MobileOS=ETC&MobileApp=TestApp&_type=json`
-      );
-        setLocationData(response.data.response.body.items.item);
-      } catch(error){
-        console.log(error);
-      };
-    };
-    allData();
-  },[location]);
-  
-  return {locationData};
+    allData()
+  },[allData]);
 };
 export default LocationBaseList;

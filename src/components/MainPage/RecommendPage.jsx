@@ -1,4 +1,5 @@
-import MapPage from "../../page/MapPage";
+import { useSelector, useDispatch } from "react-redux";
+import { addPickData } from "../../store/locationDataSlice";
 
 import styled from "styled-components";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -23,7 +24,7 @@ const Container = styled.div`
     margin: 0 auto;
 
     .swiper-container {
-        width: 90%;
+        width: 160vh;
         padding-left: 50px;
         padding-right: 50px;
     }
@@ -92,13 +93,16 @@ const CampingName = styled.h2`
     font-size: 20px;
 `;
 
-const RecommendPage = ({campData}) => { // 로컬데이터 프롭값으로 받음
-    const camp = campData;
-    console.log(camp);
+const RecommendPage = () => {
+    //지역 기반 데이터 슬라이스에서 가져옴
+    const campStoreData = useSelector((state) => state.locationDataSlice.locationData);
+    const dispatch = useDispatch();
+    console.log(campStoreData);
     const clickPush = (i) => {
         //해당하는 캠핑장 클릭시 id값 추출 및 해당하는 인덱스값 가져옴
-        const searchId = camp[i];
+        const searchId = campStoreData[i];
         console.log(searchId);
+        dispatch(addPickData(searchId));
     };
 
 
@@ -123,7 +127,7 @@ const RecommendPage = ({campData}) => { // 로컬데이터 프롭값으로 받�
                     loop={true}
                 >
                     {
-                       camp.map((camp, index) => (
+                       campStoreData.map((camp, index) => (
                         <SwiperSlide key={index} onClick={() => {
                             clickPush(index);
                         }}>

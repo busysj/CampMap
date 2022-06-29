@@ -11,14 +11,15 @@ import LocationBaseList from "../components/mapApi/LocationBaseList";
 
 const MainPage = () => {
   const [popup, setPopup] = useState(true);
-  const locationData = LocationBaseList().locationData;
   return (
     <div>
       {popup ? <PopupPage onClose={setPopup} /> : null}
       <SearchPage />
-      <RecommendPage campData={locationData} />
+      <RecommendPage />
       <ReviewPage />
       <YoutubePage />
+
+      <LocationBaseList/>{/* 컴포넌트 실행용도로 선언 */}
     </div>
   );
 };
