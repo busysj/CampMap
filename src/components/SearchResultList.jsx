@@ -1,80 +1,116 @@
-import React from "react";
+import React, { useState } from "react";
 import { List } from "antd";
 import styled from "styled-components";
-// import Campsite from "../assets/Camping06.jpg";
 import defaultImage from "../assets/default-Image.png";
 
 const SearchResultList = (props) => {
-    return (
-        <SearchBox>
-            <SearchList
-                itemLayout="vertical"
-                size="large"
-                pagination={{
-                    onChange: (page) => {
-                        console.log(page);
-                    },
-                    pageSize: 10,
-                }}
-                dataSource={props.filteredData}
-                renderItem={(item) => (
-                    <List.Item
-                        key={item.index}
-                        extra={
-                            <img
-                                width={200}
-                                height={137}
-                                alt="캠핑장 사진"
-                                src={item.firstImageUrl ? item.firstImageUrl : defaultImage}
-                            />
-                        }
-                    >
-                        <List.Item.Meta
-                            title={<a href={item.homepage}>{item.facltNm}</a>}
-                            description={item.addr1}
-                        />
-                        {item.tel} <br />
-                        {item.sbrsCl} <br />
-                        <Reservation href={item.resveUrl}>예약하러 가기</Reservation>
-                    </List.Item>
-                )}
-            />
-        </SearchBox>
-    );
+  // const [classAdd, setClassAdd] = useState(false);
+
+  const ListItemClick = (id, mapX, mapY) => {
+    // const [clickClassAdd, setClickClassAdd] = useState(false);
+    // alert(props.filteredData[i].contentId + " " + i);
+    props.setItemContentId(id);
+    props.setClickPosition({ lat: mapY, lng: mapX });
+    console.log(id);
+  };
+  return (
+    <SearchBox>
+      <SearchList
+        itemLayout="vertical"
+        size="large"
+        pagination={{
+          onChange: (page) => {
+            console.log(page);
+          },
+          pageSize: 10,
+        }}
+        dataSource={props.filteredData}
+        renderItem={(item, index) => (
+          <div
+            // className={classAdd ? "active items" : "items"}
+            className="items"
+            id={item.contentId}
+            onClick={() => {
+              ListItemClick(item.contentId, item.mapX, item.mapY);
+            }}
+          >
+            <List.Item
+              className="item"
+              key={index}
+              extra={
+                <img
+                  width={200}
+                  height={137}
+                  alt="캠핑장 사진"
+                  src={item.firstImageUrl ? item.firstImageUrl : defaultImage}
+                />
+              }
+            >
+              <List.Item.Meta
+                title={
+                  <a style={{ fontWeight: "bold" }} href={item.homepage}>
+                    {item.facltNm}
+                  </a>
+                }
+                description={item.addr1}
+              />
+              {item.tel} <br />
+              {item.sbrsCl} <br />
+              <Reservation href="/camppage">상세 정보 보기</Reservation>
+            </List.Item>
+          </div>
+        )}
+      />
+    </SearchBox>
+  );
 };
 
 export default SearchResultList;
 
 const SearchBox = styled.div`
-    height: 700px;
-    padding: 15px;
-    overflow-y: scroll;
+  height: 700px;
+  padding: 15px;
+  overflow-y: scroll;
 
-    &::-webkit-scrollbar {
-        width: 8px;
-    }
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
 
-    &::-webkit-scrollbar-thumb {
-        background: var(--main-color-orange-light);
-        border-radius: 10px;
-    }
+  &::-webkit-scrollbar-thumb {
+    background: var(--main-color-orange-light);
+    border-radius: 10px;
+  }
 
-    &::-webkit-scrollbar-track {
-        background: #faecd3;
-    }
+  &::-webkit-scrollbar-track {
+    background: #faecd3;
+  }
 `;
 
 const SearchList = styled(List)`
-    margin-top: 10px;
-    /* text-align: center; */
+  margin-top: 10px;
+  /* text-align: center; */
+
+  .item {
+    font-size: 13px;
+  }
+
+  .items {
+    border-top: 0.1px solid lightgray;
+  }
+
+  .items:hover {
+    background-color: #eeeeee;
+  }
+  .active {
+    background-color: #eeeeee;
+  }
 `;
 
 const Reservation = styled.a`
-    float: right;
+  float: right;
 
-    &:hover {
-        color: var(--main-color-orange);
-        font-size: 0.88rem;
-        font-weight: 900;
-    }
+  &:hover {
+    color: var(--main-color-orange);
+    font-weight: 900;
+  }
 `;

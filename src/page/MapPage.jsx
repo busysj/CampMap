@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { CustomOverlayMap, Map, MapMarker, useMap } from "react-kakao-maps-sdk";
-import { ZoomControl, MapTypeControl } from "react-kakao-maps-sdk";
+import { ZoomControl, MapTypeControl, MapTypeId } from "react-kakao-maps-sdk";
 import { Input, Select, Tag } from "antd";
 import RotateLeftIcon from "@mui/icons-material/RotateLeft";
 import "antd/dist/antd.min.css";
@@ -317,11 +317,10 @@ const MapPage = () => {
   const [level, setLevel] = useState();
   const [search, setSearch] = useState(false);
 
-  const { location, error } = UseCurrentLocation(geolocationOptions);
+  const [itemContentId, setItemContentId] = useState();
+  const [clickPosition, setClickPosition] = useState();
 
-  useEffect(() => {
-    console.log("렌더링");
-  }, []);
+  const { location, error } = UseCurrentLocation(geolocationOptions);
 
   const [allData, setAllData] = useState([]);
   const [filteredData, setFilteredData] = useState(allData);
@@ -329,7 +328,7 @@ const MapPage = () => {
 
   useEffect(() => {
     axios(
-      "http://api.visitkorea.or.kr/openapi/service/rest/GoCamping/basedList?ServiceKey=DBx1v7ble2j4MNFWznYeeM5wQYthH5QTVeMOTXn5H%2FxvLP7Bbaa8IZvKxHq8r0425fyEMXvrs32EFDRIALvz5A%3D%3D&numOfRows=100&pageNo=1&MobileOS=ETC&MobileApp=TestApp&_type=json"
+      "http://api.visitkorea.or.kr/openapi/service/rest/GoCamping/basedList?ServiceKey=DBx1v7ble2j4MNFWznYeeM5wQYthH5QTVeMOTXn5H%2FxvLP7Bbaa8IZvKxHq8r0425fyEMXvrs32EFDRIALvz5A%3D%3D&numOfRows=300&pageNo=1&MobileOS=ETC&MobileApp=TestApp&_type=json"
     )
       .then((response) => {
         console.log(response.data.response.body.items.item);
@@ -459,6 +458,8 @@ const MapPage = () => {
     setSelectedResult(null);
     setDistrictResult(null);
     setTagValueResult(null);
+    setItemContentId();
+    setClickPosition();
     setFilteredData(allData);
     setSelected(cityData[0]);
     setDistrict(districtData[cityData[0]]);
@@ -497,11 +498,12 @@ const MapPage = () => {
     description,
     homepage,
     callNumber,
+    conId,
   }) => {
     const map = useMap();
     const [isVisible, setIsVisible] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
-
+    const [isOpen2, setIsOpen2] = useState(true);
     return (
       <>
         <MapMarker
@@ -515,8 +517,56 @@ const MapPage = () => {
         >
           {isVisible && content}
         </MapMarker>
+
+        {itemContentId === conId
+          ? isOpen2 && (
+              <CustomOverlayMap position={position} id={conId}>
+                <Wrap>
+                  <Info>
+                    <div className="title">
+                      {campName}
+                      <div
+                        className="close"
+                        onClick={() => setIsOpen2(false)}
+                        title="닫기"
+                      ></div>
+                    </div>
+                    <div className="body">
+                      <div className="img">
+                        <img
+                          src={firstImg ? firstImg : defaultImage}
+                          width="73"
+                          height="70"
+                          alt={campName}
+                        />
+                      </div>
+                      <Description>
+                        <div className="ellipsis">{description}</div>
+                        <div className="jibun ellipsis">{callNumber}</div>
+                        <br />
+                        <div className="link_box">
+                          <a
+                            href={homepage}
+                            target="_blank"
+                            className="link"
+                            rel="noreferrer"
+                          >
+                            홈페이지
+                          </a>
+                          <a className="info_btn" href="/camppage">
+                            상세 정보
+                          </a>
+                        </div>
+                      </Description>
+                    </div>
+                  </Info>
+                </Wrap>
+                ;
+              </CustomOverlayMap>
+            )
+          : null}
         {isOpen && (
-          <CustomOverlayMap position={position}>
+          <CustomOverlayMap position={position} id={conId}>
             <Wrap>
               <Info>
                 <div className="title">
@@ -539,7 +589,8 @@ const MapPage = () => {
                   <Description>
                     <div className="ellipsis">{description}</div>
                     <div className="jibun ellipsis">{callNumber}</div>
-                    <div>
+                    <br />
+                    <div className="link_box">
                       <a
                         href={homepage}
                         target="_blank"
@@ -547,6 +598,9 @@ const MapPage = () => {
                         rel="noreferrer"
                       >
                         홈페이지
+                      </a>
+                      <a className="info_btn" href="/camppage">
+                        상세 정보
                       </a>
                     </div>
                   </Description>
@@ -658,16 +712,24 @@ const MapPage = () => {
               )}
               <ResetButton onClick={onClickReset}>뒤로 가기</ResetButton>
             </Header>
-            <SearchResultList filteredData={filteredData} />
+            <SearchResultList
+              filteredData={filteredData}
+              setItemContentId={setItemContentId}
+              setClickPosition={setClickPosition}
+            />
           </Search>
           {filteredData[0] ? (
             <Map
-              center={{
-                lat: filteredData[0].mapY,
-                lng: filteredData[0].mapX,
-              }}
+              center={
+                clickPosition
+                  ? clickPosition
+                  : {
+                      lat: filteredData[0].mapY,
+                      lng: filteredData[0].mapX,
+                    }
+              }
               style={{ width: "63%", height: "800px" }}
-              level={10}
+              level={itemContentId ? 3 : 10}
               onZoomChanged={(map) => setLevel(map.getLevel())}
             >
               <ZoomControl />
@@ -682,8 +744,13 @@ const MapPage = () => {
                   description={item.addr1}
                   homepage={item.homepage}
                   callNumber={item.tel}
+                  conId={item.contentId}
+                  index={index}
                 />
               ))}
+              {/* {clickPosition && (
+                <MapTypeId type={kakao.maps.MapTypeId.TERRAIN} />
+              )} */}
             </Map>
           ) : (
             (alert("검색 결과가 없습니다"), setSearch(false))
@@ -832,7 +899,7 @@ const Info = styled.div`
     height: 35px;
     background: #eee;
     border-bottom: 1px solid #ddd;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: bold;
   }
 
@@ -902,10 +969,30 @@ const Description = styled.div`
     color: #888;
     margin-top: -2px;
   }
+
+  .link_box {
+    margin-top: -10px;
+  }
+
+  .info_btn {
+    float: right;
+    margin-right: 20px;
+    color: black;
+    background-color: white;
+    border: 0.2px solid lightgray;
+    padding: 3px 5px;
+    font-weight: 900;
+  }
+
+  .info_btn:hover {
+    border: 1px solid var(--main-color-orange);
+    color: var(--main-color-orange);
+  }
 `;
 
 // 마커 css
 const MarkerPoint = styled.div`
   padding: 3px;
   color: black;
+  z-index: -1;
 `;

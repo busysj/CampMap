@@ -8,7 +8,6 @@ import YoutubePage from "../components/MainPage/YoutubePage";
 
 import LocationBaseList from "../components/mapApi/LocationBaseList";
 
-
 const MainPage = () => {
   const [popup, setPopup] = useState(true);
   return (
@@ -19,7 +18,8 @@ const MainPage = () => {
       <ReviewPage />
       <YoutubePage />
 
-      <LocationBaseList/>{/* 컴포넌트 실행용도로 선언 */}
+      <LocationBaseList />
+      {/* 컴포넌트 실행용도로 선언 */}
     </div>
   );
 };
