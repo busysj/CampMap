@@ -1,26 +1,26 @@
 import { initializeApp } from "firebase/app";
-import {
-    getAuth, // 인증
-} from "firebase/auth";
+import { getAuth } from "firebase/auth"; // 인증
 import { getFirestore } from "firebase/firestore"; // firestore 사용
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
     // firebase 설정과 관련된 개인 정보
-    apiKey: process.env.REACT_APP_FIREBASE_KEY,
-    //apiKey: "본인 SDK 인증키 입력해야함. .env 에 입력하면됩니다", // 인증 key
-    authDomain: "campmap-dc086.firebaseapp.com",
-    projectId: "campmap-dc086",
-    storageBucket: "campmap-dc086.appspot.com",
-    messagingSenderId: "442364824752",
-    appId: "1:442364824752:web:715c04388a94eaaa1dff75",
+    apiKey: "AIzaSyC0DCwci9mhJSYr2nHHlzxySmrReidnCgQ",
+    authDomain: "campmap-983f8.firebaseapp.com",
+    projectId: "campmap-983f8",
+    storageBucket: "campmap-983f8.appspot.com",
+    messagingSenderId: "218811450222",
+    appId: "1:218811450222:web:1749df7ad4d1ef6b7bb77f",
 };
 
 const app = initializeApp(firebaseConfig);
-
-export const db = getFirestore(app);
-// 이런식으로 쓰면 사용할 js파일에 import {db} from '~~firebase.js' 하면됨
-
-export const auth = getAuth();
+const auth = getAuth(app);
 // import { signInWithEmailAndPassword } from "firebase/auth";
 // import { auth } from "../../firebase";
 // 사용할 js파일에서 이렇게 사용하믄댐
+const db = getFirestore(app);
+// 이런식으로 쓰면 사용할 js파일에 import db from '~~firebase.js' 하면됨
+//export const storage = getStorage(app);
+const storage = getStorage(app);
+
+export { auth, db, storage };
