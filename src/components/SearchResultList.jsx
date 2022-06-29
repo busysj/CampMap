@@ -6,10 +6,11 @@ import defaultImage from "../assets/default-Image.png";
 const SearchResultList = (props) => {
   // const [classAdd, setClassAdd] = useState(false);
 
-  const ListItemClick = (id) => {
+  const ListItemClick = (id, mapX, mapY) => {
     // const [clickClassAdd, setClickClassAdd] = useState(false);
     // alert(props.filteredData[i].contentId + " " + i);
     props.setItemContentId(id);
+    props.setClickPosition({ lat: mapY, lng: mapX });
     console.log(id);
   };
   return (
@@ -30,7 +31,7 @@ const SearchResultList = (props) => {
             className="items"
             id={item.contentId}
             onClick={() => {
-              ListItemClick(item.contentId);
+              ListItemClick(item.contentId, item.mapX, item.mapY);
             }}
           >
             <List.Item

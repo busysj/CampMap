@@ -80,6 +80,7 @@ const NavbarPage = () => {
             </div>
           ) : (
             <div>
+              <User>{`welcome to ${user.displayName}`}</User>
               <button
                 to="/"
                 onClick={() => {
@@ -128,6 +129,7 @@ const NavLogo = styled(Link)`
   color: black;
   font-weight: 600;
   cursor: pointer;
+
   img {
     width: 80px;
     height: 60px;
@@ -147,6 +149,11 @@ const NavItem = styled.div`
   position: absolute;
   right: 18%;
 `;
+const User = styled.span`
+  font-size: smaller;
+  font-weight: bolder;
+  letter-spacing: -1px;
+`;
 
 const NavButtonContainer = styled.div`
   position: absolute;
@@ -162,6 +169,7 @@ const NavButtonContainer = styled.div`
     color: #fff;
     border: none;
     font-weight: 500;
+
     &:hover {
       background: var(--main-color-orange-light);
     }
@@ -179,6 +187,7 @@ const NavLink = styled(Link)`
   font-weight: 500;
   text-decoration: none;
   color: black;
+
   &:hover {
     color: var(--main-color-orange);
     border-bottom: 2px solid var(--main-color-orange);

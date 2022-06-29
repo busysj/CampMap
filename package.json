@@ -13,6 +13,7 @@
     "@mdi/font": "^6.7.96",
     "@mui/icons-material": "^5.8.3",
     "@mui/material": "^5.8.3",
+    "@pathofdev/react-tag-input": "^1.0.7",
     "@popperjs/core": "^2.11.5",
     "@reduxjs/toolkit": "^1.8.2",
     "@testing-library/jest-dom": "^5.16.4",
@@ -30,6 +31,7 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "react-summernote": "^2.0.2",
+    "react-toastify": "^9.0.5",
     "sass": "^1.52.2",
     "styled-components": "^5.3.5",
     "swiper": "^6.0.2",
@@ -64,5 +66,5 @@
   "devDependencies": {
     "gh-pages": "^4.0.0"
   },
-  "homepage": "https://busysj.github.io/CampMap"
+  "homepage": "https://busysj.github.io/CampMap/"
 }
