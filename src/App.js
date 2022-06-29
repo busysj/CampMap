@@ -19,7 +19,6 @@ import { ToastContainer } from "react-toastify";
 import { useSelector } from "react-redux";
 import { selectUser } from "./store/userSlice";
 
-import LogReg from "./components/tools/LogReg";
 
 function App() {
     const user = useSelector(selectUser);
