@@ -7,6 +7,7 @@ import SearchPage from "../components/MainPage/SearchPage";
 import YoutubePage from "../components/MainPage/YoutubePage";
 
 import LocationBaseList from "../components/mapApi/LocationBaseList";
+import BasedList from "../components/mapApi/BasedList";
 
 
 const MainPage = () => {
@@ -19,6 +20,7 @@ const MainPage = () => {
       <ReviewPage />
       <YoutubePage />
 
+      <BasedList/>
       <LocationBaseList/>{/* 컴포넌트 실행용도로 선언 */}
     </div>
   );

@@ -9,7 +9,7 @@ const locationDataSlice = createSlice({
   name : 'locationData',
   initialState,
   reducers : {
-    addData : (state, action) => {
+    addLocationData : (state, action) => {
       state.locationData = action.payload
     },
     addPickData : (state, action) => {
@@ -17,5 +17,5 @@ const locationDataSlice = createSlice({
     },
   }
 });
-export const { addData, addPickData } = locationDataSlice.actions;
+export const { addLocationData, addPickData } = locationDataSlice.actions;
 export default locationDataSlice;
