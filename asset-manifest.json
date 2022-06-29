@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/CampMap/static/css/main.202dcf5b.css",
+    "main.js": "/CampMap/static/js/main.058ec951.js",
+    "static/js/787.fc7ebc36.chunk.js": "/CampMap/static/js/787.fc7ebc36.chunk.js",
+    "static/media/MainBackgroundImg.jpg": "/CampMap/static/media/MainBackgroundImg.88cb4d3ad5481423bb74.jpg",
+    "static/media/Safety.png": "/CampMap/static/media/Safety.cc8df65755a6cfc482f2.png",
+    "static/media/Logo.png": "/CampMap/static/media/Logo.450fbfefe9fcf016add5.png",
+    "static/media/Camping01.jpg": "/CampMap/static/media/Camping01.abc79878f720918436cf.jpg",
+    "static/media/Camping03.jpg": "/CampMap/static/media/Camping03.727bad7816be85daa1f8.jpg",
+    "static/media/Camping02.jpg": "/CampMap/static/media/Camping02.2c1a7b5cfcd555c8d312.jpg",
+    "static/media/thumbnail_post_IMG.png": "/CampMap/static/media/thumbnail_post_IMG.f75fd3329a18738639b0.png",
+    "static/media/default-Image.png": "/CampMap/static/media/default-Image.124a9fb39dcefd8a037a.png",
+    "index.html": "/CampMap/index.html",
+    "main.202dcf5b.css.map": "/CampMap/static/css/main.202dcf5b.css.map",
+    "main.058ec951.js.map": "/CampMap/static/js/main.058ec951.js.map",
+    "787.fc7ebc36.chunk.js.map": "/CampMap/static/js/787.fc7ebc36.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.202dcf5b.css",
+    "static/js/main.058ec951.js"
+  ]
+}
