@@ -320,31 +320,28 @@ const MapPage = () => {
 
   const { location, error } = UseCurrentLocation(geolocationOptions);
 
-  useEffect(() => {
-    console.log("렌더링");
-  }, []);
-
   const [allData, setAllData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [searchResult, setSearchResult] = useState("");
+  const pickData = useSelector((state) => state.locationDataSlice.locationPickData);
 
-  setAllData(useSelector((state) => state.BasedDataSlice.basedData));
-  setFilteredData(useSelector((state) => state.BasedDataSlice.basedData));
-  console.log(allData);
-
-  /*useEffect(() => {
+  useEffect(() => {
     axios(
-      "http://api.visitkorea.or.kr/openapi/service/rest/GoCamping/basedList?ServiceKey=DBx1v7ble2j4MNFWznYeeM5wQYthH5QTVeMOTXn5H%2FxvLP7Bbaa8IZvKxHq8r0425fyEMXvrs32EFDRIALvz5A%3D%3D&numOfRows=100&pageNo=1&MobileOS=ETC&MobileApp=TestApp&_type=json"
+      "http://api.visitkorea.or.kr/openapi/service/rest/GoCamping/basedList?ServiceKey=DBx1v7ble2j4MNFWznYeeM5wQYthH5QTVeMOTXn5H%2FxvLP7Bbaa8IZvKxHq8r0425fyEMXvrs32EFDRIALvz5A%3D%3D&numOfRows=1000&pageNo=1&MobileOS=ETC&MobileApp=TestApp&_type=json"
     )
       .then((response) => {
-        console.log(response.data.response.body.items.item);
         setAllData(response.data.response.body.items.item);
         setFilteredData(response.data.response.body.items.item);
       })
       .catch((error) => {
         console.log("Error getting fake data: " + error);
       });
-  }, []);*/
+      console.log(setAllData);
+  }, []);
+  useEffect(() => {
+    setFilteredData(pickData);
+    console.log(filteredData);
+  },[]);
 
   const [keywordResult, setKeywordResult] = useState();
   const [selectedResult, setSelectedResult] = useState();
