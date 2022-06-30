@@ -3,7 +3,7 @@ import "./App.css";
 import MainPage from "./page/MainPage";
 import { Route, Routes, Navigate } from "react-router-dom";
 import MapPage from "./page/MapPage";
-import CampPage from "./page/CampPage";
+import CampPage from "./components/CampPage/CampPage";
 import Community from "./components/CommunityPage/Community";
 import CampingNav from "./components/MainPage/CampingNav";
 import SearchResultList from "./components/SearchResultList";
