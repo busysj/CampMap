@@ -21,14 +21,14 @@ const NavbarPage = () => {
 
     const handleClose = () => {
         setOpenModal(false);
-        console.log(location.pathname); // 네브바 주소접근 확인 콘솔 -by.재라
+        // console.log(location.pathname); // 네브바 주소접근 확인 콘솔 -by.재라
     };
 
     return (
         <Nav>
             <NavLogo to="/">
                 <img src={Logo} alt="logo" />
-                Camp
+                CampMap
             </NavLogo>
 
             <NavMenu>
@@ -44,7 +44,10 @@ const NavbarPage = () => {
                     <form>
                         <SearchInput1>
                             <span>
-                                <input type="text" placeholder="검색어를 입력 해 주세요" />
+                                <input
+                                    type="text"
+                                    placeholder="검색어를 입력 해 주세요"
+                                />
                                 <button>
                                     <BtnIcon>
                                         <SearchIcon viewBox="0 0 25 25" />

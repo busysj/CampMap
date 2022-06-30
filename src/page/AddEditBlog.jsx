@@ -12,7 +12,8 @@ import {
     addDoc,
     doc,
     getDoc,
-    updateDoc,
+    //updateDoc,
+    setDoc,
 } from "firebase/firestore";
 
 const initialState = {
@@ -126,7 +127,7 @@ const AddEditBlog = ({ user }) => {
                 // id값 없으면 업데이트
                 try {
                     await addDoc(collection(db, "blog"), {
-                        //
+                        // collection 은 db의 blog컬렉션까지 조회해서 거기서 문서바로추가함
                         ...form,
                         timestamp: serverTimestamp(),
                         author: user.displayName,
@@ -138,15 +139,17 @@ const AddEditBlog = ({ user }) => {
             } else {
                 // id값 있으면 게시글 신규작성
                 try {
-                    await updateDoc(collection(db, "blog"), {
+                    await setDoc(doc(db, "blog", id), {
                         // 인자 업데이트시 필드만 객체 형식으로 전달하면댐
-                        //
+                        // 필드쪽에 업데이트하기 위해서는 doc으로(문서)접근, blog의doc의id를 확인해줘야함
+                        // 😂💦 collection 썼다가 .. 에러나서 주글뽄..
                         ...form,
                         timestamp: serverTimestamp(),
                         author: user.displayName,
                         userId: user.uid,
                     });
                 } catch (error) {
+                    console.log("id", id);
                     console.log("업데이트왜안댐?", error);
                 }
             }

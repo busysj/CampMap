@@ -22,7 +22,7 @@ const BoardList = ({ blogs, user, handleDelete, handleUpdate }) => {
     const [nickname, setNickname] = useState([]);
 
     const userId = user?.uid;
-    console.log(`user`, user);
+    //console.log(`user`, user);
 
     // 🤣id 있을 경우 해당 blog 삭제할수 있도록 해야함
     // 💦그리고 useId와 만든사용자의 id도 일치해야함
@@ -71,8 +71,8 @@ const BoardList = ({ blogs, user, handleDelete, handleUpdate }) => {
                             item.userId -> firebase 쪽 id
                             user.uid -> 현재 로그인 한 id
                             */}
-                                {console.log(`item.userId`, item.userId)}
-                                {console.log(`user.uid`, user)}
+                                {/* {console.log(`item.userId`, item.userId)}
+                                {console.log(`user.uid`, user)} */}
                                 {user?.uid && item.userId === user.uid && (
                                     <span>
                                         <FontAwesomeIcon
@@ -104,11 +104,13 @@ const BoardList = ({ blogs, user, handleDelete, handleUpdate }) => {
                             </div>
                         </div>
                         <div className="thumbnail_post">
-                            <img
-                                src={item.imgUrl}
-                                alt={item.title}
-                                className="thumbnail_post"
-                            />
+                            {item.imgUrl ? (
+                                <img
+                                    src={item.imgUrl}
+                                    alt={item.title}
+                                    className="thumbnail_post"
+                                />
+                            ) : null}
                         </div>
                     </div>
                 ))}

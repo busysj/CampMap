@@ -18,11 +18,9 @@ import { ToastContainer } from "react-toastify";
 import { useSelector } from "react-redux";
 import { selectUser } from "./store/userSlice";
 
-import LogReg from "./components/tools/LogReg";
-
 function App() {
     const user = useSelector(selectUser);
-    console.log(`user가 없나요?`, user);
+    console.log(`user가 있나요?`, user);
 
     return (
         <div className="App">

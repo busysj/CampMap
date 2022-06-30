@@ -81,7 +81,6 @@ const Community = ({ user }) => {
 
     return (
         <div className="total">
-            <h1>커뮤니티 페이지</h1>
             <div className="wirte_section_header">
                 <button
                     className="write_btn"
@@ -124,6 +123,9 @@ const Community = ({ user }) => {
                 </div>
             ) : (
                 <div className="wirte_section_middle">
+                    <span style={{ marginLeft: "10px", fontWeight: "bold" }}>
+                        {user.displayName} 님 환영합니다
+                    </span>
                     <button
                         className="write_btn"
                         onClick={() => {
@@ -132,7 +134,6 @@ const Community = ({ user }) => {
                     >
                         글쓰기
                     </button>
-                    / 로그인 안했으면 로그인하라고 띄워주기
                 </div>
             )}
 
@@ -170,10 +171,10 @@ const Community = ({ user }) => {
                             handleUpdate={handleUpdate}
                         />
                     </div>
-                    <div className="tags_section_body">Tags Most Popular</div>
+                    {/* <div className="tags_section_body">Tags Most Popular</div> */}
                 </div>
                 <BoardList />
-                <div className="category_section_footer">
+                {/* <div className="category_section_footer">
                     글리스트 밑에 글작성 버튼
                     <div className="wirte_section_end">
                         <button
@@ -185,7 +186,7 @@ const Community = ({ user }) => {
                             글쓰기
                         </button>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     );
