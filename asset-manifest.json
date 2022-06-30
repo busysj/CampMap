@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/CampMap/static/css/main.82445d6b.css",
-    "main.js": "/CampMap/static/js/main.96075309.js",
+    "main.js": "/CampMap/static/js/main.2dc53d6c.js",
     "static/js/787.fc7ebc36.chunk.js": "/CampMap/static/js/787.fc7ebc36.chunk.js",
     "static/media/MainBackgroundImg.jpg": "/CampMap/static/media/MainBackgroundImg.88cb4d3ad5481423bb74.jpg",
     "static/media/Safety.png": "/CampMap/static/media/Safety.cc8df65755a6cfc482f2.png",
@@ -12,11 +12,11 @@
     "static/media/default-Image.png": "/CampMap/static/media/default-Image.124a9fb39dcefd8a037a.png",
     "index.html": "/CampMap/index.html",
     "main.82445d6b.css.map": "/CampMap/static/css/main.82445d6b.css.map",
-    "main.96075309.js.map": "/CampMap/static/js/main.96075309.js.map",
+    "main.2dc53d6c.js.map": "/CampMap/static/js/main.2dc53d6c.js.map",
     "787.fc7ebc36.chunk.js.map": "/CampMap/static/js/787.fc7ebc36.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.82445d6b.css",
-    "static/js/main.96075309.js"
+    "static/js/main.2dc53d6c.js"
   ]
 }
