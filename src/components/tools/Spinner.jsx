@@ -14,4 +14,6 @@ export default Spinner;
 const SpinnerBoarder = styled.div`
     width: 3rem;
     height: 3rem;
+    margin-right: auto;
+    margin-left: auto;
 `;

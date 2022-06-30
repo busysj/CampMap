@@ -6,7 +6,13 @@ import BoardList from "./BoardList";
 import { useEffect } from "react"; // db나 api에서 가져올때 항상 useEffect 사용
 import { useState } from "react"; // db나 api에서 값을 가져와서 state에 저장
 import { db } from "../../firebase";
-import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
+import {
+    collection,
+    deleteDoc,
+    doc,
+    onSnapshot,
+    updateDoc,
+} from "firebase/firestore";
 import Spinner from "../tools/Spinner";
 
 const Community = ({ user }) => {
@@ -32,7 +38,7 @@ const Community = ({ user }) => {
             },
             (error) => {
                 console.log(error);
-            },
+            }
         );
 
         return () => {
@@ -61,9 +67,20 @@ const Community = ({ user }) => {
         }
     };
 
+    // firebase 기존 문서 수정, 문서 업데이트
+    // https://firebase.google.com/docs/firestore/manage-data/add-data
+    const handleUpdate = async (id) => {
+        // 문서 수정 핸들링 하는 함수
+        try {
+            //수정된 데이터를, 기존 데이터에 덮어씌운다???
+            await updateDoc(doc(db, "blog", id));
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <div className="total">
-            <h1>커뮤니티 페이지</h1>
             <div className="wirte_section_header">
                 <button
                     className="write_btn"
@@ -106,6 +123,9 @@ const Community = ({ user }) => {
                 </div>
             ) : (
                 <div className="wirte_section_middle">
+                    <span style={{ marginLeft: "10px", fontWeight: "bold" }}>
+                        {user.displayName} 님 환영합니다
+                    </span>
                     <button
                         className="write_btn"
                         onClick={() => {
@@ -114,7 +134,6 @@ const Community = ({ user }) => {
                     >
                         글쓰기
                     </button>
-                    / 로그인 안했으면 로그인하라고 띄워주기
                 </div>
             )}
 
@@ -145,11 +164,17 @@ const Community = ({ user }) => {
                 </div>
                 <div className="category_tags_sum">
                     <div className="category_section_body">
-                        <BoardList blogs={blogs} user={user} handleDelete={handleDelete} />
+                        <BoardList
+                            blogs={blogs}
+                            user={user}
+                            handleDelete={handleDelete}
+                            handleUpdate={handleUpdate}
+                        />
                     </div>
-                    <div className="tags_section_body">Tags Most Popular</div>
+                    {/* <div className="tags_section_body">Tags Most Popular</div> */}
                 </div>
-                <div className="category_section_footer">
+                <BoardList />
+                {/* <div className="category_section_footer">
                     글리스트 밑에 글작성 버튼
                     <div className="wirte_section_end">
                         <button
@@ -161,7 +186,7 @@ const Community = ({ user }) => {
                             글쓰기
                         </button>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     );

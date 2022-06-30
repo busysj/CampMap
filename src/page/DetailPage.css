@@ -1,6 +1,6 @@
 .single {
     position: relative;
-    height: 700px;
+    height: 500px;
     width: 100%;
     font-size: 72px;
 }
@@ -12,7 +12,7 @@
     background-repeat: no-repeat;
     background-position: center center;
     position: relative;
-    height: 600px;
+    height: 500px;
     width: 100%;
 }
 
@@ -47,7 +47,7 @@
 .blog-title h2 {
     color: white;
     font-weight: 300;
-    font-size: 72px;
+    font-size: 50px;
 }
 
 .blog-single-content {
