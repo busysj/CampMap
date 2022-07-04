@@ -553,7 +553,12 @@ const MapPage = () => {
                           >
                             홈페이지
                           </a>
-                          <a className="info_btn" href="/camppage">
+                          <a
+                            className="info_btn"
+                            target="_blank"
+                            rel="noreferrer"
+                            href={`/camppage/${conId}`}
+                          >
                             상세 정보
                           </a>
                         </div>
@@ -599,7 +604,12 @@ const MapPage = () => {
                       >
                         홈페이지
                       </a>
-                      <a className="info_btn" href="/camppage">
+                      <a
+                        className="info_btn"
+                        target="_blank"
+                        rel="noreferrer"
+                        href={`/camppage/${conId}`}
+                      >
                         상세 정보
                       </a>
                     </div>

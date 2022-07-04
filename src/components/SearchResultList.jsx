@@ -56,7 +56,13 @@ const SearchResultList = (props) => {
               />
               {item.tel} <br />
               {item.sbrsCl} <br />
-              <Reservation href="/camppage">상세 정보 보기</Reservation>
+              <Reservation
+                target="_blank"
+                rel="noreferrer"
+                href={`/camppage/${item.contentId}`}
+              >
+                상세 정보 보기
+              </Reservation>
             </List.Item>
           </div>
         )}

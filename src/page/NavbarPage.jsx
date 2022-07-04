@@ -35,12 +35,12 @@ const NavbarPage = () => {
         <NavItem>
           <NavLink to="/map">지도</NavLink>
           <NavLink to="/community">커뮤니티</NavLink>
-          <NavLink to="/recommend">캠핑장추천</NavLink>
+          {/* <NavLink to="/recommend">캠핑장추천</NavLink>
           <NavLink to="/review">리뷰</NavLink>
-          <NavLink to="/youtube">유튜브</NavLink>
+          <NavLink to="/youtube">유튜브</NavLink> */}
         </NavItem>
         {/* 재라 : 네브바 검색창 코드start - 0610 */}
-        {location.pathname !== "/" ? (
+        {/* {location.pathname !== "/" ? (
           <form>
             <SearchInput1>
               <span>
@@ -49,12 +49,12 @@ const NavbarPage = () => {
                   <BtnIcon>
                     <SearchIcon viewBox="0 0 25 25" />
                   </BtnIcon>
-                  {/* className="btn_icon" */}
+                  
                 </button>
               </span>
             </SearchInput1>
           </form>
-        ) : null}
+        ) : null} */}
         {/* 재라 : 네브바 검색창 코드end - 0610 */}
         <NavButtonContainer>
           {!user ? ( // user값에 따라 네브바 (로그인,회원가입) 또는 (로그아웃,마이페이지) 로 나뉨
@@ -80,7 +80,7 @@ const NavbarPage = () => {
             </div>
           ) : (
             <div>
-              <User>{`welcome to ${user.displayName}`}</User>
+              <User>{`${user.displayName}`}</User>
               <button
                 to="/"
                 onClick={() => {
@@ -150,7 +150,7 @@ const NavItem = styled.div`
   right: 18%;
 `;
 const User = styled.span`
-  font-size: smaller;
+  margin-right: 50px;
   font-weight: bolder;
   letter-spacing: -1px;
 `;
@@ -178,7 +178,7 @@ const NavButtonContainer = styled.div`
 
 const NavLink = styled(Link)`
   display: flex;
-  margin: 0 30px 0 30px;
+  margin: 0 15px;
   padding: 0 15px;
   font-size: 15px;
   align-items: center;
