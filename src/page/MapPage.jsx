@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from 'react-redux';
 import styled from "styled-components";
 import { CustomOverlayMap, Map, MapMarker, useMap } from "react-kakao-maps-sdk";
 import { ZoomControl, MapTypeControl, MapTypeId } from "react-kakao-maps-sdk";
@@ -323,7 +324,7 @@ const MapPage = () => {
   const { location, error } = UseCurrentLocation(geolocationOptions);
 
   const [allData, setAllData] = useState([]);
-  const [filteredData, setFilteredData] = useState(allData);
+  const [filteredData, setFilteredData] = useState([]);
   const [searchResult, setSearchResult] = useState("");
 
   useEffect(() => {
@@ -331,13 +332,13 @@ const MapPage = () => {
       "http://api.visitkorea.or.kr/openapi/service/rest/GoCamping/basedList?ServiceKey=DBx1v7ble2j4MNFWznYeeM5wQYthH5QTVeMOTXn5H%2FxvLP7Bbaa8IZvKxHq8r0425fyEMXvrs32EFDRIALvz5A%3D%3D&numOfRows=300&pageNo=1&MobileOS=ETC&MobileApp=TestApp&_type=json"
     )
       .then((response) => {
-        console.log(response.data.response.body.items.item);
         setAllData(response.data.response.body.items.item);
         setFilteredData(response.data.response.body.items.item);
       })
       .catch((error) => {
         console.log("Error getting fake data: " + error);
       });
+      console.log(setAllData);
   }, []);
 
   const [keywordResult, setKeywordResult] = useState();

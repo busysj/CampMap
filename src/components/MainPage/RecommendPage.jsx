@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { addPickData } from "../../store/locationDataSlice";
+import { Link } from "react-router-dom";
 
 import styled from "styled-components";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -128,6 +129,7 @@ const RecommendPage = () => {
                 >
                     {
                        campStoreData.map((camp, index) => (
+                        <Link to={`/camppage/${camp.contentId}`}>
                         <SwiperSlide key={index} onClick={() => {
                             clickPush(index);
                         }}>
@@ -137,6 +139,7 @@ const RecommendPage = () => {
                                 <CampingName>{camp.facltNm}</CampingName>
                             </CampingBack>
                         </SwiperSlide>
+                        </Link>
                        )) 
                     }
                 </Swiper>

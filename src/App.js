@@ -3,7 +3,7 @@ import "./App.css";
 import MainPage from "./page/MainPage";
 import { Route, Routes, Navigate } from "react-router-dom";
 import MapPage from "./page/MapPage";
-import CampPage from "./page/CampPage";
+import CampPage from "./components/CampPage/CampPage";
 import Community from "./components/CommunityPage/Community";
 import CampingNav from "./components/MainPage/CampingNav";
 import SearchResultList from "./components/SearchResultList";
@@ -28,15 +28,11 @@ function App() {
             <Routes>
                 <Route path="/" element={<Layout />}>
                     <Route path="/" element={<MainPage />} />
-                    <Route path="/camppage" element={<CampPage />} />
                     <Route path="/map" element={<MapPage />}>
                         <Route index element={<SearchResultList />} />
                     </Route>
-                    <Route path="/camppage" element={<CampPage />} />
-                    <Route
-                        path="/community"
-                        element={<Community user={user} />}
-                    />
+                    <Route path="/camppage/:id" element={<CampPage />} />
+                    <Route path="/community" element={<Community user={user} />} />
                     <Route path="/detail/:id" element={<DetailPage />} />
                     /
                     <Route
