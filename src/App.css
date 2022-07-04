@@ -1,10 +1,10 @@
 :root {
-    --main-color-black: #1e1e07;
-    --main-color-green: #0e5f12;
-    --main-color-orange: #ff8807;
-    --main-color-orange-light: rgb(255, 198, 64);
-    --main-color-yellow: #ffe923;
-    --main-color-yellow-light: #fffbab;
+  --main-color-black: #1e1e07;
+  --main-color-green: #0e5f12;
+  --main-color-orange: #ff8807;
+  --main-color-orange-light: rgb(255, 198, 64);
+  --main-color-yellow: #ffe923;
+  --main-color-yellow-light: #fffbab;
 }
 
 /* body {
@@ -12,32 +12,32 @@
 }  */
 
 .ant-select-selector:hover {
-    border-color: var(--main-color-orange) !important;
+  border-color: var(--main-color-orange) !important;
 }
 
 .ant-select-focused {
-    border-color: var(--main-color-orange);
-    box-shadow: 0 0 0 0.5px var(--main-color-orange);
-    border-radius: 2px;
+  border-color: var(--main-color-orange);
+  box-shadow: 0 0 0 0.5px var(--main-color-orange);
+  border-radius: 2px;
 }
 
 .ant-pagination-item:hover {
-    color: var(--main-color-orange) !important;
-    border-color: var(--main-color-orange) !important;
-    font-weight: bold;
+  color: var(--main-color-orange) !important;
+  border-color: var(--main-color-orange) !important;
+  font-weight: bold;
 }
 
 .ant-pagination-item-active {
-    color: var(--main-color-orange) !important;
-    border-color: var(--main-color-orange) !important;
-    font-weight: bold;
+  color: var(--main-color-orange) !important;
+  border-color: var(--main-color-orange) !important;
+  font-weight: bold;
 }
 
 .ant-pagination-item-link:hover {
-    color: var(--main-color-orange) !important;
-    border-color: var(--main-color-orange) !important;
+  color: var(--main-color-orange) !important;
+  border-color: var(--main-color-orange) !important;
 }
 
-h1 {
+/* h1 {
     background-color: var(--main-color-orange);
-}
+} */
