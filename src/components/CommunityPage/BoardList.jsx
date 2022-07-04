@@ -14,7 +14,7 @@ import { useSelector } from "react-redux";
         ✅ 5초마다 데이터 가져와야하고 그런거 안해도됨 (소켓과같은hook)
         */
 
-const BoardList = ({ blogs, user, handleDelete }) => {
+const BoardList = ({ blogs, user, handleDelete, handleUpdate }) => {
   const navigator = useNavigate();
   const [id, setId] = useState([]);
   const [title, setTitle] = useState([]);
@@ -22,7 +22,7 @@ const BoardList = ({ blogs, user, handleDelete }) => {
   const [nickname, setNickname] = useState([]);
 
   const userId = user?.uid;
-  console.log(`user`, user);
+  //console.log(`user`, user);
 
   // 🤣id 있을 경우 해당 blog 삭제할수 있도록 해야함
   // 💦그리고 useId와 만든사용자의 id도 일치해야함

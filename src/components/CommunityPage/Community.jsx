@@ -6,7 +6,13 @@ import BoardList from "./BoardList";
 import { useEffect } from "react"; // db나 api에서 가져올때 항상 useEffect 사용
 import { useState } from "react"; // db나 api에서 값을 가져와서 state에 저장
 import { db } from "../../firebase";
-import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  onSnapshot,
+  updateDoc,
+} from "firebase/firestore";
 import Spinner from "../tools/Spinner";
 
 const Community = ({ user }) => {

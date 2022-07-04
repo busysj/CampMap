@@ -21,7 +21,7 @@ const NavbarPage = () => {
 
   const handleClose = () => {
     setOpenModal(false);
-    console.log(location.pathname); // 네브바 주소접근 확인 콘솔 -by.재라
+    // console.log(location.pathname); // 네브바 주소접근 확인 콘솔 -by.재라
   };
 
   return (

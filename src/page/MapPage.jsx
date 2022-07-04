@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addPickData } from "../store/locationDataSlice";
 import styled from "styled-components";
 import { CustomOverlayMap, Map, MapMarker, useMap } from "react-kakao-maps-sdk";
 import { ZoomControl, MapTypeControl, MapTypeId } from "react-kakao-maps-sdk";
@@ -9,6 +11,7 @@ import UseCurrentLocation from "../hooks/UseCurrentLocation";
 import axios from "axios";
 import SearchResultList from "../components/SearchResultList";
 import defaultImage from "../assets/default-Image.png";
+import { Link } from "react-router-dom";
 
 const { Option } = Select;
 
@@ -311,6 +314,7 @@ const geolocationOptions = {
 };
 
 const MapPage = () => {
+  const dispatch = useDispatch();
   const [cities, setCities] = useState(districtData[cityData[0]]);
   const [district, setDistrict] = useState(districtData[cityData[0]][0]);
   const [selected, setSelected] = useState(cityData[0]);
@@ -323,7 +327,7 @@ const MapPage = () => {
   const { location, error } = UseCurrentLocation(geolocationOptions);
 
   const [allData, setAllData] = useState([]);
-  const [filteredData, setFilteredData] = useState(allData);
+  const [filteredData, setFilteredData] = useState([]);
   const [searchResult, setSearchResult] = useState("");
 
   useEffect(() => {
@@ -499,6 +503,7 @@ const MapPage = () => {
     homepage,
     callNumber,
     conId,
+    item,
   }) => {
     const map = useMap();
     const [isVisible, setIsVisible] = useState(false);
@@ -553,14 +558,15 @@ const MapPage = () => {
                           >
                             홈페이지
                           </a>
-                          <a
+                          <Link
+                            onClick={() => {
+                              dispatch(addPickData(item));
+                            }}
                             className="info_btn"
-                            target="_blank"
-                            rel="noreferrer"
-                            href={`/camppage/${conId}`}
+                            to={`/camppage/${conId}`}
                           >
                             상세 정보
-                          </a>
+                          </Link>
                         </div>
                       </Description>
                     </div>
@@ -604,14 +610,15 @@ const MapPage = () => {
                       >
                         홈페이지
                       </a>
-                      <a
+                      <Link
+                        onClick={() => {
+                          dispatch(addPickData(item));
+                        }}
                         className="info_btn"
-                        target="_blank"
-                        rel="noreferrer"
-                        href={`/camppage/${conId}`}
+                        to={`/camppage/${conId}`}
                       >
                         상세 정보
-                      </a>
+                      </Link>
                     </div>
                   </Description>
                 </div>
@@ -756,6 +763,7 @@ const MapPage = () => {
                   callNumber={item.tel}
                   conId={item.contentId}
                   index={index}
+                  item={item}
                 />
               ))}
               {/* {clickPosition && (
