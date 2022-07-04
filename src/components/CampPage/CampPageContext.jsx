@@ -1,14 +1,14 @@
 import styled from "styled-components";
 
-const CampPageContext = () => {
+const CampPageContext = ({facltNm, addr1, addr2, tel}) => {
   return(
     <div>
       <CampContext>
-        <h2 className="camp-title">캠핑장 이름</h2>
+        <h2 className="camp-title">{facltNm}</h2>
         <div className="camp-title-icon"></div>
         <div className="horizon" />
-        <h3>주소 : </h3>
-        <h3>전번 : </h3>
+        <h3>주소 : {addr1}{addr2}</h3>
+        <h3>전번 : {tel}</h3>
         <div className="horizon" />
       </CampContext>
     </div>

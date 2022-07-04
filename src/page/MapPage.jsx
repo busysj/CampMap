@@ -326,7 +326,6 @@ const MapPage = () => {
   const [allData, setAllData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [searchResult, setSearchResult] = useState("");
-  const pickData = useSelector((state) => state.locationDataSlice.locationPickData);
 
   useEffect(() => {
     axios(
@@ -341,11 +340,6 @@ const MapPage = () => {
       });
       console.log(setAllData);
   }, []);
-
-  useEffect(() => {
-    setFilteredData(pickData);
-    console.log(filteredData);
-  },[filteredData]);
 
   const [keywordResult, setKeywordResult] = useState();
   const [selectedResult, setSelectedResult] = useState();

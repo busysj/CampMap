@@ -30,11 +30,10 @@ function App() {
             <Routes>
                 <Route path="/" element={<Layout />}>
                     <Route path="/" element={<MainPage />} />
-                    <Route path="/camppage" element={<CampPage />} />
                     <Route path="/map" element={<MapPage />}>
                         <Route index element={<SearchResultList />} />
                     </Route>
-                    <Route path="/camppage" element={<CampPage />} />
+                    <Route path="/camppage/:id" element={<CampPage />} />
                     <Route path="/community" element={<Community user={user} />} />
                     <Route path="/detail/:id" element={<DetailPage />} />
                     /

@@ -2,6 +2,7 @@ import styled from "styled-components";
 import CampMapPage from "./CampMapPage";
 import CampPageContext from "./CampPageContext";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 //아이콘 import
 
 import Car from "@mui/icons-material/DirectionsCarFilledOutlined";
@@ -11,12 +12,18 @@ import LocalFire from "@mui/icons-material/LocalFireDepartmentOutlined";
 import Extinguisher from "@mui/icons-material/FireExtinguisherOutlined";
 import Pet from "@mui/icons-material/PetsOutlined";
 
-const tabList = {
-    0 : <CampPageContext/>,
-    1 : <CampMapPage/>
-};
 
 const CampPage = () => {
+    const campData = useSelector((state) => state.locationDataSlice.locationPickData);
+    
+    const tabList = {
+        0 : <CampPageContext 
+        addr1={campData.addr1} addr2={campData.addr2}
+        facltNm={campData.facltNm}
+        tel={campData.tel}/>,
+        1 : <CampMapPage
+        mapX={campData.mapX} mapY={campData.mapY} name={campData.facltNm}/>
+    };
     const [tab, setTab] = useState(0);
     const changeTab = (tabIndex) => {
         setTab(tabIndex);
