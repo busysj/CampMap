@@ -21,10 +21,16 @@ const DetailPage = () => {
 
     return (
         <div className="single">
-            <div className="blog-title-box" style={{ backgroundImage: `url('${blog?.imgUrl}')` }}>
+            <div
+                className="blog-title-box"
+                style={{ backgroundImage: `url('${blog?.imgUrl}')` }}
+            >
                 <div className="overlay"></div>
                 <div className="blog-title">
                     <span>{blog?.timestamp.toDate().toDateString()}</span>
+                    <span style={{ fontWeight: "bold" }}>
+                        &nbsp; By &nbsp;{blog?.author}
+                    </span>
                     <h2>{blog?.title}</h2>
                 </div>
             </div>
@@ -32,15 +38,13 @@ const DetailPage = () => {
                 <div className="container padding">
                     <div className="row mx-0">
                         <div className="col-md-8">
-                            <span className="meta-info text-start">
-                                By <p className="author">{blog?.author}</p> - &nbsp;
-                                {blog?.timestamp.toDate().toDateString()}
-                            </span>
                             <p className="text-start">{blog?.description}</p>
                         </div>
                         <div className="col-md-3">
-                            <h2>Tags</h2>
-                            <h2>Most Popular</h2>
+                            <h2>태그</h2>
+                            <p>노지캠핑</p>
+                            <p>장비</p>
+                            <p>음식</p>
                         </div>
                     </div>
                 </div>
