@@ -131,20 +131,20 @@ const RecommendPage = () => {
         loop={true}
       >
         {campStoreData.map((camp, index) => (
-          <Link to={`/camppage/${camp.contentId}`}>
             <SwiperSlide
               key={index}
               onClick={() => {
                 clickPush(index);
               }}
             >
+            <Link to={`/camppage/${camp.contentId}`}>
               <span>더 보기</span>
               <img id={camp.contentId} src={camp.firstImageUrl} alt="Camping" />
               <CampingBack>
                 <CampingName>{camp.facltNm}</CampingName>
               </CampingBack>
+            </Link>
             </SwiperSlide>
-          </Link>
         ))}
       </Swiper>
     </Container>
