@@ -12,6 +12,7 @@ import axios from "axios";
 import SearchResultList from "../components/SearchResultList";
 import defaultImage from "../assets/default-Image.png";
 import { Link } from "react-router-dom";
+import Spinner from "../components/tools/Spinner";
 
 const { Option } = Select;
 
@@ -314,7 +315,6 @@ const geolocationOptions = {
 };
 
 const MapPage = () => {
-  const dispatch = useDispatch();
   const [cities, setCities] = useState(districtData[cityData[0]]);
   const [district, setDistrict] = useState(districtData[cityData[0]][0]);
   const [selected, setSelected] = useState(cityData[0]);
@@ -326,23 +326,26 @@ const MapPage = () => {
 
   const { location, error } = UseCurrentLocation(geolocationOptions);
 
-  const [allData, setAllData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
+  const dispatch = useDispatch();
+  const campData = useSelector((state) => state.basedDataSlice.basedData);
+
+  const [allData, setAllData] = useState(campData);
+  const [filteredData, setFilteredData] = useState(allData);
   const [searchResult, setSearchResult] = useState("");
 
-  useEffect(() => {
-    axios(
-      "http://api.visitkorea.or.kr/openapi/service/rest/GoCamping/basedList?ServiceKey=DBx1v7ble2j4MNFWznYeeM5wQYthH5QTVeMOTXn5H%2FxvLP7Bbaa8IZvKxHq8r0425fyEMXvrs32EFDRIALvz5A%3D%3D&numOfRows=300&pageNo=1&MobileOS=ETC&MobileApp=TestApp&_type=json"
-    )
-      .then((response) => {
-        console.log(response.data.response.body.items.item);
-        setAllData(response.data.response.body.items.item);
-        setFilteredData(response.data.response.body.items.item);
-      })
-      .catch((error) => {
-        console.log("Error getting fake data: " + error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios(
+  //     "http://api.visitkorea.or.kr/openapi/service/rest/GoCamping/basedList?ServiceKey=DBx1v7ble2j4MNFWznYeeM5wQYthH5QTVeMOTXn5H%2FxvLP7Bbaa8IZvKxHq8r0425fyEMXvrs32EFDRIALvz5A%3D%3D&numOfRows=300&pageNo=1&MobileOS=ETC&MobileApp=TestApp&_type=json"
+  //   )
+  //     .then((response) => {
+  //       console.log(response.data.response.body.items.item);
+  //       setAllData(response.data.response.body.items.item);
+  //       setFilteredData(response.data.response.body.items.item);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, []);
 
   const [keywordResult, setKeywordResult] = useState();
   const [selectedResult, setSelectedResult] = useState();
@@ -633,7 +636,9 @@ const MapPage = () => {
 
   return (
     <>
-      {!search ? (
+      {campData.length === 0 ? (
+        <Spinner />
+      ) : !search ? (
         <FindMap>
           <Search>
             <Header>
