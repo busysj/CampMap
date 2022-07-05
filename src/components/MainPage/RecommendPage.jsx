@@ -30,6 +30,7 @@ const Container = styled.div`
     width: 160vh;
     padding-left: 50px;
     padding-right: 50px;
+    margin: 0;
   }
 
   .swiper-button-next {
@@ -51,12 +52,20 @@ const Container = styled.div`
     justify-content: center;
     display: flex;
     flex-direction: column;
+    a {
+      margin: auto; padding: 0;
+      display: block;
+      width: 100%; height: 100%;
+      text-align: center;
+    }
     span {
       margin: 0;
       padding: 0;
       opacity: 0;
+
     }
     img {
+      margin: 0;
       border-radius: 24px 24px 0 0;
       display: block;
       width: 100%;
@@ -68,10 +77,10 @@ const Container = styled.div`
         filter: brightness(50%);
       }
       span {
-        display: inline;
         opacity: 1;
         position: absolute;
         top: 50%;
+        left: 40%;
         text-align: center;
         background-color: transparent;
         color: white;
@@ -88,12 +97,10 @@ const CampingBack = styled.div`
   height: 5vh;
   border-radius: 0 0 24px 24px;
   align-items: center;
+  justify-content: center;
 `;
 const CampingName = styled.h2`
   color: rgb(255, 198, 64);
-  text-align: center;
-  margin-top: 10px;
-  justify-content: center;
   font-size: 20px;
 `;
 
@@ -107,7 +114,6 @@ const RecommendPage = () => {
   const clickPush = (i) => {
     //해당하는 캠핑장 클릭시 id값 추출 및 해당하는 인덱스값 가져옴
     const searchId = campStoreData[i];
-    console.log(searchId);
     dispatch(addPickData(searchId));
   };
 
@@ -137,13 +143,15 @@ const RecommendPage = () => {
                 clickPush(index);
               }}
             >
-            <Link to={`/camppage/${camp.contentId}`}>
-              <span>더 보기</span>
-              <img id={camp.contentId} src={camp.firstImageUrl} alt="Camping" />
-              <CampingBack>
-                <CampingName>{camp.facltNm}</CampingName>
-              </CampingBack>
-            </Link>
+              <div>
+              <Link to={`/camppage/${camp.contentId}`}>
+                <span>더 보기</span>
+                <img id={camp.contentId} src={camp.firstImageUrl} alt="Camping" />
+                <CampingBack>
+                  <CampingName>{camp.facltNm}</CampingName>
+                </CampingBack>
+              </Link>
+              </div>
             </SwiperSlide>
         ))}
       </Swiper>

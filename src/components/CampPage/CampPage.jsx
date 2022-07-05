@@ -3,26 +3,15 @@ import CampMapPage from "./CampMapPage";
 import CampPageContext from "./CampPageContext";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-//아이콘 import
-
-import Car from "@mui/icons-material/DirectionsCarFilledOutlined";
-import Sink from "@mui/icons-material/CountertopsOutlined";
-import Shower from "@mui/icons-material/ShowerOutlined";
-import LocalFire from "@mui/icons-material/LocalFireDepartmentOutlined";
-import Extinguisher from "@mui/icons-material/FireExtinguisherOutlined";
-import Pet from "@mui/icons-material/PetsOutlined";
 
 
 const CampPage = () => {
     const campData = useSelector((state) => state.locationDataSlice.locationPickData);
     
     const tabList = {
-        0 : <CampPageContext 
-        addr1={campData.addr1} addr2={campData.addr2}
-        facltNm={campData.facltNm}
-        tel={campData.tel}/>,
+        0 : <CampPageContext props={campData}/>,
         1 : <CampMapPage
-        mapX={campData.mapX} mapY={campData.mapY} name={campData.facltNm}/>
+        mapX={campData.mapX} mapY={campData.mapY} name={campData.facltNm}/>,
     };
     const [tab, setTab] = useState(0);
     const changeTab = (tabIndex) => {
@@ -30,7 +19,11 @@ const CampPage = () => {
     };
 
     return (
+        <div>
+        <CampBackImg style={{background:`url(${campData.firstImageUrl})`,
+        backgroundRepeat:'no-repeat', backgroundSize:'cover'}}/>
             <CampBody>
+                <CampImg src={campData.firstImageUrl} alt='camping' />
                 <TabBar>
                     <ul>
                         <li className={`${tab === 0 ? 'active' : ''}`} onClick={() => changeTab(0)}>
@@ -43,78 +36,49 @@ const CampPage = () => {
                 </TabBar>
                 <TabContentArea>
                     {tabList[tab]}
-                </TabContentArea>
-                <AbleContainer>
-                <div>
-                    <Car className="icon-able" />
-                    <p>차량입장가능</p>
-                </div>
-                <div>
-                    <Sink className="icon-able" />
-                    <p>개수대 이용 가능</p>
-                </div>
-                <div>
-                    <Shower className="icon-able" />
-                    <p>샤워실 이용 가능</p>
-                </div>
-                <div>
-                    <LocalFire className="icon-able" />
-                    <p>화구 사용 가능</p>
-                </div>
-                <div>
-                    <Extinguisher className="icon-able" />
-                    <p>소화기 설치</p>
-                </div>
-                <div>
-                    <Pet className="icon-able" />
-                    <p>반려동물 입장 가능</p>
-                </div>
-            </AbleContainer>
+                </TabContentArea>               
         </CampBody>
+    </div>
     );
 };
 
 export default CampPage;
 
 const CampBody = styled.div`
+    background-color: white;
     max-width: 600px;
-    text-align: center;
     margin: auto;
     box-shadow: 3px 3px 10px black;
 `;
+const CampBackImg = styled.div`
+    width: 1920px; height: 1080px;
+    position: fixed;
+    z-index: -1;
+    filter: blur(5px);
+`;
+const CampImg = styled.img`
+    width: 100%; height: 300px;
+`;
 const TabBar = styled.div`
+    margin: 0;
+    text-align: center;
+    font-weight: bold;
     ul{
-        padding: 20px;
+        padding: 0;
         display: flex;
         list-style: none;
     }
     li{
-        margin: auto;
+        width: 100%; height: 100%;
+        display: block;
+        padding: 20px;
     }
     li.active{
+        color: white;
         font-weight: bold;
-        color: var(--main-color-orange);
+        background-color: var(--main-color-orange);
     }
 `;
 const TabContentArea = styled.div`
     width: 100%;
-`
-const AbleContainer = styled.div`
-    max-width: 600px;
-    height: 300px;
-    background-color: var(--main-color-orange);
-    text-align: center;
-    display: flex;
-    justify-content: space-around;
-    h2 {
-        color: white;
-    }
-    p {
-        color: white;
-        font-size: 10px;
-    }
-    .icon-able {
-        color: white;
-        font-size: 5em;
-    }
 `;
