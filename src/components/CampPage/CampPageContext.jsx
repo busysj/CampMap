@@ -9,22 +9,15 @@ const CampPageContext = ({props}) => {
         </CampTitle>
         <div className="horizon" />
         <div className="camp-maininfo">
-            <p>기본정보</p>
-            <h3>주소 : {props.addr1}{props.addr2}</h3>
-            <h3>전번 : {props.tel}</h3>
+            <h3>기본정보</h3>
+            <p>주소 : {props.addr1} {props.addr2}</p>
+            <p>전화번호 : {props.tel}</p>
+            <a href={`${props.homepage}`} target='blank'>홈페이지</a>
         </div>
         <div className="horizon" />
         <div className="camp-info">
-            <p>캠핑장 환경 : {props.induty}</p>
-            <p>운영일 : {props.operDeCl}</p>
-            <p>운영계절 : {props.operPdCl}</p>
-            <p>반려동물 동반 {props.animalCmgCl}</p>
-            <p>개인트레일러 동반 : {props.trlerAcmpnyAt}</p>
-            <p>카라반 동반 : {props.caravAcmpnyAt}</p>
-            <p>화장실 갯수 : {props.toiletCo}</p>
-            <p>샤워실 갯수 : {props.swrmCo}</p>
-            <p>화로대 : {props.brazierCl}</p>
-            <p>소화기 갯수 : {props.extshrCo}</p>
+            <h2>"{props.lineIntro}"</h2>
+            <p>{props.intro}</p>
         </div>
       </CampContext>
   );
@@ -47,26 +40,38 @@ const CampTitle = styled.div`
 
 const CampContext = styled.div`
     margin: 5px;
-    max-width: 600px;
-    height: 600px;
+    max-width: 800px; min-width: 600px;
+    max-height: auto;
     background-color: white;
     .horizon {
         width: 100%;
         height: 2px;
         background-color: var(--main-color-orange);
-        margin: 0;
+        margin-top: 30px; margin-bottom: 30px;
     }
     .camp-info{
         text-align: center;
+        h2 {
+            font-size: 25px;
+            font-weight: bold;
+            margin-top: 50px; margin-bottom: 50px;
+        }
+        p {
+            margin: 30px;
+            word-spacing: 3px;
+            line-height: 25px;
+        }
     }
-
-    h2 {
-        margin: 30px;
-    }
-    h3 {
+    .camp-maininfo{
+        h3 {
         font-size: 20px;
-        margin-top: 30px;
-        margin-bottom: 30px;
+        }
+        a{
+            font-style: none;
+            margin-top: 10px; margin-bottom: 10px;
+            padding: 10px;
+            background-color: var(--main-color-orange);
+        }
     }
 `;
 
