@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addPickData } from "../store/locationDataSlice";
 import styled from "styled-components";
@@ -8,11 +8,9 @@ import { Input, Select, Tag } from "antd";
 import RotateLeftIcon from "@mui/icons-material/RotateLeft";
 import "antd/dist/antd.min.css";
 import UseCurrentLocation from "../hooks/UseCurrentLocation";
-import axios from "axios";
 import SearchResultList from "../components/SearchResultList";
 import defaultImage from "../assets/default-Image.png";
 import { Link } from "react-router-dom";
-import Spinner from "../components/tools/Spinner";
 
 const { Option } = Select;
 
@@ -636,9 +634,7 @@ const MapPage = () => {
 
   return (
     <>
-      {campData.length === 0 ? (
-        <Spinner />
-      ) : !search ? (
+      {!search ? (
         <FindMap>
           <Search>
             <Header>
@@ -691,7 +687,10 @@ const MapPage = () => {
           </Search>
           {location ? (
             <Map
-              center={{ lat: location.latitude, lng: location.longitude }}
+              center={{
+                lat: location.latitude - 0.00145,
+                lng: location.longitude - 0.0036,
+              }}
               style={{ width: "63%", height: "800px" }}
               level={4}
               onZoomChanged={(map) => setLevel(map.getLevel())}
@@ -699,11 +698,20 @@ const MapPage = () => {
               <ZoomControl />
               <MapMarker
                 position={{
-                  lat: location.latitude,
-                  lng: location.longitude,
+                  lat: location.latitude - 0.00145,
+                  lng: location.longitude - 0.0036,
                 }}
               >
-                <div style={{ color: "#000" }}> 현재 위치</div>
+                <div
+                  style={{
+                    width: "145px",
+                    color: "black",
+                    textAlign: "center",
+                    fontWeight: "bold",
+                  }}
+                >
+                  현재 위치
+                </div>
               </MapMarker>
             </Map>
           ) : (
@@ -715,7 +723,17 @@ const MapPage = () => {
             >
               <ZoomControl />
               <MapMarker position={{ lat: 33.450701, lng: 126.570667 }}>
-                <div style={{ color: "#000" }}> 카카오</div>
+                <div
+                  style={{
+                    width: "145px",
+                    color: "black",
+                    textAlign: "center",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {" "}
+                  카카오
+                </div>
               </MapMarker>
             </Map>
           )}
@@ -1015,7 +1033,15 @@ const Description = styled.div`
 
 // 마커 css
 const MarkerPoint = styled.div`
-  padding: 3px;
+  width: 200px;
+  background-color: white;
+  opacity: 0.8;
+  border: 1px solid black;
+  border-radius: 3px;
+  padding: 4px;
   color: black;
   z-index: -1;
+  text-align: center;
+  font-size: 13px;
+  font-weight: bold;
 `;

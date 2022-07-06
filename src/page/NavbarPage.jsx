@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Logo from "../assets/Logo.png";
-import { Link, useLocation } from "react-router-dom";
+import { NavLink, Link, useLocation } from "react-router-dom";
 import LogReg from "../components/tools/LogReg";
 import OutsideClick from "../components/tools/OutsideClick";
 import SearchIcon from "@mui/icons-material/Search";
@@ -33,8 +33,8 @@ const NavbarPage = () => {
 
       <NavMenu>
         <NavItem>
-          <NavLink to="/map">지도</NavLink>
-          <NavLink to="/community">커뮤니티</NavLink>
+          <Navlink to={`/map`}>지도</Navlink>
+          <Navlink to={`/community`}>커뮤니티</Navlink>
           {/* <NavLink to="/recommend">캠핑장추천</NavLink>
           <NavLink to="/review">리뷰</NavLink>
           <NavLink to="/youtube">유튜브</NavLink> */}
@@ -148,6 +148,11 @@ const NavItem = styled.div`
   display: flex;
   position: absolute;
   right: 18%;
+
+  .active {
+    color: var(--main-color-orange);
+    border-bottom: 2px solid var(--main-color-orange);
+  }
 `;
 const User = styled.span`
   margin-right: 50px;
@@ -176,7 +181,7 @@ const NavButtonContainer = styled.div`
   }
 `;
 
-const NavLink = styled(Link)`
+const Navlink = styled(NavLink)`
   display: flex;
   margin: 0 15px;
   padding: 0 15px;
