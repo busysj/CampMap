@@ -393,6 +393,7 @@ const MapPage = () => {
       (data) => data.sbrsCl && data.sbrsCl.includes(valueArray)
     );
 
+    console.log(tagResult);
     if (keywordResult) {
       setFilteredData(keywordResult);
       if (selectedResult) {
@@ -684,8 +685,8 @@ const MapPage = () => {
           {location ? (
             <Map
               center={{
-                lat: location.latitude - 0.00135,
-                lng: location.longitude - 0.00343,
+                lat: location.latitude,
+                lng: location.longitude,
               }}
               style={{ width: "63%", height: "800px" }}
               level={4}
@@ -694,8 +695,8 @@ const MapPage = () => {
               <ZoomControl />
               <MapMarker
                 position={{
-                  lat: location.latitude - 0.00135,
-                  lng: location.longitude - 0.00343,
+                  lat: location.latitude,
+                  lng: location.longitude,
                 }}
               >
                 <div
