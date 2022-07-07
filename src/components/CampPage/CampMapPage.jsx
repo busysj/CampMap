@@ -6,10 +6,10 @@ const CampMapPage = ({mapX, mapY, name}) => {
     <div>
       <MapContainer
         center={{ lat: mapY, lng: mapX }}
-        style={{ width: "100%", height: "500px" }}
+        style={{ width: "100%", height: "600px" }}
       >
         <MapMarker position={{ lat: mapY, lng: mapX }}>
-          <div style={{ color: "#000" }}>{name}</div>
+          <div className="marker-info">{name}</div>
         </MapMarker>
       </MapContainer>
     </div>
@@ -18,6 +18,15 @@ const CampMapPage = ({mapX, mapY, name}) => {
 
 const MapContainer = styled(Map)`
     width: 600px;
-    height: 470px;
+    height: 600px;
+    .marker-info{
+      display: block;
+      background-color: var(--main-color-orange);
+      width: 165px; height: 45px;
+      position: absolute; left: -10px; top: -20px;
+      text-align: center;
+      border-radius: 10px;
+      color: white;
+    }
 `;
 export default CampMapPage;

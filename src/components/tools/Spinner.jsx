@@ -12,6 +12,7 @@ const Spinner = () => {
 export default Spinner;
 
 const SpinnerBoarder = styled.div`
+    position: absolute; top: 50%; left: 50%;
     width: 3rem;
     height: 3rem;
     margin-right: auto;
