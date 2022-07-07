@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import SwiperTool, {
   StyleSwiper,
   BestReviewContainer,
@@ -8,34 +9,32 @@ import SwiperTool, {
   SwiperSlide,
 } from "../tools/SwiperTool";
 
-const camp = [
-  //이미지 api로 받아올것
-  require("../../assets/Camping01.jpg"),
-  require("../../assets/Camping02.jpg"),
-  require("../../assets/Camping03.jpg"),
-];
 
 const list = ["리스트1", "리스트2", "리스트3", "리스트4", "리스트5"];
 
 const ReviewPage = () => {
+  const campData = useSelector((state) => state.locationDataSlice.locationData);
+  const campIntro = [campData[0], campData[1], campData[2]];
   const slide = SwiperTool();
 
   return (
     <Review>
       <BestReviewContainer>
         <StyleSwiper {...slide.swiperParams} ref={slide.setswiper}>
-          {camp.map((camp, index) => (
+          {campIntro.map((camp, index) => (
             <SwiperSlide key={index}>
-              <BestReviewImg src={camp} />
+              <Link to={`/camppage/${camp.contentId}`}>
+              <BestReviewImg src={camp.firstImageUrl} />
               {/* 삽입 이미지 */}
               <BestReviewTitle>
                 {/* 삽입 제목 */}
-                제목 {index + 1}
+                "{camp.lineIntro}"
               </BestReviewTitle>
               <BestReviewContext>
                 {/* 삽입 내용 */}
-                {index + 1}번째 게시물
+                {camp.intro}
               </BestReviewContext>
+              </Link>
             </SwiperSlide>
           ))}
         </StyleSwiper>
@@ -102,16 +101,17 @@ const BestReviewTitle = styled.h2`
   position: absolute;
   top: 10%;
   text-align: center;
+  font-size: 25px;
 `;
 const BestReviewContext = styled.p`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 25%;
+  width: 80%;
+  height: 80%;
+  position: absolute; 
+  top: 25%; left: 10%;
   text-align: center;
   color: white;
 `;
-const More = styled(NavLink)`
+const More = styled(Link)`
   text-decoration-line: none;
   float: right;
   margin-top: 15px;

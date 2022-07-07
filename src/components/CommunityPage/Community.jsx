@@ -70,16 +70,6 @@ const Community = ({ user }) => {
   return (
     <div className="total">
       {/* <h1>커뮤니티 페이지</h1> */}
-      <div className="wirte_section_header">
-        <button
-          className="write_btn"
-          onClick={() => {
-            navigator("/create");
-          }}
-        >
-          글쓰기
-        </button>
-      </div>
       {/* <div className="best_section">
                 <div className="description">
                     <h1>flexbox이용 카드컴포넌트</h1>
@@ -120,7 +110,6 @@ const Community = ({ user }) => {
           >
             글쓰기
           </button>
-          / 로그인 안했으면 로그인하라고 띄워주기
         </div>
       )}
 
