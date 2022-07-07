@@ -143,7 +143,6 @@ const RecommendPage = () => {
                 clickPush(index);
               }}
             >
-              <div>
               <Link to={`/camppage/${camp.contentId}`}>
                 <span>더 보기</span>
                 <img id={camp.contentId} src={camp.firstImageUrl} alt="Camping" />
@@ -151,7 +150,6 @@ const RecommendPage = () => {
                   <CampingName>{camp.facltNm}</CampingName>
                 </CampingBack>
               </Link>
-              </div>
             </SwiperSlide>
         ))}
       </Swiper>

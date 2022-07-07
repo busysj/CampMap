@@ -14,6 +14,7 @@ import Trailer from '@mui/icons-material/RvHookupOutlined';
 import Caravan from '@mui/icons-material/AirportShuttleOutlined';
 
 const CampPage = () => {
+    //locationDataSlice에서 선택한 Redux 데이터 가져옴
     const campData = useSelector((state) => state.locationDataSlice.locationPickData);
     
     const tabList = {
