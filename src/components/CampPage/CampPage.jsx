@@ -3,6 +3,7 @@ import CampMapPage from "./CampMapPage";
 import CampPageContext from "./CampPageContext";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import defaultImage from '../../assets/default-Image.png';
 
 import Toilet from '@mui/icons-material/WcOutlined';
 import Pet from '@mui/icons-material/PetsOutlined';
@@ -30,10 +31,10 @@ const CampPage = () => {
     return (
     <div>
         <CampBackImg style={ campData.firstImageUrl ? { background:`url(${campData.firstImageUrl})`,
-        backgroundRepeat:'no-repeat', backgroundSize:'cover'} : { background : 'url(../assets/default-Image.png)', backgroundRepeat : 'no-repeat', backgroundSize : 'cover'}}/>
+        backgroundRepeat:'no-repeat', backgroundSize:'cover'} : { background : `url(${defaultImage})`, backgroundRepeat : 'no-repeat', backgroundSize : 'cover'}}/>
         <CampBody>
             {campData.firstImageUrl ? <CampImg src={campData.firstImageUrl} alt='camping' />
-            : <CampImg src='../assets/default-Image.png' alt='camping' />}
+            : <CampImg src={defaultImage} alt='camping' />}
             <TabBar>
                 <ul>
                     <li className={`${tab === 0 ? 'active' : ''}`} onClick={() => changeTab(0)}>
