@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addPickData } from "../store/locationDataSlice";
 import styled from "styled-components";
@@ -8,7 +8,6 @@ import { Input, Select, Tag } from "antd";
 import RotateLeftIcon from "@mui/icons-material/RotateLeft";
 import "antd/dist/antd.min.css";
 import UseCurrentLocation from "../hooks/UseCurrentLocation";
-import axios from "axios";
 import SearchResultList from "../components/SearchResultList";
 import defaultImage from "../assets/default-Image.png";
 import { Link } from "react-router-dom";
@@ -314,7 +313,6 @@ const geolocationOptions = {
 };
 
 const MapPage = () => {
-  const dispatch = useDispatch();
   const [cities, setCities] = useState(districtData[cityData[0]]);
   const [district, setDistrict] = useState(districtData[cityData[0]][0]);
   const [selected, setSelected] = useState(cityData[0]);
@@ -326,23 +324,26 @@ const MapPage = () => {
 
   const { location, error } = UseCurrentLocation(geolocationOptions);
 
-  const [allData, setAllData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
+  const dispatch = useDispatch();
+  const campData = useSelector((state) => state.basedDataSlice.basedData);
+
+  const [allData, setAllData] = useState(campData);
+  const [filteredData, setFilteredData] = useState(allData);
   const [searchResult, setSearchResult] = useState("");
 
-  useEffect(() => {
-    axios(
-      "http://api.visitkorea.or.kr/openapi/service/rest/GoCamping/basedList?ServiceKey=DBx1v7ble2j4MNFWznYeeM5wQYthH5QTVeMOTXn5H%2FxvLP7Bbaa8IZvKxHq8r0425fyEMXvrs32EFDRIALvz5A%3D%3D&numOfRows=300&pageNo=1&MobileOS=ETC&MobileApp=TestApp&_type=json"
-    )
-      .then((response) => {
-        console.log(response.data.response.body.items.item);
-        setAllData(response.data.response.body.items.item);
-        setFilteredData(response.data.response.body.items.item);
-      })
-      .catch((error) => {
-        console.log("Error getting fake data: " + error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios(
+  //     "http://api.visitkorea.or.kr/openapi/service/rest/GoCamping/basedList?ServiceKey=DBx1v7ble2j4MNFWznYeeM5wQYthH5QTVeMOTXn5H%2FxvLP7Bbaa8IZvKxHq8r0425fyEMXvrs32EFDRIALvz5A%3D%3D&numOfRows=300&pageNo=1&MobileOS=ETC&MobileApp=TestApp&_type=json"
+  //   )
+  //     .then((response) => {
+  //       console.log(response.data.response.body.items.item);
+  //       setAllData(response.data.response.body.items.item);
+  //       setFilteredData(response.data.response.body.items.item);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, []);
 
   const [keywordResult, setKeywordResult] = useState();
   const [selectedResult, setSelectedResult] = useState();
@@ -686,7 +687,10 @@ const MapPage = () => {
           </Search>
           {location ? (
             <Map
-              center={{ lat: location.latitude, lng: location.longitude }}
+              center={{
+                lat: location.latitude - 0.00145,
+                lng: location.longitude - 0.0036,
+              }}
               style={{ width: "63%", height: "800px" }}
               level={4}
               onZoomChanged={(map) => setLevel(map.getLevel())}
@@ -694,11 +698,20 @@ const MapPage = () => {
               <ZoomControl />
               <MapMarker
                 position={{
-                  lat: location.latitude,
-                  lng: location.longitude,
+                  lat: location.latitude - 0.00145,
+                  lng: location.longitude - 0.0036,
                 }}
               >
-                <div style={{ color: "#000" }}> 현재 위치</div>
+                <div
+                  style={{
+                    width: "145px",
+                    color: "black",
+                    textAlign: "center",
+                    fontWeight: "bold",
+                  }}
+                >
+                  현재 위치
+                </div>
               </MapMarker>
             </Map>
           ) : (
@@ -710,7 +723,17 @@ const MapPage = () => {
             >
               <ZoomControl />
               <MapMarker position={{ lat: 33.450701, lng: 126.570667 }}>
-                <div style={{ color: "#000" }}> 카카오</div>
+                <div
+                  style={{
+                    width: "145px",
+                    color: "black",
+                    textAlign: "center",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {" "}
+                  카카오
+                </div>
               </MapMarker>
             </Map>
           )}
@@ -1010,7 +1033,15 @@ const Description = styled.div`
 
 // 마커 css
 const MarkerPoint = styled.div`
-  padding: 3px;
+  width: 200px;
+  background-color: white;
+  opacity: 0.8;
+  border: 1px solid black;
+  border-radius: 3px;
+  padding: 4px;
   color: black;
   z-index: -1;
+  text-align: center;
+  font-size: 13px;
+  font-weight: bold;
 `;

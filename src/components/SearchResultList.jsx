@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { List } from "antd";
 import styled from "styled-components";
 import defaultImage from "../assets/default-Image.png";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addPickData } from "../store/locationDataSlice";
 
 const SearchResultList = (props) => {
-  // const [classAdd, setClassAdd] = useState(false);
+  const dispatch = useDispatch();
 
   const ListItemClick = (id, mapX, mapY) => {
-    // const [clickClassAdd, setClickClassAdd] = useState(false);
-    // alert(props.filteredData[i].contentId + " " + i);
     props.setItemContentId(id);
     props.setClickPosition({ lat: mapY, lng: mapX });
     console.log(id);
@@ -57,9 +58,10 @@ const SearchResultList = (props) => {
               {item.tel} <br />
               {item.sbrsCl} <br />
               <Reservation
-                target="_blank"
-                rel="noreferrer"
-                href={`/camppage/${item.contentId}`}
+                onClick={() => {
+                  dispatch(addPickData(item));
+                }}
+                to={`/camppage/${item.contentId}`}
               >
                 상세 정보 보기
               </Reservation>
@@ -112,7 +114,7 @@ const SearchList = styled(List)`
   }
 `;
 
-const Reservation = styled.a`
+const Reservation = styled(Link)`
   float: right;
 
   &:hover {
