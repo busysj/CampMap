@@ -17,6 +17,7 @@ import { ToastContainer } from "react-toastify";
 
 import { useSelector } from "react-redux";
 import { selectUser } from "./store/userSlice";
+import MapPage2 from "./page/MapPage2";
 
 function App() {
   const user = useSelector(selectUser);
@@ -28,7 +29,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<MainPage />} />
-          <Route path="/map" element={<MapPage />}>
+          <Route path="/map" element={<MapPage2 />}>
             <Route index element={<SearchResultList />} />
           </Route>
           <Route path="/camppage/:id" element={<CampPage />} />
