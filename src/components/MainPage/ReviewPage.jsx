@@ -14,14 +14,13 @@ const list = ["리스트1", "리스트2", "리스트3", "리스트4", "리스트
 
 const ReviewPage = () => {
   const campData = useSelector((state) => state.locationDataSlice.locationData);
-  const campIntro = [campData[0], campData[1], campData[2]];
   const slide = SwiperTool();
 
   return (
     <Review>
       <BestReviewContainer>
         <StyleSwiper {...slide.swiperParams} ref={slide.setswiper}>
-          {campIntro.map((camp, index) => (
+          {campData.map((camp, index) => (
             <SwiperSlide key={index}>
               <Link to={`/camppage/${camp.contentId}`}>
               <BestReviewImg src={camp.firstImageUrl} />
