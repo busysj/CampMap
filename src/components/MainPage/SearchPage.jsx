@@ -2,6 +2,7 @@ import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import styled from "styled-components";
 import backgroundImg from "../../assets/MainBackgroundImg.jpg";
+import { NavLink } from "react-router-dom";
 
 const SeachPage = () => {
   return (
@@ -13,10 +14,12 @@ const SeachPage = () => {
             <span>
               <input type="text" placeholder="캠핑장 또는 지역을 검색하세요" />
               <button>
-                <BtnIcon>
-                  <SearchIcon viewBox="3 3 25 25" />
-                </BtnIcon>
-                {/* className="btn_icon" */}
+                <NavLink className="button" to={`/map`}>
+                  <BtnIcon>
+                    <SearchIcon viewBox="3 3 25 25" />
+                  </BtnIcon>
+                  {/* className="btn_icon" */}
+                </NavLink>
               </button>
             </span>
           </SearchInput>
@@ -109,6 +112,7 @@ const SearchInput = styled.div`
   }
 `;
 const BtnIcon = styled.div`
+  color: white;
   margin-top: 5px;
   font-size: large;
 `;

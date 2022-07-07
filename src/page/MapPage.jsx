@@ -393,8 +393,6 @@ const MapPage = () => {
       (data) => data.sbrsCl && data.sbrsCl.includes(valueArray)
     );
 
-    // value[0] && setTagValueResult(tagResult);
-
     if (keywordResult) {
       setFilteredData(keywordResult);
       if (selectedResult) {
@@ -686,8 +684,8 @@ const MapPage = () => {
           {location ? (
             <Map
               center={{
-                lat: location.latitude - 0.00145,
-                lng: location.longitude - 0.0036,
+                lat: location.latitude - 0.00135,
+                lng: location.longitude - 0.00343,
               }}
               style={{ width: "63%", height: "800px" }}
               level={4}
@@ -696,8 +694,8 @@ const MapPage = () => {
               <ZoomControl />
               <MapMarker
                 position={{
-                  lat: location.latitude - 0.00145,
-                  lng: location.longitude - 0.0036,
+                  lat: location.latitude - 0.00135,
+                  lng: location.longitude - 0.00343,
                 }}
               >
                 <div
@@ -875,7 +873,7 @@ const SelectBox = styled.div`
 const SearchTagList = styled.div`
   margin: 15px;
 
-  .active {
+  .tagActive {
     color: var(--main-color-orange);
     font-weight: bold;
     border-color: var(--main-color-orange);
