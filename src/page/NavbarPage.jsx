@@ -112,7 +112,7 @@ const Nav = styled.div`
   background: #fff;
   display: flex;
   justify-content: space-between;
-  width: 1920px;
+  max-width: 1920px; min-width: 800px;
   height: 72px;
   top: 0;
   font-size: 1.2rem;
@@ -138,8 +138,8 @@ const NavLogo = styled(Link)`
 `;
 
 const NavMenu = styled.div`
+  max-width: 1920px;
   display: flex;
-  right: 100%;
   list-style: none;
   margin: 0 80px 0 0;
 `;
@@ -147,7 +147,7 @@ const NavMenu = styled.div`
 const NavItem = styled.div`
   display: flex;
   position: absolute;
-  right: 18%;
+  right: 220px;
 
   .active {
     color: var(--main-color-orange);
@@ -155,14 +155,15 @@ const NavItem = styled.div`
   }
 `;
 const User = styled.span`
-  margin-right: 50px;
+  margin-right: 40px;
   font-weight: bolder;
   letter-spacing: -1px;
 `;
 
 const NavButtonContainer = styled.div`
-  position: absolute;
-  right: 5%;
+  max-width: 1920px;
+  display: flex;
+  position: absolute; right: 15px;
   button {
     background: var(--main-color-orange);
     align-items: center;

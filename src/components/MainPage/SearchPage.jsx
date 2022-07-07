@@ -36,7 +36,7 @@ const SeachPage = () => {
 export default SeachPage;
 
 const SearchBackgroundimg = styled.div`
-  width: 1920px;
+  max-width: 1920px; min-width: 1000px;
   height: 500px;
   position: relative;
   z-index: 1;
@@ -115,9 +115,8 @@ const BtnIcon = styled.div`
 
 const SearchFilter = styled.ul`
   list-style-type: none;
-  width: 500px;
-  margin-left: 680px;
-  margin-right: auto;
+  width: 50%;
+  margin: auto;
   display: flex;
   justify-content: center;
 

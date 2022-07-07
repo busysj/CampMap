@@ -31,7 +31,7 @@ const CampPage = () => {
     return (
     <div>
         <CampBackImg style={ campData.firstImageUrl ? { background:`url(${campData.firstImageUrl})`,
-        backgroundRepeat:'no-repeat', backgroundSize:'cover'} : { background : `url(${defaultImage})`, backgroundRepeat : 'no-repeat', backgroundSize : 'cover'}}/>
+        backgroundRepeat:'no-repeat', backgroundSize:'cover'} : { backgroundColor : 'white'}}/>
         <CampBody>
             {campData.firstImageUrl ? <CampImg src={campData.firstImageUrl} alt='camping' />
             : <CampImg src={defaultImage} alt='camping' />}
@@ -109,7 +109,7 @@ export default CampPage;
 
 const CampBody = styled.div`
     background-color: white;
-    max-width: 800px; min-width: 600px;
+    max-width: 800px; min-width: 800px;
     margin: auto;
     box-shadow: 3px 3px 10px black;
 `;
@@ -146,7 +146,7 @@ const TabContentArea = styled.div`
     width: 100%;
 `;
 const AbleContainer = styled.div`
-    max-width: 800px; max-height: auto; min-width: 600px;
+    max-width: 800px; max-height: auto; min-width: 800px;
     background-color: var(--main-color-orange);
     display: flex;
     flex-wrap: wrap;

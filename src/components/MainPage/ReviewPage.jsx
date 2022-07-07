@@ -1,4 +1,6 @@
 import React from "react";
+import { addPickData } from "../../store/locationDataSlice";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -14,14 +16,21 @@ const list = ["리스트1", "리스트2", "리스트3", "리스트4", "리스트
 
 const ReviewPage = () => {
   const campData = useSelector((state) => state.locationDataSlice.locationData);
+  const dispatch = useDispatch();
+  const campFilter = campData.filter((item) => { return item.intro });
+  const clickPush = (i) => {
+    //해당하는 캠핑장 클릭시 id값 추출 및 해당하는 인덱스값 가져옴
+    const searchId = campFilter[i];
+    dispatch(addPickData(searchId));
+  };
   const slide = SwiperTool();
 
   return (
     <Review>
       <BestReviewContainer>
         <StyleSwiper {...slide.swiperParams} ref={slide.setswiper}>
-          {campData.map((camp, index) => (
-            <SwiperSlide key={index}>
+          {campFilter.map((camp, index) => (
+            <SwiperSlide key={index} onClick={() => {clickPush(index)}}>
               <Link to={`/camppage/${camp.contentId}`}>
               <BestReviewImg src={camp.firstImageUrl} />
               {/* 삽입 이미지 */}

@@ -5,19 +5,18 @@ const CampPageContext = ({props}) => {
       <CampContext>
         <CampTitle>
             <span className="camp-title">{props.facltNm}</span>
-            <span className="camp-status">{props.manageSttus}</span>
+            <span className={`${props.manageSttus === '운영' ? 'camp-onduty' : 'camp-disduty'}`}>{props.manageSttus}</span>
         </CampTitle>
         <div className="horizon" />
         <div className="camp-maininfo">
-            <h3>기본정보</h3>
             <p>주소 : {props.addr1} {props.addr2}</p>
-            <p>전화번호 : {props.tel}</p>
+            <p>전화번호 : {props.tel ? props.tel : '정보 없음'}</p>
             <a href={`${props.homepage}`} target='blank'>홈페이지</a>
         </div>
         <div className="horizon" />
         <div className="camp-info">
-            <h2>"{props.lineIntro}"</h2>
-            <p>{props.intro}</p>
+            <h2>{props.lineIntro ? `"${props.lineIntro}"` : '캠핑장 정보 없음'}</h2>
+            <p>{props.intro ? props.intro : ''}</p>
         </div>
       </CampContext>
   );
@@ -28,13 +27,21 @@ const CampTitle = styled.div`
         font-size: 2em;
         margin: 10px 10px;
     }
-    .camp-status{
+    .camp-onduty{
+        float: right;
+        margin-right: 50px;
+        padding: 5px;
+        border-radius: 20px;
+        background-color: var(--main-color-orange-light);
+        color: white;
+    }
+    .camp-disduty{
         float: right;
         margin-right: 50px;
         padding: 5px;
         border-radius: 20px;
         background-color: var(--main-color-green);
-        color: white;
+        color: white;       
     }
 `;
 
@@ -47,14 +54,15 @@ const CampContext = styled.div`
         width: 100%;
         height: 2px;
         background-color: var(--main-color-orange);
-        margin-top: 30px; margin-bottom: 30px;
+        margin-top: 20px; margin-bottom: 20px;
     }
     .camp-info{
         text-align: center;
+        margin-top: 100px; margin-bottom: 100px;
         h2 {
             font-size: 25px;
             font-weight: bold;
-            margin-top: 50px; margin-bottom: 50px;
+            margin-bottom: 50px;
         }
         p {
             margin: 30px;
@@ -63,14 +71,16 @@ const CampContext = styled.div`
         }
     }
     .camp-maininfo{
-        h3 {
-        font-size: 20px;
-        }
+        text-align: center;
         a{
-            font-style: none;
-            margin-top: 10px; margin-bottom: 10px;
+            border-radius: 20px;
+            display: inline-block;
+            color: white;
             padding: 10px;
             background-color: var(--main-color-orange);
+            &:hover{
+                background-color: var(--main-color-orange-light);
+            }
         }
     }
 `;
