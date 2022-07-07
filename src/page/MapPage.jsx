@@ -348,7 +348,6 @@ const MapPage = () => {
   const [keywordResult, setKeywordResult] = useState();
   const [selectedResult, setSelectedResult] = useState();
   const [districtResult, setDistrictResult] = useState();
-  const [tagValueResult, setTagValueResult] = useState();
 
   const handleSearch = (e) => {
     let value = e.target.value.toLowerCase();
@@ -384,7 +383,7 @@ const MapPage = () => {
   };
 
   const onClickSearch = () => {
-    let value = document.querySelectorAll(".active");
+    let value = document.querySelectorAll(".tagActive");
     let valueArray = [];
     for (let i = 0; i < value.length; i++) {
       valueArray[i] = value[i].id;
@@ -394,7 +393,7 @@ const MapPage = () => {
       (data) => data.sbrsCl && data.sbrsCl.includes(valueArray)
     );
 
-    value[0] && setTagValueResult(tagResult);
+    // value[0] && setTagValueResult(tagResult);
 
     if (keywordResult) {
       setFilteredData(keywordResult);
@@ -462,7 +461,6 @@ const MapPage = () => {
     setKeywordResult(null);
     setSelectedResult(null);
     setDistrictResult(null);
-    setTagValueResult(null);
     setItemContentId();
     setClickPosition();
     setFilteredData(allData);
@@ -487,7 +485,7 @@ const MapPage = () => {
             }
           }}
           id={data}
-          className={isTagClick && "active"}
+          className={isTagClick && "tagActive"}
         >
           {data}
         </SearchTag>
