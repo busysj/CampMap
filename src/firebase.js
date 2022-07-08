@@ -5,12 +5,12 @@ import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   // firebase 설정과 관련된 개인 정보
-  apiKey: "AIzaSyC_BGyPvbcV2JTw5HfAS_yDdUWUlg8RLUo",
-  authDomain: "campproject-ee34a.firebaseapp.com",
-  projectId: "campproject-ee34a",
-  storageBucket: "campproject-ee34a.appspot.com",
-  messagingSenderId: "1048265201053",
-  appId: "1:1048265201053:web:2eebe695834072367b8b74"
+  apiKey: "AIzaSyC0DCwci9mhJSYr2nHHlzxySmrReidnCgQ",
+  authDomain: "campmap-983f8.firebaseapp.com",
+  projectId: "campmap-983f8",
+  storageBucket: "campmap-983f8.appspot.com",
+  messagingSenderId: "218811450222",
+  appId: "1:218811450222:web:1749df7ad4d1ef6b7bb77f",
 };
 
 const app = initializeApp(firebaseConfig);
@@ -24,12 +24,3 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 
 export { auth, db, storage };
-
-/**
-  apiKey: "AIzaSyC0DCwci9mhJSYr2nHHlzxySmrReidnCgQ",
-  authDomain: "campmap-983f8.firebaseapp.com",
-  projectId: "campmap-983f8",
-  storageBucket: "campmap-983f8.appspot.com",
-  messagingSenderId: "218811450222",
-  appId: "1:218811450222:web:1749df7ad4d1ef6b7bb77f",
- */
