@@ -33,17 +33,17 @@ const FooterPage = () => {
         </FooterImg>
         <FooterCenter>
           <Footerbottommenu>
-            <a href="/">개인정보 취급방침</a>
+            <a href="/CampMap">개인정보 취급방침</a>
             <span>|</span>
-            <a href="/">홈페이지 이용약관</a>
+            <a href="/CampMap">홈페이지 이용약관</a>
             <span>|</span>
-            <a href="/">광고 및 제휴문의</a>
+            <a href="/CampMap">광고 및 제휴문의</a>
             <span>|</span>
-            <a href="/">고객센터</a>
+            <a href="/CampMap">고객센터</a>
             <span>|</span>
-            <a href="/">회원가입</a>
+            <a href="/CampMap">회원가입</a>
             <span>|</span>
-            <a href="/">로그인</a>
+            <a href="/CampMap">로그인</a>
           </Footerbottommenu>
           <FooterCopyright>
             <span>Copyright © 2022 </span>
@@ -80,7 +80,7 @@ const FooterPage = () => {
 export default FooterPage;
 
 const FooterSection = styled.div`
-  width: 100%;
+  max-width: 1920px; min-width: 800px;
   clear: both;
   height: 190px;
   padding: 30px;
@@ -97,8 +97,8 @@ const FooterSection = styled.div`
 `;
 const FooterBox = styled.div`
   display: flex;
-  width: 1200px;
-  margin: 0 auto;
+  max-width: 1200px; min-width: 800px;
+  margin: auto;
   justify-content: center;
 `;
 
