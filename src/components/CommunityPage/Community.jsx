@@ -21,6 +21,10 @@ const Community = ({ user }) => {
 
   // const [user, setUser] = useState(null);
   const navigator = useNavigate();
+  const dateFiltered = (item) => (
+    //날짜 내림차순 정렬
+    item.sort((a,b) => b.timestamp.toDate() - a.timestamp.toDate())
+  );
 
   useEffect(() => {
     //두개의 인자를 가지고 (첫번째는 사용할 컬렉션 이름, 두번째는 어느db에서 가져올건지 컬렉션이름,콜백함수)
@@ -33,7 +37,7 @@ const Community = ({ user }) => {
         snapshot.docs.forEach((doc) => {
           list.push({ id: doc.id, ...doc.data() });
         });
-        setBlogs(list);
+        setBlogs(dateFiltered(list));
         setLoading(false);
       },
       (error) => {
@@ -135,11 +139,12 @@ const Community = ({ user }) => {
         </div>
         <div className="category_tags_sum">
           <div className="category_section_body">
+            {/* 커뮤니티에서 보드리스트로 프롭값 넘겨줌 */}
             <BoardList blogs={blogs} user={user} handleDelete={handleDelete} />
           </div>
           {/* <div className="tags_section_body">Tags Most Popular</div> */}
         </div>
-        {/* <div className="category_section_footer">
+    {/* <div className="category_section_footer">
           글리스트 밑에 글작성 버튼
           <div className="write_section_end">
             <button

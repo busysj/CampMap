@@ -1,12 +1,9 @@
 import React from "react";
-import { useState } from "react"; // db나 api에서 값을 가져와서 state에 저장
 //import postImg from "../../assets/thumbnail_post_IMG.png";
-import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faEdit } from "@fortawesome/free-regular-svg-icons";
-import { useSelector } from "react-redux";
 
 /*      🧡 getData() : 데이터를 한 번 가져옵니다.
         ✅ onSnapshot() : 실시간 업데이트 수신 
@@ -15,19 +12,18 @@ import { useSelector } from "react-redux";
         */
 
 const BoardList = ({ blogs, user, handleDelete, handleUpdate }) => {
-  const navigator = useNavigate();
+  /*const navigator = useNavigate();
   const [id, setId] = useState([]);
   const [title, setTitle] = useState([]);
   const [text, setText] = useState([]);
   const [nickname, setNickname] = useState([]);
 
-  const userId = user?.uid;
+  const userId = user?.uid;*/
   //console.log(`user`, user);
 
   // 🤣id 있을 경우 해당 blog 삭제할수 있도록 해야함
   // 💦그리고 useId와 만든사용자의 id도 일치해야함
   // 😥id가 같은사람만 delete, edit 버튼 생성되도록함
-
   return (
     <div>
       {blogs.map((item) => (
@@ -59,8 +55,6 @@ const BoardList = ({ blogs, user, handleDelete, handleUpdate }) => {
                             item.userId -> firebase 쪽 id
                             user.uid -> 현재 로그인 한 id
                             */}
-              {console.log(`item.userId`, item.userId)}
-              {console.log(`user.uid`, user)}
               {user?.uid && item.userId === user.uid && (
                 <span>
                   <FontAwesomeIcon
