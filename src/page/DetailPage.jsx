@@ -21,6 +21,7 @@ const DetailPage = () => {
 
   return (
     <div className="single">
+      <img className="background_img" src={blog?.imgUrl}></img>
       <div className="blog_box">
         <div
           className="blog-title-box"

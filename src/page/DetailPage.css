@@ -1,8 +1,20 @@
 .single {
-  width: 100%;
+  width: 1920px;
+  height: 1080px;
+}
+
+.background_img {
+  width: 1920px;
+  height: 1080px;
+  position: fixed;
+  z-index: -1;
+  filter: blur(15px);
 }
 .blog_box {
-  width: 1300px;
+  width: 1200px;
+  margin: 0 auto;
+  background-color: white;
+  height: 1080px;
 }
 
 .blog-title-box {
@@ -32,6 +44,10 @@
   width: 100%;
   margin: 0 auto;
   text-align: center;
+}
+
+.blog-title h2 {
+  font-size: 10px;
 }
 
 .blog-title span {
