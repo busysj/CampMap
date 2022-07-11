@@ -11,6 +11,7 @@ import UseCurrentLocation from "../hooks/UseCurrentLocation";
 import SearchResultList from "../components/SearchResultList";
 import defaultImage from "../assets/default-Image.png";
 import { Link } from "react-router-dom";
+import { addHomeSearchData, addHomeSearchValue } from "../store/basedDataSlice";
 
 const { Option } = Select;
 
@@ -313,23 +314,33 @@ const geolocationOptions = {
 };
 
 const MapPage = () => {
+  const dispatch = useDispatch();
+  const campData = useSelector((state) => state.basedDataSlice.basedData);
+  const homeSearchData = useSelector(
+    (state) => state.basedDataSlice.homeSearchData
+  );
+  const homeSearchValue = useSelector(
+    (state) => state.basedDataSlice.homeSearchValue
+  );
+
   const [cities, setCities] = useState(districtData[cityData[0]]);
   const [district, setDistrict] = useState(districtData[cityData[0]][0]);
   const [selected, setSelected] = useState(cityData[0]);
   const [level, setLevel] = useState();
-  const [search, setSearch] = useState(false);
+  const [search, setSearch] = useState(
+    homeSearchData.length === 0 ? false : true
+  );
 
   const [itemContentId, setItemContentId] = useState();
   const [clickPosition, setClickPosition] = useState();
 
   const { location, error } = UseCurrentLocation(geolocationOptions);
 
-  const dispatch = useDispatch();
-  const campData = useSelector((state) => state.basedDataSlice.basedData);
-
   const [allData, setAllData] = useState(campData);
-  const [filteredData, setFilteredData] = useState(allData);
-  const [searchResult, setSearchResult] = useState("");
+  const [filteredData, setFilteredData] = useState(
+    homeSearchData.length === 0 ? allData : homeSearchData
+  );
+  const [searchResult, setSearchResult] = useState(homeSearchValue);
 
   // useEffect(() => {
   //   axios(
@@ -393,7 +404,6 @@ const MapPage = () => {
       (data) => data.sbrsCl && data.sbrsCl.includes(valueArray)
     );
 
-    console.log(tagResult);
     if (keywordResult) {
       setFilteredData(keywordResult);
       if (selectedResult) {
@@ -466,6 +476,8 @@ const MapPage = () => {
     setSelected(cityData[0]);
     setDistrict(districtData[cityData[0]]);
     setCities(districtData[cityData[0]]);
+    dispatch(addHomeSearchData([]));
+    dispatch(addHomeSearchValue(""));
   };
 
   const Tags = ({ data }) => {
