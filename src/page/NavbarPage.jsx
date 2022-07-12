@@ -147,7 +147,7 @@ const NavMenu = styled.div`
 const NavItem = styled.div`
   display: flex;
   position: absolute;
-  right: 220px;
+  right: 250px;
 
   .active {
     color: var(--main-color-orange);

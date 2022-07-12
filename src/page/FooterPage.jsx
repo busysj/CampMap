@@ -65,7 +65,7 @@ const FooterPage = () => {
                   <span>
                     <EmailIcon />
                     <b>이메일 </b>
-                    <a href="mailto:seren0120@naver.com">{person.email}</a>
+                    <a href={`mailto:${person.email}`}>{person.email}</a>
                   </span>
                 </div>
               ))}
@@ -92,7 +92,6 @@ const FooterSection = styled.div`
   }
   a:hover {
     color: var(--main-color-green);
-    font-weight: bold;
   }
 `;
 const FooterBox = styled.div`
