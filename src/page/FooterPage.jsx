@@ -80,7 +80,8 @@ const FooterPage = () => {
 export default FooterPage;
 
 const FooterSection = styled.div`
-  max-width: 1920px; min-width: 800px;
+  max-width: 1920px;
+  min-width: 800px;
   clear: both;
   height: 190px;
   padding: 30px;
@@ -96,7 +97,8 @@ const FooterSection = styled.div`
 `;
 const FooterBox = styled.div`
   display: flex;
-  max-width: 1200px; min-width: 800px;
+  max-width: 1200px;
+  min-width: 800px;
   margin: auto;
   justify-content: center;
 `;

@@ -1,9 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import styled from "styled-components";
 import backgroundImg from "../../assets/MainBackgroundImg.jpg";
+import { NavLink } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  addHomeSearchData,
+  addHomeSearchValue,
+} from "../../store/basedDataSlice";
+
+const tag = ["부산", "기장", "바다", "글램핑", "공원"];
 
 const SeachPage = () => {
+  const [homeSearch, setHomeSearch] = useState("");
+  const dispatch = useDispatch();
+  const campData = useSelector((state) => state.basedDataSlice.basedData);
+
+  const onSearchValue = (e) => {
+    let value = e.target.value;
+    setHomeSearch(value);
+  };
+
+  const onSearch = () => {
+    let result = campData.filter((data) => {
+      return (
+        data.addr1.search(homeSearch) !== -1 ||
+        data.facltNm.search(homeSearch) !== -1
+      );
+    });
+
+    if (result.length !== 0) {
+      dispatch(addHomeSearchValue(homeSearch));
+      dispatch(addHomeSearchData(result));
+      console.log(result);
+    } else {
+      alert("검색 결과가 없습니다");
+      dispatch(addHomeSearchData([]));
+      dispatch(addHomeSearchValue(""));
+    }
+  };
   return (
     <SearchBackgroundimg>
       <div className="search__backgroundimg">
@@ -11,22 +46,29 @@ const SeachPage = () => {
         <form>
           <SearchInput>
             <span>
-              <input type="text" placeholder="캠핑장 또는 지역을 검색하세요" />
+              <input
+                type="text"
+                placeholder="캠핑장 또는 지역을 검색하세요"
+                onChange={(e) => onSearchValue(e)}
+                value={homeSearch}
+              />
               <button>
-                <BtnIcon>
-                  <SearchIcon viewBox="3 3 25 25" />
-                </BtnIcon>
-                {/* className="btn_icon" */}
+                <NavLink className="button" to={`/map`} onClick={onSearch}>
+                  <BtnIcon>
+                    <SearchIcon viewBox="3 3 25 25" />
+                  </BtnIcon>
+                  {/* className="btn_icon" */}
+                </NavLink>
               </button>
             </span>
           </SearchInput>
         </form>
         <SearchFilter>
-          <li>#필터</li>
-          <li>#부산</li>
-          <li>#바다</li>
-          <li>#노지</li>
-          <li>#사상</li>
+          {tag.map((item, index) => (
+            <li key={index} value={item} onClick={() => setHomeSearch(item)}>
+              #{item}
+            </li>
+          ))}
         </SearchFilter>
       </div>
     </SearchBackgroundimg>
@@ -36,7 +78,8 @@ const SeachPage = () => {
 export default SeachPage;
 
 const SearchBackgroundimg = styled.div`
-  max-width: 1920px; min-width: 1000px;
+  max-width: 1920px;
+  min-width: 1000px;
   height: 500px;
   position: relative;
   z-index: 1;
@@ -91,6 +134,8 @@ const SearchInput = styled.div`
     padding: 2px 0 0 10px;
     border-radius: 20px 0 0 20px;
     font-size: 20px;
+    text-align: center;
+    font-weight: bold;
     z-index: -5;
     outline: none;
     color: black;
@@ -109,6 +154,7 @@ const SearchInput = styled.div`
   }
 `;
 const BtnIcon = styled.div`
+  color: white;
   margin-top: 5px;
   font-size: large;
 `;
