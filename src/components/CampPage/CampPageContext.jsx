@@ -15,7 +15,7 @@ const CampPageContext = ({props}) => {
         </div>
         <div className="horizon" />
         <div className="camp-info">
-            <h2>{props.lineIntro ? `"${props.lineIntro}"` : '캠핑장 정보 없음'}</h2>
+            <h2>{props.lineIntro ? `"${props.lineIntro}"` : '캠핑장 소개글 없음'}</h2>
             <p>{props.intro ? props.intro : ''}</p>
         </div>
       </CampContext>

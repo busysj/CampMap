@@ -53,7 +53,6 @@ const ReviewPage = () => {
     };
   },[]);//파이어 스토어의 블로그 리스트를 비동기로 받아옴
 
-
   return (
     <Review>
       <BestReviewContainer>
@@ -84,8 +83,8 @@ const ReviewPage = () => {
           {title.map((item, i) => {
             if(i<5){
               return (
-              <Link to={`/detail/${item.id}`}>
-                <ReviewItem key={i}>{item.title}</ReviewItem>
+              <Link to={`/detail/${item.id}`} key={i}>
+                <ReviewItem>{item.title}</ReviewItem>
               </Link>
               )
             }

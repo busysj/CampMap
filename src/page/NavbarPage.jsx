@@ -112,7 +112,7 @@ const Nav = styled.div`
   background: #fff;
   display: flex;
   justify-content: space-between;
-  max-width: 1920px; min-width: 800px;
+  max-width: 1920px; min-width: 1000px;
   height: 72px;
   top: 0;
   font-size: 1.2rem;
@@ -147,7 +147,7 @@ const NavMenu = styled.div`
 const NavItem = styled.div`
   display: flex;
   position: absolute;
-  right: 220px;
+  right: 350px;
 
   .active {
     color: var(--main-color-orange);
@@ -163,7 +163,7 @@ const User = styled.span`
 const NavButtonContainer = styled.div`
   max-width: 1920px;
   display: flex;
-  position: absolute; right: 15px;
+  position: absolute; right: 100px;
   button {
     background: var(--main-color-orange);
     align-items: center;

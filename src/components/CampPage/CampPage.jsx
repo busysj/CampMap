@@ -120,7 +120,7 @@ const CampBackImg = styled.div`
     filter: blur(5px);
 `;
 const CampImg = styled.img`
-    width: 100%; height: 300px;
+    width: 100%; height: 400px;
 `;
 const TabBar = styled.div`
     margin: 0;

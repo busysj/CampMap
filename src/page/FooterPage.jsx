@@ -40,10 +40,6 @@ const FooterPage = () => {
             <a href="/CampMap">광고 및 제휴문의</a>
             <span>|</span>
             <a href="/CampMap">고객센터</a>
-            <span>|</span>
-            <a href="/CampMap">회원가입</a>
-            <span>|</span>
-            <a href="/CampMap">로그인</a>
           </Footerbottommenu>
           <FooterCopyright>
             <span>Copyright © 2022 </span>
@@ -65,7 +61,7 @@ const FooterPage = () => {
                   <span>
                     <EmailIcon />
                     <b>이메일 </b>
-                    <a href="mailto:seren0120@naver.com">{person.email}</a>
+                    <a href={`mailto:${person.email}`}>{person.email}</a>
                   </span>
                 </div>
               ))}
@@ -93,7 +89,6 @@ const FooterSection = styled.div`
   }
   a:hover {
     color: var(--main-color-green);
-    font-weight: bold;
   }
 `;
 const FooterBox = styled.div`
