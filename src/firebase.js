@@ -5,12 +5,12 @@ import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   // firebase 설정과 관련된 개인 정보
-  apiKey: "AIzaSyC0DCwci9mhJSYr2nHHlzxySmrReidnCgQ",
-  authDomain: "campmap-983f8.firebaseapp.com",
-  projectId: "campmap-983f8",
-  storageBucket: "campmap-983f8.appspot.com",
-  messagingSenderId: "218811450222",
-  appId: "1:218811450222:web:1749df7ad4d1ef6b7bb77f",
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
 };
 
 const app = initializeApp(firebaseConfig);

@@ -106,11 +106,8 @@ const CampingName = styled.h2`
 
 const RecommendPage = () => {
   //지역 기반 데이터 슬라이스에서 가져옴
-  const campStoreData = useSelector(
-    (state) => state.locationDataSlice.locationData
-  );
+  const campStoreData = useSelector((state) => state.locationDataSlice.locationData);
   const dispatch = useDispatch();
-  console.log(campStoreData);
   const clickPush = (i) => {
     //해당하는 캠핑장 클릭시 id값 추출 및 해당하는 인덱스값 가져옴
     const searchId = campStoreData[i];
