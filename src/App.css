@@ -8,8 +8,8 @@
 }
 
 /* body {
-  margin: 0 3%;
-}  */
+  background-color: orange;
+} */
 
 .ant-select-selector:hover {
   border-color: var(--main-color-orange) !important;
