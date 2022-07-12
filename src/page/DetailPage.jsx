@@ -21,6 +21,7 @@ const DetailPage = () => {
 
   return (
     <div className="single">
+      <img className="background_img" src={blog?.imgUrl}></img>
       <div className="blog_box">
         <div
           className="blog-title-box"
@@ -35,17 +36,15 @@ const DetailPage = () => {
             <h2>{blog?.title}</h2>
           </div>
         </div>
-        <div>
-          <div>
-            <p>{blog?.description}</p>
-          </div>
-          {/* <div className="col-md-3">
+        <div className="content">
+          <p>{blog?.description}</p>
+        </div>
+        {/* <div className="col-md-3">
               <h2>태그</h2>
               <p>노지캠핑</p>
               <p>장비</p>
               <p>음식</p>
             </div> */}
-        </div>
       </div>
     </div>
   );
