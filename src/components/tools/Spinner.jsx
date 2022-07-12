@@ -17,6 +17,5 @@ const SpinnerBoarder = styled.div`
   left: 50%;
   width: 3rem;
   height: 3rem;
-  margin-right: auto;
-  margin-left: auto;
+  margin: auto;
 `;
