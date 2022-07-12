@@ -6,6 +6,7 @@ import BoardList from "./BoardList";
 import { useEffect } from "react"; // db나 api에서 가져올때 항상 useEffect 사용
 import { useState } from "react"; // db나 api에서 값을 가져와서 state에 저장
 import { db } from "../../firebase";
+import { List } from "antd";
 import {
   collection,
   deleteDoc,
@@ -21,10 +22,9 @@ const Community = ({ user }) => {
 
   // const [user, setUser] = useState(null);
   const navigator = useNavigate();
-  const dateFiltered = (item) => (
+  const dateFiltered = (item) =>
     //날짜 내림차순 정렬
-    item.sort((a,b) => b.timestamp.toDate() - a.timestamp.toDate())
-  );
+    item.sort((a, b) => b.timestamp.toDate() - a.timestamp.toDate());
 
   useEffect(() => {
     //두개의 인자를 가지고 (첫번째는 사용할 컬렉션 이름, 두번째는 어느db에서 가져올건지 컬렉션이름,콜백함수)
@@ -119,9 +119,9 @@ const Community = ({ user }) => {
 
       <div className="category_home">
         <div className="category_section_header">
-          <Nav variant="tabs" defaultActiveKey="/community">
+          {/* <Nav variant="tabs" defaultActiveKey="/community">
             <Nav.Item>
-              <Nav.Link href="/community">전체</Nav.Link>
+              <Nav.Link href="/CampMap/community">전체</Nav.Link>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link eventKey="link-1">노지캠</Nav.Link>
@@ -135,16 +135,31 @@ const Community = ({ user }) => {
             <Nav.Item>
               <Nav.Link eventKey="link-4">노하우&꿀팁</Nav.Link>
             </Nav.Item>
-          </Nav>
+          </Nav> */}
         </div>
-        <div className="category_tags_sum">
-          <div className="category_section_body">
-            {/* 커뮤니티에서 보드리스트로 프롭값 넘겨줌 */}
-            <BoardList blogs={blogs} user={user} handleDelete={handleDelete} />
+        <List
+          itemLayout="vertical"
+          size="large"
+          pagination={{
+            onChange: (page) => {
+              console.log(page);
+            },
+            pageSize: 10,
+          }}
+        >
+          <div className="category_tags_sum">
+            <div className="category_section_body">
+              {/* 커뮤니티에서 보드리스트로 프롭값 넘겨줌 */}
+              <BoardList
+                blogs={blogs}
+                user={user}
+                handleDelete={handleDelete}
+              />
+            </div>
+            {/* <div className="tags_section_body">Tags Most Popular</div> */}
           </div>
-          {/* <div className="tags_section_body">Tags Most Popular</div> */}
-        </div>
-    {/* <div className="category_section_footer">
+        </List>
+        {/* <div className="category_section_footer">
           글리스트 밑에 글작성 버튼
           <div className="write_section_end">
             <button
