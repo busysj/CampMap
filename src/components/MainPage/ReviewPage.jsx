@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import { db } from '../../firebase'
 import { collection, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import Spinner from '../tools/Spinner';
 
 import SwiperTool, {
   StyleSwiper,
@@ -19,7 +18,6 @@ import SwiperTool, {
 const ReviewPage = () => {
   // 지역기반 데이터 슬라이스로 받아옴
   const campData = useSelector((state) => state.locationDataSlice.locationData);
-  const loading = useSelector((state) => state.locationDataSlice.loading);
   const dispatch = useDispatch();
   // 지역기반 데이터 중 캠프 상세내용 없는 캠핑장은 제외시킴
   const campFilter = campData.filter((item) => { return item.intro });
@@ -54,14 +52,6 @@ const ReviewPage = () => {
       titleList();
     };
   },[]);//파이어 스토어의 블로그 리스트를 비동기로 받아옴
-
-  if(loading){
-    return (
-      <div>
-        <Spinner/>
-      </div>
-    );
-  };
 
   return (
     <Review>

@@ -40,10 +40,6 @@ const FooterPage = () => {
             <a href="/CampMap">광고 및 제휴문의</a>
             <span>|</span>
             <a href="/CampMap">고객센터</a>
-            <span>|</span>
-            <a href="/CampMap">회원가입</a>
-            <span>|</span>
-            <a href="/CampMap">로그인</a>
           </Footerbottommenu>
           <FooterCopyright>
             <span>Copyright © 2022 </span>

@@ -17,7 +17,7 @@ const locationDataSlice = createSlice({
       state.locationPickData = action.payload
     },
     loadingState : (state, action) => {
-      state.loading = action.loading
+      state.loading = action.payload
     },
   }
 });
