@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import UseCurrentLocation from "../../hooks/UseCurrentLocation";
 import { addLocationData, loadingState } from "../../store/locationDataSlice";
@@ -12,20 +12,31 @@ const geolocationOptions = {
 const LocationBaseList = () => {
   const dispatch = useDispatch();
   const {location, error} = UseCurrentLocation(geolocationOptions);
-  const allData = useCallback(async () => {
-    try {
-      const response = await axios.get(
-        `http://api.visitkorea.or.kr/openapi/service/rest/GoCamping/locationBasedList?ServiceKey=DBx1v7ble2j4MNFWznYeeM5wQYthH5QTVeMOTXn5H%2FxvLP7Bbaa8IZvKxHq8r0425fyEMXvrs32EFDRIALvz5A%3D%3D&mapX=${location.longitude}&mapY=${location.latitude}&radius=20000&numOfRows=100&pageNo=1&MobileOS=ETC&MobileApp=TestApp&_type=json`
-      );
-      dispatch(addLocationData(response.data.response.body.items.item));
-      dispatch(loadingState(false));
-    } catch (error) {
-      console.log(error);
-    }
-  }, [dispatch, location]);
-
   useEffect(() => {
-    allData();
-  }, [allData]);
+    if(location){
+      console.log(location);
+      axios.get(
+        `http://api.visitkorea.or.kr/openapi/service/rest/GoCamping/locationBasedList?ServiceKey=DBx1v7ble2j4MNFWznYeeM5wQYthH5QTVeMOTXn5H%2FxvLP7Bbaa8IZvKxHq8r0425fyEMXvrs32EFDRIALvz5A%3D%3D&mapX=${location.longitude}&mapY=${location.latitude}&radius=20000&numOfRows=100&pageNo=1&MobileOS=ETC&MobileApp=TestApp&_type=json`
+      ).then((response) => {
+          return dispatch(addLocationData(response.data.response.body.items.item));
+        //dispatch(loadingState(false));
+      })
+    .catch((error) => {
+      console.log(error);
+      //dispatch(loadingState(true));
+    });
+    }
+    else{
+      axios.get(
+        `http://api.visitkorea.or.kr/openapi/service/rest/GoCamping/locationBasedList?ServiceKey=DBx1v7ble2j4MNFWznYeeM5wQYthH5QTVeMOTXn5H%2FxvLP7Bbaa8IZvKxHq8r0425fyEMXvrs32EFDRIALvz5A%3D%3D&mapX=126.976811&mapY=37.575854&radius=20000&numOfRows=100&pageNo=1&MobileOS=ETC&MobileApp=TestApp&_type=json`
+      ).then((response) => {
+          return dispatch(addLocationData(response.data.response.body.items.item));
+        //dispatch(loadingState(false));
+      })
+    .catch((error) => {
+      console.log(error);
+      //dispatch(loadingState(true));
+    });
+    }},[dispatch,location]);
 };
 export default LocationBaseList;

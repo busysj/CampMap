@@ -20,7 +20,7 @@ const ReviewPage = () => {
   const campData = useSelector((state) => state.locationDataSlice.locationData);
   const dispatch = useDispatch();
   // 지역기반 데이터 중 캠프 상세내용 없는 캠핑장은 제외시킴
-  const campFilter = campData.filter((item) => { return item.intro });
+  const campFilter = campData.filter((item) => { return item.intro && item.lineIntro && item.firstImageUrl});
   const [title, setTitle] = useState([]);
   
   const clickPush = (i) => {
