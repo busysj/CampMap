@@ -12,31 +12,17 @@ const geolocationOptions = {
 const LocationBaseList = () => {
   const dispatch = useDispatch();
   const {location, error} = UseCurrentLocation(geolocationOptions);
+
   useEffect(() => {
-    if(location){
       console.log(location);
       axios.get(
         `http://api.visitkorea.or.kr/openapi/service/rest/GoCamping/locationBasedList?ServiceKey=DBx1v7ble2j4MNFWznYeeM5wQYthH5QTVeMOTXn5H%2FxvLP7Bbaa8IZvKxHq8r0425fyEMXvrs32EFDRIALvz5A%3D%3D&mapX=${location.longitude}&mapY=${location.latitude}&radius=20000&numOfRows=100&pageNo=1&MobileOS=ETC&MobileApp=TestApp&_type=json`
       ).then((response) => {
-          return dispatch(addLocationData(response.data.response.body.items.item));
-        //dispatch(loadingState(false));
+          dispatch(addLocationData(response.data.response.body.items.item));
+          dispatch(loadingState(false));
       })
     .catch((error) => {
       console.log(error);
-      //dispatch(loadingState(true));
-    });
-    }
-    else{
-      axios.get(
-        `http://api.visitkorea.or.kr/openapi/service/rest/GoCamping/locationBasedList?ServiceKey=DBx1v7ble2j4MNFWznYeeM5wQYthH5QTVeMOTXn5H%2FxvLP7Bbaa8IZvKxHq8r0425fyEMXvrs32EFDRIALvz5A%3D%3D&mapX=126.976811&mapY=37.575854&radius=20000&numOfRows=100&pageNo=1&MobileOS=ETC&MobileApp=TestApp&_type=json`
-      ).then((response) => {
-          return dispatch(addLocationData(response.data.response.body.items.item));
-        //dispatch(loadingState(false));
-      })
-    .catch((error) => {
-      console.log(error);
-      //dispatch(loadingState(true));
-    });
-    }},[dispatch,location]);
+    })},[dispatch, location]);
 };
 export default LocationBaseList;
