@@ -3,7 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   locationData : [],
   locationPickData : [],
-  loading : true
 }
 
 const locationDataSlice = createSlice({
@@ -15,9 +14,6 @@ const locationDataSlice = createSlice({
     },
     addPickData : (state, action) => {
       state.locationPickData = action.payload
-    },
-    loadingState : (state, action) => {
-      state.loading = action.payload
     },
   }
 });
