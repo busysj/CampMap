@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import Spinner from '../components/tools/Spinner';
-import { useSelector } from 'react-redux';
 
 import PopupPage from "../components/MainPage/PopupPage";
 import RecommendPage from "../components/MainPage/RecommendPage";
@@ -12,14 +10,13 @@ import LocationBaseList from "../components/mapApi/LocationBaseList";
 
 const MainPage = () => {
   const [popup, setPopup] = useState(true);
-  const loading = useSelector((state) => state.locationDataSlice.loading);
 
   return (
     <div>
       {popup ? <PopupPage onClose={setPopup} /> : null}
       <SearchPage />
-      { loading === false ? <RecommendPage /> : <Spinner/>}
-      { loading === false ? <ReviewPage /> : <Spinner/>}
+      <RecommendPage />
+      <ReviewPage />
       <YoutubePage />
 
       <LocationBaseList />

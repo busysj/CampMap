@@ -2,22 +2,29 @@ import { useState, useEffect } from "react";
 
 const UseCurrentLocation = (options = {}) => {
   // location 정보 저장
-  const [location, setLocation] = useState();
+  const [location, setLocation] = useState({
+    latitude : null,
+    longitude : null
+  });
   // 에러 메세지 저장
   const [error, setError] = useState();
 
   // Geolocation의 `getCurrentPosition` 메소드에 대한 성공 callback 핸들러
   const handleSuccess = (pos) => {
     const { latitude, longitude } = pos.coords;
-
+    
     setLocation({
-      latitude,
-      longitude,
+      latitude : latitude,
+      longitude : longitude
     });
   };
 
   // Geolocation의 `getCurrentPosition` 메소드에 대한 실패 callback 핸들러
   const handleError = (error) => {
+    setLocation({
+      latitude : 37.575984,
+      longitude : 126.976828
+    });
     setError(error.message);
   };
 

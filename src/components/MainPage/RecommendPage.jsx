@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { addPickData } from "../../store/locationDataSlice";
 import { Link } from "react-router-dom";
+import defaultImage from '../../assets/default-Image.png';
 
 import styled from "styled-components";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -142,7 +143,7 @@ const RecommendPage = () => {
             >
               <Link to={`/camppage/${camp.contentId}`}>
                 <span>더 보기</span>
-                <img id={camp.contentId} src={camp.firstImageUrl} alt="Camping" />
+                <img id={camp.contentId} src={camp.firstImageUrl ? camp.firstImageUrl : defaultImage} alt="Camping" />
                 <CampingBack>
                   <CampingName>{camp.facltNm}</CampingName>
                 </CampingBack>
